@@ -22,6 +22,3 @@ export enum UserType {
     Library = 'library',
     CareerAssistant = 'careerassistant'
 }
-
-
-
