@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import * as amqp from 'amqplib';
-import logger from '../logger/loggerconnection';
 
 @Injectable()
 export default class RabbitMQService {
@@ -15,7 +14,6 @@ export default class RabbitMQService {
         await this.connect('amqp://guest:guest@localhost:5672');
         await this.channel.assertQueue(queue);
         this.channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
-        logger.info("System launch");
     }
 
     async receive(queue: string, callback: (message: any) => void) {

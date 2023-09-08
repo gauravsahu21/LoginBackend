@@ -1,6 +1,5 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
 import { Request, Response } from 'express';
-import logger from 'src/connections/logger/logger';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -25,7 +24,6 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>();
         const request = ctx.getRequest<Request>();
-        logger.error(`Error:${error} , Path:${request.url}`);
         response.status(200).json({
             message: error.message,
             error: error,

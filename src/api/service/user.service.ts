@@ -15,7 +15,6 @@ import {
   normalExpireTime,
   userRememberToken,
 } from 'src/common/util/user.utility';
-import logger from 'src/common/logger/loggerconnection';
 import { sendResetPasswordEmail } from 'src/common/util/mailsender.utility';
 import { ProfileBasic } from 'src/db/entity/profilebasic.entity';
 import { Request } from 'express';
@@ -43,7 +42,6 @@ export default class UserService {
       );
     } catch (error) {
       console.log(error);
-      logger.error(error);
 
       return HttpResponse.error(error.message, {
         errorData: error,
@@ -80,7 +78,6 @@ export default class UserService {
         resetUser.resetPasswordExpire = null;
         await resetUser.save();
       }
-      logger.error(error);
 
       return HttpResponse.error(error.message, {
         errorData: error,
