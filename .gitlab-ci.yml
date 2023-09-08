@@ -1,0 +1,17 @@
+stages:
+    - build
+    # - deploy
+build:
+    variables:
+        CI: "false"
+    stage: build
+    image: node:10.16.0
+    script:
+        - npm install
+        - npm run build
+    tags:
+        - in-sciencelabs
+    except:
+        - qa
+        - master
+        - tags

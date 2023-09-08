@@ -1,0 +1,36 @@
+{
+  "APP_PORT": 5004,
+  "database": {
+    "careerassistant": {
+      "host": "161.97.186.200",
+      "user": "careerassistant",
+      "password": "P@$$word@1234",
+      "port": 3306,
+      "database": "careerassistant",
+      "multipleStatements": true,
+      "waitForConnections": true,
+      "connectionLimit": 10,
+      "queueLimit": 0,
+      "timezone": "UTC"
+    },
+    "profileInformation": {
+      "host": "161.97.186.200",
+      "user": "careerassistant",
+      "password": "P@$$word@1234",
+      "port": 3306,
+      "database": "profile_information",
+      "multipleStatements": true,
+      "waitForConnections": true,
+      "connectionLimit": 10,
+      "queueLimit": 0,
+      "timezone": "UTC"
+    }
+  },
+  "logger": {
+    "name": "elasticSearch",
+    "host": "https://eslogs.in-sciencelabs.com/",
+    "authorization": "Basic ZWxhc3RpYzplbGFzdGljcEAkJHdvcmQ=",
+    "index": "ca-nodeserver-qa",
+    "level": "info"
+  }
+}
