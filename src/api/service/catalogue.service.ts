@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import HttpResponse from "src/common/lib/http-response";
-import logger from "src/connections/logger/logger";
 import CatalogueRepository from "src/db/repository/catalogue.repository";
 
 @Injectable()
@@ -16,7 +15,6 @@ export class CatalogueService {
         200,
       );
     } catch (error) {
-      logger.error(error);
       return HttpResponse.error(error.message);
     }
   }
