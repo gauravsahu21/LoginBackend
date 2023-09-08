@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryColumn, BaseEntity } from "typeorm";
 
 @Entity({ name: 'catelogues' })
-export class Catalogue extends BaseEntity{
+export class CatalogueEntity extends BaseEntity{
     @PrimaryColumn({ type: 'varchar', length: 255 })
     catelogueId: string;
 
