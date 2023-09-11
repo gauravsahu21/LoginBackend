@@ -1,13 +1,15 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-
-import { connect } from 'http2';
-import { createConnectionAndChannel } from 'src/connections/connection';
-import { buffer } from 'stream/consumers';
-import { contactUsDto, enquiriesDto, updateEnquiryDto } from 'src/common/dto/contact.dto';
-import { ContactUsEntity } from '../entity/contactus.entity';
 import { Between } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 
+import { createConnectionAndChannel } from 'src/connections/connection';
+import {
+  contactUsDto,
+  enquiriesDto,
+  updateEnquiryDto,
+} from 'src/common/dto/contact.dto';
+import { ContactUsEntity } from '../entity/contactus.entity';
 
 @Injectable()
 export default class ContactUsRepository {
@@ -18,7 +20,7 @@ export default class ContactUsRepository {
     try {
       if (this.channel) {
         const contactusform = Buffer.from(JSON.stringify(contactus));
-        this.channel.sendToQueue("contactus", contactusform);
+        this.channel.sendToQueue('contactus', contactusform);
       }
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
@@ -27,7 +29,7 @@ export default class ContactUsRepository {
   async insertData(contactUs: contactUsDto) {
     try {
       const newContactUs = new ContactUsEntity();
-      newContactUs.contactUsId = contactUs.contactUsId;
+      newContactUs.contactUsId = uuidv4();
       newContactUs.contactUsType = contactUs.contactUsType;
       newContactUs.message = contactUs.message;
       newContactUs.countryCode = contactUs.countryCode;
@@ -35,11 +37,10 @@ export default class ContactUsRepository {
       newContactUs.email = contactUs.email;
       newContactUs.connectorName = contactUs.connectorName;
       newContactUs.contactSubject = contactUs.contactSubject;
-      newContactUs.contactTime = contactUs.contactTime
+      newContactUs.contactTime = contactUs.contactTime;
       newContactUs.connectStatus = contactUs.connectStatus;
       newContactUs.additionalNotes = contactUs.additionalNotes;
       await ContactUsEntity.save(newContactUs);
-
     } catch (err) {
       throw err;
     }
@@ -63,18 +64,17 @@ export default class ContactUsRepository {
 
       return totalNewContactUsForm;
     } catch (error) {
-      console.log(error, "asd");
+      console.log(error, 'asd');
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
-
 
   getDate() {
     const dateObj = new Date();
     const month = dateObj.getUTCMonth() + 1; //months from 1-12
     const day = dateObj.getUTCDate();
     const year = dateObj.getUTCFullYear();
-    const newdate = year + "-" + month + "-" + day;
+    const newdate = year + '-' + month + '-' + day;
     return newdate;
   }
   getOneMonthPreviousDate() {
@@ -82,7 +82,7 @@ export default class ContactUsRepository {
     const month = dateObj.getUTCMonth() - 2; //months from 1-12
     const day = dateObj.getUTCDate();
     const year = dateObj.getUTCFullYear();
-    const newdate = year + "-" + month + "-" + day;
+    const newdate = year + '-' + month + '-' + day;
     return newdate;
   }
 
@@ -92,13 +92,12 @@ export default class ContactUsRepository {
       let response;
       let totalPages;
       if (toDate === null && fromDate === null) {
-
-        console.log("both null")
+        console.log('both null');
         const totalconnectUs = await ContactUsEntity.count({
           where: {
             connectStatus: connectStatus,
-          }
-        })
+          },
+        });
 
         totalPages = Math.ceil(totalconnectUs / 8);
         response = await ContactUsEntity.find({
@@ -106,17 +105,15 @@ export default class ContactUsRepository {
             connectStatus: connectStatus,
           },
           take: 8,
-          skip: (page - 1) * 8
-        })
-
-      }
-      else if (toDate === null && fromDate != null) {
-        console.log("toDate null")
+          skip: (page - 1) * 8,
+        });
+      } else if (toDate === null && fromDate != null) {
+        console.log('toDate null');
         const date = this.getDate();
         response = await ContactUsEntity.find({
           where: {
             connectStatus: connectStatus,
-            contactTime: Between(fromDate, date)
+            contactTime: Between(fromDate, date),
           },
 
           take: 8,
@@ -126,20 +123,19 @@ export default class ContactUsRepository {
         const totalconnectUs = await ContactUsEntity.count({
           where: {
             connectStatus: connectStatus,
-            contactTime: Between(fromDate, date)
-          }
-        })
+            contactTime: Between(fromDate, date),
+          },
+        });
 
         totalPages = Math.ceil(totalconnectUs / 8);
-
       } else if (toDate != null && fromDate === null) {
-        console.log("fromDate null")
+        console.log('fromDate null');
         const date = this.getOneMonthPreviousDate();
-        console.log(date, "@")
+        console.log(date, '@');
         response = await ContactUsEntity.find({
           where: {
             connectStatus: connectStatus,
-            contactTime: Between(date, toDate)
+            contactTime: Between(date, toDate),
           },
 
           take: 8,
@@ -148,18 +144,17 @@ export default class ContactUsRepository {
         const totalconnectUs = await ContactUsEntity.count({
           where: {
             connectStatus: connectStatus,
-            contactTime: Between(date, toDate)
-          }
-        })
+            contactTime: Between(date, toDate),
+          },
+        });
 
         totalPages = Math.ceil(totalconnectUs / 8);
-
       } else {
-        console.log("nothing null")
+        console.log('nothing null');
         response = await ContactUsEntity.find({
           where: {
             connectStatus: connectStatus,
-            contactTime: Between(fromDate, toDate)
+            contactTime: Between(fromDate, toDate),
           },
 
           take: 8,
@@ -169,19 +164,17 @@ export default class ContactUsRepository {
         const totalconnectUs = await ContactUsEntity.count({
           where: {
             connectStatus: connectStatus,
-            contactTime: Between(fromDate, toDate)
-          }
-        })
+            contactTime: Between(fromDate, toDate),
+          },
+        });
 
         totalPages = Math.ceil(totalconnectUs / 8);
-
       }
 
       return {
         response,
         totalPages,
-      }
-
+      };
     } catch (error) {
       throw error;
     }
@@ -189,11 +182,12 @@ export default class ContactUsRepository {
 
   async updateContactUs(update: updateEnquiryDto) {
     try {
-      const updateContact = await ContactUsEntity
-        .createQueryBuilder('contact')
+      const updateContact = await ContactUsEntity.createQueryBuilder('contact')
         .update()
         .set({ connectStatus: update.connectStatus }) // Use set to specify the column to update and its new value
-        .where('contactUsId = :contactUsId', { contactUsId: update.contactUsId }) // Use where to specify the condition
+        .where('contactUsId = :contactUsId', {
+          contactUsId: update.contactUsId,
+        }) // Use where to specify the condition
         .execute();
       return updateContact;
     } catch (error) {
@@ -203,13 +197,14 @@ export default class ContactUsRepository {
 
   async deleteContactUs(deleteId: string) {
     try {
-      console.log(deleteId, "asd")
-      const deleteStatus = await ContactUsEntity.createQueryBuilder('contact').delete().where('contactUsId = :contactUsId', { contactUsId: deleteId }).execute()
+      console.log(deleteId, 'asd');
+      const deleteStatus = await ContactUsEntity.createQueryBuilder('contact')
+        .delete()
+        .where('contactUsId = :contactUsId', { contactUsId: deleteId })
+        .execute();
       return deleteStatus;
     } catch (error) {
-
       throw error;
     }
   }
 }
-

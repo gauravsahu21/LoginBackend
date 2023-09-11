@@ -4,7 +4,7 @@ import { Controller, Post, UseGuards, Body, Get, Delete, Param} from "@nestjs/co
 import { contactUsDto, enquiriesDto, updateEnquiryDto } from "src/common/dto/contact.dto";
 import { ContactUsService } from "../service/contact.service";
 
-@Controller('/api/v1/contactus')
+@Controller('contactus')
 export class ContactUsController {
     constructor(private readonly messagesService: ContactUsService) { }
 

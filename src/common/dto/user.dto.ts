@@ -1,13 +1,49 @@
-import { Authorization } from "src/db/entity/authorization.entity";
+import {
+  IsBoolean,
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 
-export interface ILoginBody {
-    userid: string;
-    password: string;
-    rememberme?: boolean;
+export class ILoginBody {
+  @IsNotEmpty()
+  @IsString()
+  userid: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
 }
 
-export interface IChangePassword {
-    oldPassword: string,
-    newPassword: string,
-    userId: string
+export class IChangePassword {
+  @IsNotEmpty()
+  @IsString()
+  oldPassword: string;
+
+  @IsNotEmpty()
+  @IsString()
+  newPassword: string;
+
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
+}
+
+export class AddOrEditCertificate {
+  @IsNotEmpty()
+  @IsString()
+  certificatesId: string;
+
+  @IsNotEmpty()
+  @IsString()
+  imageId: string;
+
+  @IsNotEmpty()
+  @IsString()
+  certificateName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  certificateType: string;
 }

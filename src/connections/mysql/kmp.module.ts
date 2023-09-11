@@ -3,6 +3,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Authorization } from 'src/db/entity/authorization.entity';
 import * as config from '../../config/config.json'
+import { Certificate } from 'src/db/entity/certificates.entity';
+
 import { BrandEntity } from 'src/db/entity/brands.entity';
 import { CatalogueEntity } from 'src/db/entity/catalogue.entity';
 import { ContactUsEntity } from 'src/db/entity/contactus.entity';
@@ -15,7 +17,7 @@ import { ContactUsEntity } from 'src/db/entity/contactus.entity';
         password: config.database.kmp.password,
         database: config.database.kmp.database,
         synchronize: false,
-        entities: [Authorization,BrandEntity,CatalogueEntity,ContactUsEntity],
+        entities: [Authorization,Certificate,BrandEntity,CatalogueEntity,ContactUsEntity],
 
     }),]
 })

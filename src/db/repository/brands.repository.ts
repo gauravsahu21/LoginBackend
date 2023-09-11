@@ -4,9 +4,11 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
+
 import { BrandEntity } from '../entity/brands.entity';
 import { Brand } from 'src/common/dto/brands.dto';
-import { v4 as uuidv4 } from 'uuid';
+
 @Injectable()
 export default class BrandsRepository {
 
