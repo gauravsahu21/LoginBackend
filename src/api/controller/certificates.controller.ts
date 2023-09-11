@@ -3,7 +3,7 @@ import { AddOrEditCertificate } from 'src/common/dto/user.dto';
 import { WriteAccess } from '../jwt-auth.guard';
 import CertificateServices from '../service/certificates.service';
 
-@Controller('/certificates')
+@Controller('certificates')
 export default class CertificateController {
   constructor(private readonly certificates: CertificateServices) {}
 

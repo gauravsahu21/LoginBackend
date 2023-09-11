@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
+
 import { ILoginBody, AddOrEditCertificate } from 'src/common/dto/user.dto';
 import { Authorization } from 'src/db/entity/authorization.entity';
 import { findUserFromUserId } from 'src/common/util/user.utility';
@@ -16,8 +17,9 @@ import { Certificate } from '../entity/certificates.entity';
 @Injectable()
 export default class UserRepository {
   async getLoginUser(loginData: ILoginBody) {
-    const user = await findUserFromUserId(loginData.userid);
-    if (user && bcrypt.compareSync(loginData.password, user.password)) {
+    let {userid,password} = loginData;
+    const user = await findUserFromUserId(userid);
+    if (user && bcrypt.compareSync(password, user.password)) {
       return user;
     } else
       throw new HttpException(

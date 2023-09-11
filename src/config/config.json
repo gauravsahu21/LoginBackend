@@ -1,5 +1,5 @@
 {
-  "APP_PORT": 5004,
+  "APP_PORT": 4004,
   "database": {
     "kmp": {
       "host": "161.97.186.200",
@@ -13,12 +13,5 @@
       "queueLimit": 0,
       "timezone": "UTC"
     }
-  },
-  "logger": {
-    "name": "elasticSearch",
-    "host": "https://eslogs.in-sciencelabs.com/",
-    "authorization": "Basic ZWxhc3RpYzplbGFzdGljcEAkJHdvcmQ=",
-    "index": "ca-nodeserver-qa",
-    "level": "info"
   }
 }

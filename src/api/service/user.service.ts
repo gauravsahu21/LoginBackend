@@ -29,6 +29,8 @@ export default class UserService {
         200,
       );
     } catch (error) {
+      console.log(error);
+
       return HttpResponse.error(error.message, {
         errorData: error,
         errorCode: error.status,
