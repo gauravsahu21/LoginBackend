@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Authorization } from 'src/db/entity/authorization.entity';
 import * as config from '../../config/config.json'
+import { Certificate } from 'src/db/entity/certificates.entity';
 
 @Module({
     imports: [TypeOrmModule.forRoot({
@@ -12,7 +13,7 @@ import * as config from '../../config/config.json'
         password: config.database.kmp.password,
         database: config.database.kmp.database,
         synchronize: false,
-        entities: [Authorization],
+        entities: [Authorization,Certificate],
 
     }),]
 })

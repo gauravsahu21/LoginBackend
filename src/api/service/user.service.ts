@@ -1,13 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import {
-  IChangePassword,
-  ILoginBody,
-} from 'src/common/dto/user.dto';
+import { IChangePassword, ILoginBody, AddOrEditCertificate } from 'src/common/dto/user.dto';
 import HttpResponse from 'src/common/lib/http-response';
 import UserRepository from 'src/db/repository/user.repository';
 import {
   getAccessToken,
-  getRefactoredUser,  
+  getRefactoredUser,
   normalExpireTime,
 } from 'src/common/util/user.utility';
 import * as dotenv from 'dotenv';
@@ -32,9 +29,6 @@ export default class UserService {
         200,
       );
     } catch (error) {
-      console.log(error);
-
-
       return HttpResponse.error(error.message, {
         errorData: error,
         errorCode: error.status,
@@ -42,7 +36,6 @@ export default class UserService {
       });
     }
   }
-
 
   async changePassword(iChangePassword: IChangePassword) {
     try {
@@ -55,11 +48,7 @@ export default class UserService {
         200,
       );
     } catch (error) {
-      return HttpResponse.error(error.message, {
-        errorData: error,
-        errorCode: error.status,
-        httpCode: error.status || HttpStatus.INTERNAL_SERVER_ERROR,
-      });
+      return HttpResponse.error(error.message);
     }
   }
 }
