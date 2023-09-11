@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 5004
+EXPOSE 4004
 
 ENV env="dev"
 
