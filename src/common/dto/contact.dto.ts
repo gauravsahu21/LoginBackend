@@ -39,6 +39,7 @@ export class contactUsDto {
 
   @IsNotEmpty()
   @IsNumber()
+  @IsIn([0,1])
   connectStatus: number;
 
   @IsNotEmpty()

@@ -10,7 +10,7 @@ export class ContactUsService {
         try {
             await this.contactusRepo.composeContactUs(contactus);
             return HttpResponse.success(
-                'Contactus form submitted successfully',
+                null,'Contactus form submitted successfully',200
             );
         } catch (error) {
             return HttpResponse.error(error.message);
