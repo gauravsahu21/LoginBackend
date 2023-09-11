@@ -7,6 +7,18 @@ import CatalogueRepository from 'src/db/repository/catalogue.repository';
 export class CatalogueService {
   constructor(private readonly catalogueRepository: CatalogueRepository) {}
 
+  async getCatalogue(brandId: string) {
+    try {
+      const list = await this.catalogueRepository.getCatalogue(brandId);
+      return HttpResponse.success(
+        list,
+        'Catalogue Data Fetched succesfully',
+        200,
+      );
+    } catch (error) {
+      return HttpResponse.error(error.message);
+    }
+  }
   async addCatalogue(body: Catalogue) {
     try {
       const response = await this.catalogueRepository.addCatalogue(body);

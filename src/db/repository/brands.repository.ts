@@ -9,6 +9,16 @@ import { Brand } from 'src/common/dto/brands.dto';
 import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export default class BrandsRepository {
+
+  async getBrands() {
+    try {
+      const brands = await BrandEntity.find();
+      return brands;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
+    }
+  }
   async addBrand(body: Brand) {
     try {
       const brand = new BrandEntity();

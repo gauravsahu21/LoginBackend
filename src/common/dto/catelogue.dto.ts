@@ -2,6 +2,7 @@ import {
   IsOptional,
   IsNotEmpty,
   IsString,
+  IsNumber
 } from 'class-validator';
 
 import { Type } from 'class-transformer';
@@ -63,6 +64,18 @@ export class Catalogue {
   @IsNotEmpty()
   @IsString()
   imageId: string;
+
+  @IsNotEmpty()
+  @IsString()
+  brandId: string;
+
+  @IsNotEmpty()
+  @IsString()
+  productCategory: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  orderId: number;
 
   @IsNotEmpty()
   @Type(() => detailsDto)
