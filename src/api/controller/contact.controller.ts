@@ -20,7 +20,7 @@ export class ContactUsController {
         return this.messagesService.getContactUs();
     }
 
-    @Post('getall/submissions')
+    @Post('submissions')
     @UseGuards(WriteAccess)
     getAllEnquiries(@Body() enquiry:enquiriesDto) {
        return this.messagesService.getAllEnquiries(enquiry);
