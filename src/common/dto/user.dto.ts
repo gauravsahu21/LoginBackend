@@ -31,7 +31,6 @@ export class IChangePassword {
 }
 
 export class AddOrEditCertificate {
-  @IsNotEmpty()
   @IsString()
   certificatesId: string;
 
