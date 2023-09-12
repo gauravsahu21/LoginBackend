@@ -27,7 +27,7 @@ export class WriteAccess implements CanActivate {
     }
   }
 
-
+  @Injectable()
   export class PasswordWriteAccess implements CanActivate {
     constructor(private readonly jwtService: JwtService) {}
     canActivate(context: ExecutionContext): boolean | Promise<boolean> {
@@ -44,6 +44,7 @@ export class WriteAccess implements CanActivate {
       } else {
           throw new UnauthorizedException('login in once again')
       }
+      console.log(request.user.profileType);
       if (!["admin","master"].includes(request.user.profileType)) {
           throw new UnauthorizedException('Need Read access!!!')
       }
