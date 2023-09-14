@@ -88,24 +88,24 @@ export default class ContactUsRepository {
 
   async getAllEnquiries(enquiries: enquiriesDto) {
     try {
+      const contactusPerPage=20;
       const { toDate, fromDate, connectStatus, page } = enquiries;
       let response;
       let totalPages;
       if (toDate === null && fromDate === null) {
-        console.log('both null');
         const totalconnectUs = await ContactUsEntity.count({
           where: {
             connectStatus: connectStatus,
           },
         });
 
-        totalPages = Math.ceil(totalconnectUs / 8);
+        totalPages = Math.ceil(totalconnectUs / contactusPerPage);
         response = await ContactUsEntity.find({
           where: {
             connectStatus: connectStatus,
           },
-          take: 8,
-          skip: (page - 1) * 8,
+          take: contactusPerPage,
+          skip: (page - 1) * contactusPerPage,
         });
       } else if (toDate === null && fromDate != null) {
         console.log('toDate null');
@@ -116,8 +116,8 @@ export default class ContactUsRepository {
             contactTime: Between(fromDate, date),
           },
 
-          take: 8,
-          skip: (page - 1) * 8,
+          take: contactusPerPage,
+          skip: (page - 1) * contactusPerPage,
         });
 
         const totalconnectUs = await ContactUsEntity.count({
@@ -127,7 +127,7 @@ export default class ContactUsRepository {
           },
         });
 
-        totalPages = Math.ceil(totalconnectUs / 8);
+        totalPages = Math.ceil(totalconnectUs / contactusPerPage);
       } else if (toDate != null && fromDate === null) {
         console.log('fromDate null');
         const date = this.getOneMonthPreviousDate();
@@ -138,8 +138,8 @@ export default class ContactUsRepository {
             contactTime: Between(date, toDate),
           },
 
-          take: 8,
-          skip: (page - 1) * 8,
+          take: contactusPerPage,
+          skip: (page - 1) * contactusPerPage,
         });
         const totalconnectUs = await ContactUsEntity.count({
           where: {
@@ -148,7 +148,7 @@ export default class ContactUsRepository {
           },
         });
 
-        totalPages = Math.ceil(totalconnectUs / 8);
+        totalPages = Math.ceil(totalconnectUs / contactusPerPage);
       } else {
         console.log('nothing null');
         response = await ContactUsEntity.find({
@@ -157,8 +157,8 @@ export default class ContactUsRepository {
             contactTime: Between(fromDate, toDate),
           },
 
-          take: 8,
-          skip: (page - 1) * 8,
+          take: contactusPerPage,
+          skip: (page - 1) * contactusPerPage,
         });
 
         const totalconnectUs = await ContactUsEntity.count({
@@ -168,7 +168,7 @@ export default class ContactUsRepository {
           },
         });
 
-        totalPages = Math.ceil(totalconnectUs / 8);
+        totalPages = Math.ceil(totalconnectUs / contactusPerPage);
       }
 
       return {
