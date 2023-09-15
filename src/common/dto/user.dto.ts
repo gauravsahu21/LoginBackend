@@ -3,6 +3,7 @@ import {
   IsIn,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
 } from 'class-validator';
 
@@ -31,6 +32,7 @@ export class IChangePassword {
 }
 
 export class AddOrEditCertificate {
+  @IsOptional()
   @IsString()
   certificatesId: string;
 
