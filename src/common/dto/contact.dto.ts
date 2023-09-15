@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 import {
+  IsArray,
   IsBoolean,
   IsIn,
   IsNotEmpty,
@@ -59,6 +61,10 @@ export class enquiriesDto {
   @IsNotEmpty()
   @IsNumber()
   page: number;
+
+  @IsNotEmpty()
+  @IsArray()
+  type:string[];
 }
 
 export class updateEnquiryDto {
