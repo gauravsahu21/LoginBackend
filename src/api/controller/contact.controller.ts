@@ -21,7 +21,7 @@ export class ContactUsController {
     }
 
     @Post('submissions')
-    // @UseGuards(WriteAccess)
+    @UseGuards(WriteAccess)
     getAllEnquiries(@Body() enquiry:enquiriesDto) {
        return this.messagesService.getAllEnquiries(enquiry);
     }
