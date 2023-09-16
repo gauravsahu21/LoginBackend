@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { Between } from 'typeorm';
+import { Between, In } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 import { createConnectionAndChannel } from 'src/connections/connection';
@@ -88,25 +88,32 @@ export default class ContactUsRepository {
 
   async getAllEnquiries(enquiries: enquiriesDto) {
     try {
+      
       const contactusPerPage=20;
-      const { toDate, fromDate, connectStatus, page } = enquiries;
+      const { toDate, fromDate, connectStatus, page,type } = enquiries;
+      if (type.includes("ALL")) {
+        type.push(...["1", "2", "0"]);
+      }
       let response;
       let totalPages;
       if (toDate === null && fromDate === null) {
         const totalconnectUs = await ContactUsEntity.count({
           where: {
             connectStatus: connectStatus,
+            contactUsType: In([...type]),
           },
         });
-
+      console.log(totalconnectUs,"asd")
         totalPages = Math.ceil(totalconnectUs / contactusPerPage);
         response = await ContactUsEntity.find({
           where: {
             connectStatus: connectStatus,
+            contactUsType: In([...type]),
           },
           take: contactusPerPage,
           skip: (page - 1) * contactusPerPage,
         });
+
       } else if (toDate === null && fromDate != null) {
         console.log('toDate null');
         const date = this.getDate();
@@ -114,6 +121,7 @@ export default class ContactUsRepository {
           where: {
             connectStatus: connectStatus,
             contactTime: Between(fromDate, date),
+            contactUsType: In([...type]),
           },
 
           take: contactusPerPage,
@@ -124,6 +132,7 @@ export default class ContactUsRepository {
           where: {
             connectStatus: connectStatus,
             contactTime: Between(fromDate, date),
+            contactUsType: In([...type]),
           },
         });
 
@@ -136,6 +145,7 @@ export default class ContactUsRepository {
           where: {
             connectStatus: connectStatus,
             contactTime: Between(date, toDate),
+            contactUsType: In([...type]),
           },
 
           take: contactusPerPage,
@@ -145,6 +155,7 @@ export default class ContactUsRepository {
           where: {
             connectStatus: connectStatus,
             contactTime: Between(date, toDate),
+            contactUsType: In([...type]),
           },
         });
 
@@ -155,6 +166,7 @@ export default class ContactUsRepository {
           where: {
             connectStatus: connectStatus,
             contactTime: Between(fromDate, toDate),
+            contactUsType: In([...type]),
           },
 
           take: contactusPerPage,
@@ -165,12 +177,13 @@ export default class ContactUsRepository {
           where: {
             connectStatus: connectStatus,
             contactTime: Between(fromDate, toDate),
+            contactUsType: In([...type]),
           },
         });
 
         totalPages = Math.ceil(totalconnectUs / contactusPerPage);
       }
-
+    
       return {
         response,
         totalPages,
