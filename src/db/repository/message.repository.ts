@@ -91,7 +91,7 @@ export default class ContactUsRepository {
       
       const contactusPerPage=20;
       const { toDate, fromDate, connectStatus, page,type } = enquiries;
-      if (type.includes("ALL")) {
+      if (type.includes("ALL") && type.length===1) {
         type.push(...["1", "2", "0"]);
       }
       let response;
