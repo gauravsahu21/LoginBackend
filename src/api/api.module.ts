@@ -16,6 +16,15 @@ import UserRepository from 'src/db/repository/user.repository';
 import BrandsRepository from 'src/db/repository/brands.repository';
 import CatalogueRepository from 'src/db/repository/catalogue.repository';
 import ContactUsRepository from 'src/db/repository/message.repository';
+import { FileUploadController } from './controller/file-upload.controller';
+import { S3Service } from './service/s3.service';
+import {  ConfigModule, ConfigService } from '@nestjs/config';
+import { CareersController } from './controller/careers.controller';
+import { CareersService } from './service/careers.service';
+import CareersRepository from 'src/db/repository/careers.repository';
+import { VideoController } from './controller/videos.controller';
+import { VideoService } from './service/videos.service';
+import VideoRepository from 'src/db/repository/videos.repository';
 
 @Module({
   imports: [],
@@ -25,6 +34,9 @@ import ContactUsRepository from 'src/db/repository/message.repository';
     UserController,
     ContactUsController,
     CertificateController,
+    FileUploadController,
+    CareersController,
+    VideoController
   ],
   providers: [
     JwtService,
@@ -32,11 +44,17 @@ import ContactUsRepository from 'src/db/repository/message.repository';
     UserService,
     CatalogueService,
     BrandsService,
+    S3Service,
+    ConfigService,
+    CareersService,
+    VideoService,
     BrandsRepository,
     ContactUsService,
     ContactUsRepository,
     CertificateServices,
     UserRepository,
+    CareersRepository,
+    VideoRepository
   ],
 })
 export class ApiModule {}
