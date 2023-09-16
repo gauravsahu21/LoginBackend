@@ -16,9 +16,6 @@ import UserRepository from 'src/db/repository/user.repository';
 import BrandsRepository from 'src/db/repository/brands.repository';
 import CatalogueRepository from 'src/db/repository/catalogue.repository';
 import ContactUsRepository from 'src/db/repository/message.repository';
-import { FileUploadController } from './controller/file-upload.controller';
-import { S3Service } from './service/s3.service';
-import {  ConfigModule, ConfigService } from '@nestjs/config';
 import { CareersController } from './controller/careers.controller';
 import { CareersService } from './service/careers.service';
 import CareersRepository from 'src/db/repository/careers.repository';
@@ -34,7 +31,6 @@ import VideoRepository from 'src/db/repository/videos.repository';
     UserController,
     ContactUsController,
     CertificateController,
-    FileUploadController,
     CareersController,
     VideoController
   ],
@@ -44,8 +40,6 @@ import VideoRepository from 'src/db/repository/videos.repository';
     UserService,
     CatalogueService,
     BrandsService,
-    S3Service,
-    ConfigService,
     CareersService,
     VideoService,
     BrandsRepository,
