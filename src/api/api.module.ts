@@ -16,6 +16,12 @@ import UserRepository from 'src/db/repository/user.repository';
 import BrandsRepository from 'src/db/repository/brands.repository';
 import CatalogueRepository from 'src/db/repository/catalogue.repository';
 import ContactUsRepository from 'src/db/repository/message.repository';
+import { CareersController } from './controller/careers.controller';
+import { CareersService } from './service/careers.service';
+import CareersRepository from 'src/db/repository/careers.repository';
+import { VideoController } from './controller/videos.controller';
+import { VideoService } from './service/videos.service';
+import VideoRepository from 'src/db/repository/videos.repository';
 
 @Module({
   imports: [],
@@ -25,6 +31,8 @@ import ContactUsRepository from 'src/db/repository/message.repository';
     UserController,
     ContactUsController,
     CertificateController,
+    CareersController,
+    VideoController
   ],
   providers: [
     JwtService,
@@ -32,11 +40,15 @@ import ContactUsRepository from 'src/db/repository/message.repository';
     UserService,
     CatalogueService,
     BrandsService,
+    CareersService,
+    VideoService,
     BrandsRepository,
     ContactUsService,
     ContactUsRepository,
     CertificateServices,
     UserRepository,
+    CareersRepository,
+    VideoRepository
   ],
 })
 export class ApiModule {}
