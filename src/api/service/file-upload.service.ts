@@ -10,11 +10,15 @@ export class FileUploadService {
 
   async uploadFile(type: string, files:object[]) {
     try {
-      // console.log(type,files,"asd")
       const  file=await this.fileRepo.uploadFiles(type,files);
+      console.log(file,"!!!")
+      return HttpResponse.success(
+        {...file},
+        'Uploaded succesfully',
+        200,
+      );
   
     } catch (error) {
-  
       return HttpResponse.error(error.message);
     }
   }
