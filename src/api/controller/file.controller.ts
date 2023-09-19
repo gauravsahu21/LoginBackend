@@ -14,7 +14,7 @@ import {
   FilesInterceptor,
 } from '@nestjs/platform-express';
 import { FileUploadService } from '../service/file-upload.service';
-import { SampleDto } from 'src/common/dto/sample.dto';
+import { SampleDto,downloadDto } from 'src/common/dto/sample.dto';
 import { Express } from 'express';
 
 @Controller('file')
@@ -30,10 +30,10 @@ export class FileUploadController {
     return await this.fileUploadService.uploadFile(body.type, ids);
   }
 
-//   @Post('/download')
-//   async download(@Body() filedata: downloadDto) {
-//     return this.fileUploadService.downloadFile(filedata);
-//   }
+  @Post('/download')
+  async download(@Body() filedata: downloadDto) {
+    return this.fileUploadService.downloadFile(filedata);
+  }
 
 //   @Post('/delete')
 //   async delete(@Body() filedata: downloadDto) {

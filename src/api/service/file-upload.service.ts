@@ -25,10 +25,10 @@ export class FileUploadService {
 
   async downloadFile(filedata:downloadDto) {
     try {
-      // let download = await this.minioClientService.downloadFile(
-      //   filedata.ids,
-      //   filedata.type,
-      // );
+      const download = await this.fileRepo.downloadFile(
+        filedata.ids,
+        filedata.type,
+      );
       // return HttpResponse.success(
       //   {...download},
       //   'downloaded succesfully',
