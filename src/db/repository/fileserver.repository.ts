@@ -1,15 +1,11 @@
 /* eslint-disable prefer-const */
 /* eslint-disable prettier/prettier */
-import {
-
-    Injectable
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as AWS from 'aws-sdk';
 import { S3 } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export default class FileRepository {
-    
     async uploadFiles(type: string, files: object[]) {
         try {
             const uploadresponse = {};
@@ -20,23 +16,38 @@ export default class FileRepository {
                 s3BucketEndpoint: true,
             });
             files.map(async (file, i) => {
-
                 const ext = file['originalname'].substring(
                     file['originalname'].lastIndexOf('.'),
                     file['originalname'].length,
                 );
 
                 const fileName: string = uuidv4() + ext;
-                const uploadStatus = await s3
-                    .putObject({
-                        Bucket: type,
-                        Key: fileName,
-                        Body: file['buffer'],
-                        // ContentType:'video/quicktime'
-                    })
-                    .promise();
-                if (uploadStatus) {
-                    console.log("gaurav")
+
+                // const uploadStatus = await s3
+                //     .putObject({
+                //         Bucket: type,
+                //         Key: fileName,
+                //         Body: file['buffer'],
+                //         // ContentType:'video/quicktime'
+                //     })
+                //     .promise();
+
+                const uploadStatus = await new Promise((resolve, reject) => {
+                    try {
+                        s3.putObject({
+                            Bucket: type,
+                            Key: fileName,
+                            Body: file['buffer'],
+                            // ContentType:'video/quicktime'
+                        }).promise();
+                        resolve('upload');
+                    } catch {
+                        reject("not uploaded")
+                    }
+                });
+
+                if (uploadStatus == 'upload') {
+                    console.log('gaurav');
                     uploadresponse[i + 1] = {
                         filename: file['originalname'],
                         fileId: fileName,
@@ -44,12 +55,11 @@ export default class FileRepository {
                         size: file['size'],
                     };
                 }
-                console.log(uploadresponse, "!@")
-            })
+            });
 
             return uploadresponse;
         } catch (err) {
-            console.log("gaurav");
+            throw err;
         }
     }
 
@@ -60,16 +70,18 @@ export default class FileRepository {
                 accessKeyId: '1bf047b8d69dfd0122f4961b30d36c57',
                 secretAccessKey: '6a88813879c0124e05b11c056fd781e8',
                 s3BucketEndpoint: true,
-                signatureVersion: 'v4'
+                signatureVersion: 'v4',
             });
             return new Promise((resolve, reject) => {
                 s3.headObject({ Bucket: type, Key: id }, async (err, data) => {
                     if (err && err.code === 'NotFound') {
-                        console.log(`Object with key '${id}' does not exist in the bucket.`);
-                        resolve("not found");
+                        console.log(
+                            `Object with key '${id}' does not exist in the bucket.`,
+                        );
+                        resolve('not found');
                     } else if (err) {
                         console.error('Error:', err);
-                        reject("error while");
+                        reject('error while');
                     } else {
                         const params = {
                             Bucket: 'product',
@@ -103,7 +115,7 @@ export default class FileRepository {
 
             //   return url;
         } catch (error) {
-            console.log(error, "qq")
+            console.log(error, 'qq');
             throw error;
         }
     }
