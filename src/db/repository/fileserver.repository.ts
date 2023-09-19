@@ -3,16 +3,20 @@
 import { Injectable } from '@nestjs/common';
 import * as AWS from 'aws-sdk';
 import { S3 } from 'aws-sdk';
+import { error } from 'console';
 import { v4 as uuidv4 } from 'uuid';
+import * as dotenv from 'dotenv';
+dotenv.config();
 @Injectable()
 export default class FileRepository {
     async uploadFiles(type: string, files: object[]) {
         try {
             const uploadresponse = {};
+            console.log(`${process.env.CONTABO_OBJECT_STORAGE_ENDPOINT}${type}`,`${process.env.CONTABO_OBJECT_STORAGE_accessKeyId}`,`${process.env.CONTABO_OBJECT_STORAGE_secretAccessKey}`)
             const s3 = new AWS.S3({
-                endpoint: `https://eu2.contabostorage.com/${type}`,
-                accessKeyId: '1bf047b8d69dfd0122f4961b30d36c57',
-                secretAccessKey: '6a88813879c0124e05b11c056fd781e8',
+                endpoint: `${process.env.CONTABO_OBJECT_STORAGE_ENDPOINT}${type}`,
+                accessKeyId:`${process.env.CONTABO_OBJECT_STORAGE_accessKeyId}`,
+                secretAccessKey:`${process.env.CONTABO_OBJECT_STORAGE_secretAccessKey}`,
                 s3BucketEndpoint: true,
             });
             files.map(async (file, i) => {
@@ -66,9 +70,9 @@ export default class FileRepository {
     async download(id: string, type: string) {
         try {
             const s3 = new AWS.S3({
-                endpoint: `https://eu2.contabostorage.com/${type}`,
-                accessKeyId: '1bf047b8d69dfd0122f4961b30d36c57',
-                secretAccessKey: '6a88813879c0124e05b11c056fd781e8',
+                endpoint: `${process.env.CONTABO_OBJECT_STORAGE_ENDPOINT}${type}`,
+                accessKeyId:`${process.env.CONTABO_OBJECT_STORAGE_accessKeyId}`,
+                secretAccessKey:`${process.env.CONTABO_OBJECT_STORAGE_secretAccessKey}`,
                 s3BucketEndpoint: true,
                 signatureVersion: 'v4',
             });
@@ -132,6 +136,66 @@ export default class FileRepository {
                 }
             }
             return download_data;
+        } catch (err) {
+            throw err;
+        }
+    }
+    async deleteFilefromServer(type, id) {
+        try {
+
+            const s3 = new AWS.S3({
+                endpoint: `${process.env.CONTABO_OBJECT_STORAGE_ENDPOINT}${type}`,
+                accessKeyId:`${process.env.CONTABO_OBJECT_STORAGE_accessKeyId}`,
+                secretAccessKey:`${process.env.CONTABO_OBJECT_STORAGE_secretAccessKey}`,
+                s3BucketEndpoint: true,
+                signatureVersion: 'v4',
+            });
+            return new Promise((resolve, reject) => {
+                s3.headObject({ Bucket: type, Key: id }, async (err, data) => {
+                    if (err && err.code === 'NotFound') {
+                        console.log(
+                            `Object with key '${id}' does not exist in the bucket.`,
+                        );
+                        resolve('not found');
+                    } else if (err) {
+                        console.error('Error:', err);
+                        reject('not found');
+                    } else {
+                        const params = {
+                            Bucket: 'product',
+                            Key: id,
+                        };
+                        s3.deleteObject(params, (err, data) => {
+                            if (err) {
+                                error(err);
+                            } else {
+                                resolve('deleted successfully');
+                            }
+                        });
+                    }
+                });
+            });
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async deleteMultiplesFile(ids: string[], type: string) {
+        try {
+            let delete_data = {};
+            for (let id of ids) {
+                const delete_response = await this.deleteFilefromServer(
+                    type,
+                    id,
+                );
+
+                if (delete_response == undefined || delete_response == 'not found') {
+                    delete_data[id] = 'no such file found';
+                } else {
+                    delete_data[id] = delete_response;
+                }
+            }
+            return { ids: delete_data };
         } catch (err) {
             throw err;
         }

@@ -40,15 +40,18 @@ export class FileUploadService {
   }
   async deleteFile(filedata:downloadDto) {
     try {
-      //  const message=await this.minioClientService.deleteMultiplesFile(filedata.ids, filedata.type);
-      //  return HttpResponse.success(
-      //   message,
-      //   'deleted succesfully',
-      //   200,
-      // );
+       const message=await this.fileRepo.deleteMultiplesFile(filedata.ids, filedata.type);
+       return HttpResponse.success(
+        message,
+        'deleted succesfully',
+        200,
+      );
     } catch (error) {
   
       return HttpResponse.error(error.message);
     }
   }
+
+
+
 }

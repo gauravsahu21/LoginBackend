@@ -35,8 +35,8 @@ export class FileUploadController {
     return this.fileUploadService.downloadFile(filedata);
   }
 
-//   @Post('/delete')
-//   async delete(@Body() filedata: downloadDto) {
-//     return this.fileUploadService.deleteFile(filedata);
-//   }
+  @Post('/delete')
+  async delete(@Body() filedata: downloadDto): Promise<any> {
+    return this.fileUploadService.deleteFile(filedata);
+  }
 }
