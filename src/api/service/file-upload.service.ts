@@ -29,11 +29,11 @@ export class FileUploadService {
         filedata.ids,
         filedata.type,
       );
-      // return HttpResponse.success(
-      //   {...download},
-      //   'downloaded succesfully',
-      //   200,
-      // );
+      return HttpResponse.success(
+        {...download},
+        'downloaded succesfully',
+        200,
+      );
     } catch (error) {
       return HttpResponse.error(error.message);
     }

@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable prettier/prettier */
 import {
 
@@ -8,17 +9,7 @@ import { S3 } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export default class FileRepository {
-    // private s3: AWS.S3;
-
-    // constructor() {
-    //     this.s3 = new AWS.S3({
-    //       endpoint: 'https://eu2.contabostorage.com/product',
-    //       accessKeyId: '1bf047b8d69dfd0122f4961b30d36c57',
-    //       secretAccessKey: '6a88813879c0124e05b11c056fd781e8',
-    //       s3BucketEndpoint: true,
-    //     });
-    //   }
-
+    
     async uploadFiles(type: string, files: object[]) {
         try {
             const uploadresponse = {};
@@ -61,35 +52,76 @@ export default class FileRepository {
             console.log("gaurav");
         }
     }
-   async createConnection(type:string){
-    const s3 = new AWS.S3({
-        endpoint: `https://eu2.contabostorage.com/${type}`,
-        accessKeyId: '1bf047b8d69dfd0122f4961b30d36c57',
-        secretAccessKey: '6a88813879c0124e05b11c056fd781e8',
-        s3BucketEndpoint: true,
-    });
-    return s3;
-   }
-    async downloadFile(ids: string[], type: string) {
+
+    async download(id: string, type: string) {
         try {
             const s3 = new AWS.S3({
-                endpoint: 'https://eu2.contabostorage.com/product',
+                endpoint: `https://eu2.contabostorage.com/${type}`,
                 accessKeyId: '1bf047b8d69dfd0122f4961b30d36c57',
                 secretAccessKey: '6a88813879c0124e05b11c056fd781e8',
                 s3BucketEndpoint: true,
                 signatureVersion: 'v4'
             });
-            const params = {
-                Bucket:'product',
-                Key:'provisional1.jpeg',
-                Expires: 36000, // Link expiration time in seconds (e.g., 1 hour)
-              };
-              
-              const url = await s3.getSignedUrlPromise('getObject', params);
-              
-              console.log('Download URL:', url);
+            return new Promise((resolve, reject) => {
+                s3.headObject({ Bucket: type, Key: id }, async (err, data) => {
+                    if (err && err.code === 'NotFound') {
+                        console.log(`Object with key '${id}' does not exist in the bucket.`);
+                        resolve("not found");
+                    } else if (err) {
+                        console.error('Error:', err);
+                        reject("error while");
+                    } else {
+                        const params = {
+                            Bucket: 'product',
+                            Key: id,
+                            Expires: 36000, // Link expiration time in seconds (e.g., 1 hour)
+                        };
+                        const url = await s3.getSignedUrlPromise('getObject', params);
+                        resolve(url);
+                    }
+                });
+            });
+            //  s3.headObject({Bucket:type,Key:id}, function (err, data) {
+            //     if (err && err.code === 'NotFound') {
+
+            //       console.log(`Object with key '${id}' does not exist in the bucket.`);
+            //       return "A";
+            //     } else if (err) {
+            //       console.error('Error:', err);
+            //       return "B";
+            //     } else {
+            //       console.log(`Object with key '${id}' exists in the bucket.`);
+            //       return "C";
+            //     }
+            //   });
+            // const params = {
+            //     Bucket:'product',
+            //     Key:id,
+            //     Expires: 36000, // Link expiration time in seconds (e.g., 1 hour)
+            //   };
+            //   const url = await s3.getSignedUrlPromise('getObject', params);
+
+            //   return url;
         } catch (error) {
-          throw error;
+            console.log(error, "qq")
+            throw error;
         }
-      }
+    }
+
+    async downloadFile(ids: string[], type: string) {
+        try {
+            let download_data = {};
+            for (let id of ids) {
+                const url = await this.download(id, type);
+                if (url == undefined || url === 'not found') {
+                    download_data[id] = 'no such file found';
+                } else {
+                    download_data[id] = url;
+                }
+            }
+            return download_data;
+        } catch (err) {
+            throw err;
+        }
+    }
 }

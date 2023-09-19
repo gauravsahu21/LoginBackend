@@ -26,12 +26,12 @@ export class FileUploadController {
   async upload(
     @Body() body: SampleDto,
     @UploadedFiles() ids: Array<Express.Multer.File>,
-  ) {
+  ): Promise<any> {
     return await this.fileUploadService.uploadFile(body.type, ids);
   }
 
   @Post('/download')
-  async download(@Body() filedata: downloadDto) {
+  async download(@Body() filedata: downloadDto): Promise<any> {
     return this.fileUploadService.downloadFile(filedata);
   }
 
