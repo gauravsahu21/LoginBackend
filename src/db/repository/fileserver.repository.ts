@@ -9,11 +9,49 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 @Injectable()
 export default class FileRepository {
+
+    async uploadAndDownload( fileName: string, bucket: string,buffer:any) {
+        try {
+            const s3 = new AWS.S3({
+                endpoint: `${process.env.CONTABO_OBJECT_STORAGE_ENDPOINT}${bucket}`,
+                accessKeyId:`${process.env.CONTABO_OBJECT_STORAGE_accessKeyId}`,
+                secretAccessKey:`${process.env.CONTABO_OBJECT_STORAGE_secretAccessKey}`,
+                s3BucketEndpoint: true,
+                signatureVersion: 'v4',
+            });
+console.log("yes");
+
+            return new Promise((resolve, reject) => {
+                s3.putObject({ Bucket:bucket, Key: fileName,Body:buffer}, async (err, data) => {
+                    if (err ) {
+                        resolve('not uploaded');
+                    } else if (err) {
+                        reject(err);
+                    } else {
+                        console.log(data)
+                        const params = {
+                            Bucket:bucket,
+                            Key:fileName
+                        };
+                        const url = await s3.getSignedUrlPromise('getObject', params);
+                        console.log(url);
+                        resolve(url);
+                    }
+                });
+            });
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+
+    
     async uploadFiles(type: string, files: object[]) {
         try {
             const uploadresponse = {};
             console.log(`${process.env.CONTABO_OBJECT_STORAGE_ENDPOINT}${type}`,`${process.env.CONTABO_OBJECT_STORAGE_accessKeyId}`,`${process.env.CONTABO_OBJECT_STORAGE_secretAccessKey}`)
-            const s3 = new AWS.S3({
+            const s3 = await new AWS.S3({
                 endpoint: `${process.env.CONTABO_OBJECT_STORAGE_ENDPOINT}${type}`,
                 accessKeyId:`${process.env.CONTABO_OBJECT_STORAGE_accessKeyId}`,
                 secretAccessKey:`${process.env.CONTABO_OBJECT_STORAGE_secretAccessKey}`,
@@ -36,30 +74,82 @@ export default class FileRepository {
                 //     })
                 //     .promise();
 
-                const uploadStatus = await new Promise((resolve, reject) => {
-                    try {
-                        s3.putObject({
-                            Bucket: type,
-                            Key: fileName,
-                            Body: file['buffer'],
-                            // ContentType:'video/quicktime'
-                        }).promise();
-                        resolve('upload');
-                    } catch {
-                        reject("not uploaded")
-                    }
-                });
+                // const uploadStatus = await new Promise((resolve, reject) => {
+                //     try {
+                //         s3.putObject({
+                //             Bucket: type,
+                //             Key: fileName,
+                //             Body: file['buffer'],
+                //             // ContentType:'video/quicktime'
+                //         }).promise();
+                //         resolve('upload');
+                //     } catch {
+                //         reject("not uploaded")
+                //     }
+                // });
+                return new Promise((resolve, reject) => {
+                    s3.putObject({ Bucket: type, Key: fileName,Body:file['buffer']}, async (err, data) => {
+                        if (err && err.code === 'NotFound') {
+                            console.log(
+                                `Object with key  does not exist in the bucket.`,
+                            );
+                            resolve('not found');
+                        } else if (err) {
+                            console.error('Error:', err);
+                            reject('error while');
+                        } else {
 
-                if (uploadStatus == 'upload') {
-                    console.log('gaurav');
-                    uploadresponse[i + 1] = {
-                        filename: file['originalname'],
-                        fileId: fileName,
-                        mimetype: file['mimetype'],
-                        size: file['size'],
-                    };
-                }
+                            console.log("yes file is uploade",data)
+                            const params = {
+                                Bucket:type,
+                                Key:fileName
+                            };
+                            const url = await s3.getSignedUrlPromise('getObject', params);
+                            resolve({fileName,url});
+                        }
+                    });
+                });
             });
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async uploadandDownloadMultiplesFiles(type: string, files: object[]) {
+        try {
+            console.log("saurav");
+            const uploadresponse = {};
+            console.log(`${process.env.CONTABO_OBJECT_STORAGE_ENDPOINT}${type}`,`${process.env.CONTABO_OBJECT_STORAGE_accessKeyId}`,`${process.env.CONTABO_OBJECT_STORAGE_secretAccessKey}`)
+            for (let file of files) {
+                const ext = file['originalname'].substring(
+                    file['originalname'].lastIndexOf('.'),
+                    file['originalname'].length,
+                );
+
+                const fileName: string = uuidv4() + ext;
+             const url=await this.uploadAndDownload(fileName,type,file['buffer'])
+            console.log(url,"URL");
+
+             if (url == undefined || url == 'not uploaded') {
+                console.log("NOT UPLOADEDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+                uploadresponse[file['originalname']] = {
+                    fileId: fileName,
+                    s3Link:"Not Uploaded",
+                    mimetype: file['mimetype'],
+                    size: file['size'],
+                };
+            } else {
+                console.log("UPLOADEDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+                uploadresponse[file['originalname']] = {
+                    fileId: fileName,
+                    s3Link:url,
+                    mimetype: file['mimetype'],
+                    size: file['size'],
+                };
+            }
+            console.log(uploadresponse,"@#")
+
+            }
 
             return uploadresponse;
         } catch (err) {
@@ -88,9 +178,8 @@ export default class FileRepository {
                         reject('error while');
                     } else {
                         const params = {
-                            Bucket: 'product',
-                            Key: id,
-                            Expires: 36000, // Link expiration time in seconds (e.g., 1 hour)
+                            Bucket:type,
+                            Key: id
                         };
                         const url = await s3.getSignedUrlPromise('getObject', params);
                         resolve(url);
