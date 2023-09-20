@@ -19,7 +19,6 @@ export default class FileRepository {
                 s3BucketEndpoint: true,
                 signatureVersion: 'v4',
             });
-console.log("yes");
 
             return new Promise((resolve, reject) => {
                 s3.putObject({ Bucket:bucket, Key: fileName,Body:buffer}, async (err, data) => {
@@ -41,77 +40,6 @@ console.log("yes");
             });
         } catch (error) {
             throw error;
-        }
-    }
-
-
-
-    
-    async uploadFiles(type: string, files: object[]) {
-        try {
-            const uploadresponse = {};
-            console.log(`${process.env.CONTABO_OBJECT_STORAGE_ENDPOINT}${type}`,`${process.env.CONTABO_OBJECT_STORAGE_accessKeyId}`,`${process.env.CONTABO_OBJECT_STORAGE_secretAccessKey}`)
-            const s3 = await new AWS.S3({
-                endpoint: `${process.env.CONTABO_OBJECT_STORAGE_ENDPOINT}${type}`,
-                accessKeyId:`${process.env.CONTABO_OBJECT_STORAGE_accessKeyId}`,
-                secretAccessKey:`${process.env.CONTABO_OBJECT_STORAGE_secretAccessKey}`,
-                s3BucketEndpoint: true,
-            });
-            files.map(async (file, i) => {
-                const ext = file['originalname'].substring(
-                    file['originalname'].lastIndexOf('.'),
-                    file['originalname'].length,
-                );
-
-                const fileName: string = uuidv4() + ext;
-
-                // const uploadStatus = await s3
-                //     .putObject({
-                //         Bucket: type,
-                //         Key: fileName,
-                //         Body: file['buffer'],
-                //         // ContentType:'video/quicktime'
-                //     })
-                //     .promise();
-
-                // const uploadStatus = await new Promise((resolve, reject) => {
-                //     try {
-                //         s3.putObject({
-                //             Bucket: type,
-                //             Key: fileName,
-                //             Body: file['buffer'],
-                //             // ContentType:'video/quicktime'
-                //         }).promise();
-                //         resolve('upload');
-                //     } catch {
-                //         reject("not uploaded")
-                //     }
-                // });
-                return new Promise((resolve, reject) => {
-                    s3.putObject({ Bucket: type, Key: fileName,Body:file['buffer']}, async (err, data) => {
-                        if (err && err.code === 'NotFound') {
-                            console.log(
-                                `Object with key  does not exist in the bucket.`,
-                            );
-                            resolve('not found');
-                        } else if (err) {
-                            console.error('Error:', err);
-                            reject('error while');
-                        } else {
-
-                            console.log("yes file is uploade",data)
-                            const params = {
-                                Bucket:type,
-                                Key:fileName
-                            };
-                            const url = await s3.getSignedUrlPromise('getObject', params);
-                            resolve({fileName,url});
-                        }
-                    });
-                });
-            });
-        } catch (err) {
-            throw err;
         }
     }
 
@@ -157,78 +85,6 @@ console.log("yes");
         }
     }
 
-    async download(id: string, type: string) {
-        try {
-            const s3 = new AWS.S3({
-                endpoint: `${process.env.CONTABO_OBJECT_STORAGE_ENDPOINT}${type}`,
-                accessKeyId:`${process.env.CONTABO_OBJECT_STORAGE_accessKeyId}`,
-                secretAccessKey:`${process.env.CONTABO_OBJECT_STORAGE_secretAccessKey}`,
-                s3BucketEndpoint: true,
-                signatureVersion: 'v4',
-            });
-            return new Promise((resolve, reject) => {
-                s3.headObject({ Bucket: type, Key: id }, async (err, data) => {
-                    if (err && err.code === 'NotFound') {
-                        console.log(
-                            `Object with key '${id}' does not exist in the bucket.`,
-                        );
-                        resolve('not found');
-                    } else if (err) {
-                        console.error('Error:', err);
-                        reject('error while');
-                    } else {
-                        const params = {
-                            Bucket:type,
-                            Key: id
-                        };
-                        const url = await s3.getSignedUrlPromise('getObject', params);
-                        resolve(url);
-                    }
-                });
-            });
-            //  s3.headObject({Bucket:type,Key:id}, function (err, data) {
-            //     if (err && err.code === 'NotFound') {
-
-            //       console.log(`Object with key '${id}' does not exist in the bucket.`);
-            //       return "A";
-            //     } else if (err) {
-            //       console.error('Error:', err);
-            //       return "B";
-            //     } else {
-            //       console.log(`Object with key '${id}' exists in the bucket.`);
-            //       return "C";
-            //     }
-            //   });
-            // const params = {
-            //     Bucket:'product',
-            //     Key:id,
-            //     Expires: 36000, // Link expiration time in seconds (e.g., 1 hour)
-            //   };
-            //   const url = await s3.getSignedUrlPromise('getObject', params);
-
-            //   return url;
-        } catch (error) {
-            console.log(error, 'qq');
-            throw error;
-        }
-    }
-
-    async downloadFile(ids: string[], type: string) {
-        try {
-            let download_data = {};
-            for (let id of ids) {
-                const url = await this.download(id, type);
-                if (url == undefined || url === 'not found') {
-                    download_data[id] = 'no such file found';
-                } else {
-                    download_data[id] = url;
-                }
-            }
-            return download_data;
-        } catch (err) {
-            throw err;
-        }
-    }
     async deleteFilefromServer(type, id) {
         try {
 
