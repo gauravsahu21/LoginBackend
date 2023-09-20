@@ -1,32 +1,48 @@
-import { ProfileType, UserType } from "src/common/models/user.model"
-import { Entity, PrimaryColumn, Column, BaseEntity, OneToOne, JoinColumn } from "typeorm"
+import { ProfileType, UserType } from 'src/common/models/user.model';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  BaseEntity,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 
-@Entity("authorization")
+@Entity('authorization')
 export class Authorization extends BaseEntity {
-    @PrimaryColumn()
-    profileId: string;
+  @PrimaryColumn('uuid', { name: 'profileId' })
+  profileId: string;
 
-    @Column({ length: 100 })
-    userId: string;
+  @Column({ name: 'userId', length: 100 })
+  userId: string;
 
-    @Column({ length: 100 })
-    password: string;
+  @Column({ name: 'password', length: 255 })
+  password: string;
 
-    @Column({ length: 20 })
-    profileType: ProfileType;
+  @Column({ name: 'profileType', length: 20 })
+  profileType: string;
 
-    @Column({ length: 100 })
-    firstName: string;
+  @Column({ name: 'firstName', length: 100 })
+  firstName: string;
 
-    @Column({ length: 50 })
-    lastName: string;
+  @Column({ name: 'lastName', length: 100 })
+  lastName: string;
 
-    @Column({ length: 255, nullable: true })
-    imageId: string;
+  @Column({ name: 'emailId', length: 200 })
+  emailId: string;
 
-    @Column({ nullable: true })
-    resetPasswordToken: string
+  @Column({ name: 'imageId', length: 255 })
+  imageId: string;
 
-    @Column({ nullable: true })
-    resetPasswordExpire: string
+  @Column({ name: 's3link', length: 255 })
+  s3link: string;
+
+  @Column('json', { name: 'permissions', nullable: true })
+  permissions: any | null;
+
+  @Column({ name: 'resetPasswordToken', length: 255 })
+  resetPasswordToken: string;
+
+  @Column({ name: 'resetPasswordExpire', length: 255 })
+  resetPasswordExpire: string;
 }
