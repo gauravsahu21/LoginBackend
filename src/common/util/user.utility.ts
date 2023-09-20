@@ -50,7 +50,7 @@ export const findUserFromUserId = async (userid: string) => {
   const user = await Authorization.createQueryBuilder('user')
     .select([
       'user.userId as userId',
-      'user.password as password',
+      'user.permissions as permissions',
       'user.profileId as profileId',
       'user.profileType as profileType',
       'user.firstName as firstName',

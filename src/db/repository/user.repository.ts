@@ -17,7 +17,7 @@ import { Certificate } from '../entity/certificates.entity';
 @Injectable()
 export default class UserRepository {
   async getLoginUser(loginData: ILoginBody) {
-    let {userid,password} = loginData;
+    let {userid,password} = loginData; 
     const user = await findUserFromUserId(userid);
     if (user && bcrypt.compareSync(password, user.password)) {
       return user;
