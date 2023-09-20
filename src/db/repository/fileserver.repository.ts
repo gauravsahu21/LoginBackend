@@ -28,12 +28,14 @@ export default class FileRepository {
                         reject(err);
                     } else {
                         console.log(data)
-                        const params = {
-                            Bucket:bucket,
-                            Key:fileName
-                        };
-                        const url = await s3.getSignedUrlPromise('getObject', params);
-                        console.log(url);
+                        // const params = {
+                        //     Bucket:bucket,
+                        //     Key:fileName,
+                        //     Expires: 36000,
+                        // };
+                        
+                        const url =`${process.env.CONTABO_OBJECT_STORAGE_accessLink}:${bucket}/${fileName}`
+        
                         resolve(url);
                     }
                 });
@@ -59,7 +61,7 @@ export default class FileRepository {
             console.log(url,"URL");
 
              if (url == undefined || url == 'not uploaded') {
-                console.log("NOT UPLOADEDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+                
                 uploadresponse[file['originalname']] = {
                     fileId: fileName,
                     s3Link:"Not Uploaded",
@@ -67,7 +69,7 @@ export default class FileRepository {
                     size: file['size'],
                 };
             } else {
-                console.log("UPLOADEDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+                
                 uploadresponse[file['originalname']] = {
                     fileId: fileName,
                     s3Link:url,
@@ -75,7 +77,7 @@ export default class FileRepository {
                     size: file['size'],
                 };
             }
-            console.log(uploadresponse,"@#")
+            
 
             }
 

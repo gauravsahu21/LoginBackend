@@ -11,7 +11,6 @@ export class FileUploadService {
   async uploadFile(type: string, files:object[]) {
     try {
       const  file=await this.fileRepo.uploadandDownloadMultiplesFiles(type,files);
-      console.log(file,"!!!")
       return HttpResponse.success(
         {...file},
         'Uploaded succesfully',
