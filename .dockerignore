@@ -4,8 +4,6 @@
 
 **/.dockerignore
 
-**/.env
-
 **/.git
 
 **/.gitignore
