@@ -7,7 +7,8 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 import { BrandEntity } from '../entity/brands.entity';
-import { Brand } from 'src/common/dto/brands.dto';
+import { Brand, BrandIdDto } from 'src/common/dto/brands.dto';
+import { In } from 'typeorm';
 
 @Injectable()
 export default class BrandsRepository {
@@ -15,6 +16,19 @@ export default class BrandsRepository {
   async getBrands() {
     try {
       const brands = await BrandEntity.find();
+      return brands;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
+    }
+  }
+  async BrandIdDto(brandIds: string[]) {
+    try {
+      const brands = await BrandEntity.find({
+        where: {
+          brandId: In(brandIds),
+        },
+      });
       return brands;
     } catch (error) {
       console.log(error);

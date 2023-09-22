@@ -35,3 +35,8 @@ export class Brand {
   @Type(() => categoryDto)
   productCategory: categoryDto[];
 }
+
+export class BrandIdDto{
+  @IsNotEmpty()
+  brandIds: string[];
+}
