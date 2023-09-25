@@ -33,7 +33,7 @@ export default class VideoRepository {
         isExited.orderId = orderId;
         isExited.duration = duration;
         isExited.description = description;
-        isExited.videoBucketId = videoLink;
+        isExited.videoLink = videoLink;
         isExited.s3link = s3Link;
         isExited.tags = tags;
         await VideoEntity.save(isExited);
@@ -44,7 +44,7 @@ export default class VideoRepository {
         video.title = title;
         video.duration = duration;
         video.description = description;
-        video.videoBucketId = videoLink;
+        video.videoLink = videoLink;
         video.s3link = s3Link;
         video.tags = tags;
         await VideoEntity.save(video);

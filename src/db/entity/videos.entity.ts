@@ -17,8 +17,8 @@ export class VideoEntity extends BaseEntity {
   @Column()
   description: string;
 
-  @Column()
-  videoBucketId: string;
+  @Column({name:"videoBucketId"})
+  videoLink: string;
 
   @Column()
   s3link: string;

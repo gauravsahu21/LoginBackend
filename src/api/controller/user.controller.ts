@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Get, Param, Patch, Query, Req, UseGuards } from "@nestjs/common";
 import UserService from "../service/user.service";
-import { IChangePassword, ILoginBody, AddOrEditCertificate} from "src/common/dto/user.dto";
+import { IChangePassword, ILoginBody} from "src/common/dto/user.dto";
 import { Request } from "express";
 import { PasswordWriteAccess, WriteAccess } from "../jwt-auth.guard";
 

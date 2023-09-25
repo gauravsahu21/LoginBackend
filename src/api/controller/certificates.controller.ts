@@ -1,5 +1,5 @@
 import { Body, Controller, Post, Get, Query, UseGuards } from '@nestjs/common';
-import { AddOrEditCertificate } from 'src/common/dto/user.dto';
+import { AddOrEditCertificate } from 'src/common/dto/certificates.dto';
 import { WriteAccess } from '../jwt-auth.guard';
 import CertificateServices from '../service/certificates.service';
 

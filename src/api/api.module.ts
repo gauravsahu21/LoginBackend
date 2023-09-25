@@ -26,6 +26,7 @@ import VideoRepository from 'src/db/repository/videos.repository';
 import FileRepository from 'src/db/repository/fileserver.repository';
 import { FileUploadController } from './controller/file.controller';
 import { FileUploadService } from './service/file-upload.service';
+import CertificateRepository from 'src/db/repository/certificates.repository';
 @Module({
   imports: [],
   controllers: [
@@ -54,7 +55,8 @@ import { FileUploadService } from './service/file-upload.service';
     CareersRepository,
     VideoRepository,
     FileUploadService,
-    FileRepository
+    FileRepository,
+    CertificateRepository
   ],
 })
 export class ApiModule {}

@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { IChangePassword, ILoginBody, AddOrEditCertificate } from 'src/common/dto/user.dto';
+import { IChangePassword, ILoginBody} from 'src/common/dto/user.dto';
 import HttpResponse from 'src/common/lib/http-response';
 import UserRepository from 'src/db/repository/user.repository';
 import {
