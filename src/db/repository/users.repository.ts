@@ -42,6 +42,7 @@ import { UserDto } from 'src/common/dto/users.dto';
         user.emailId = body.emailId;
         user.profileType = body.profileType;
         user.permissions = body.permissions;
+        user.brandIds = body.brandIds;
         user.save();
         return true;
       } catch (error) {

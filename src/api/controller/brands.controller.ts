@@ -13,7 +13,7 @@ export default class BrandController {
   async getBrands(): Promise<any> {
     return this.brandsService.getBrands();
   }
-  @Post('/')
+  @Post('/view')
   async getBrandsByIds(@Body() body: BrandIdDto): Promise<any> {
     return this.brandsService.getBrandsByIds(body);
   }

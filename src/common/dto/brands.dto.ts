@@ -28,6 +28,10 @@ export class Brand {
 
   @IsNotEmpty()
   @IsString()
+  s3Link: string;
+
+  @IsNotEmpty()
+  @IsString()
   website: string;
 
   @IsNotEmpty()

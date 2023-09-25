@@ -40,6 +40,9 @@ export class Authorization extends BaseEntity {
   @Column('json', { name: 'permissions', nullable: true })
   permissions: any | null;
 
+  @Column('json', { name: 'brandIds', nullable: true })
+  brandIds: any | null;
+
   @Column({ name: 'resetPasswordToken', length: 255 })
   resetPasswordToken: string;
 
