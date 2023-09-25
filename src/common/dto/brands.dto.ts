@@ -28,10 +28,19 @@ export class Brand {
 
   @IsNotEmpty()
   @IsString()
+  s3Link: string;
+
+  @IsNotEmpty()
+  @IsString()
   website: string;
 
   @IsNotEmpty()
   @ValidateNested({ each: true })
   @Type(() => categoryDto)
   productCategory: categoryDto[];
+}
+
+export class BrandIdDto{
+  @IsNotEmpty()
+  brandIds: string[];
 }

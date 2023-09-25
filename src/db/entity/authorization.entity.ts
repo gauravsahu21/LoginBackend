@@ -34,11 +34,14 @@ export class Authorization extends BaseEntity {
   @Column({ name: 'imageId', length: 255 })
   imageId: string;
 
-  @Column({ name: 's3link', length: 255 })
+  @Column({ name: 's3link', type: "text" })
   s3link: string;
 
   @Column('json', { name: 'permissions', nullable: true })
   permissions: any | null;
+
+  @Column('json', { name: 'brandIds', nullable: true })
+  brandIds: any | null;
 
   @Column({ name: 'resetPasswordToken', length: 255 })
   resetPasswordToken: string;

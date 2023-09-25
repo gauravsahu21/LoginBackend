@@ -17,4 +17,7 @@ export class BrandEntity extends BaseEntity {
 
     @Column({ type: 'varchar', length: 255, nullable: true })
     imageId: string;
+
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    s3Link: string;
 }

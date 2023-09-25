@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Post, Query, Delete, UseGuards,Get } from '@nestjs/common';
 import {BrandsService} from '../service/brands.service';
-import { Brand } from 'src/common/dto/brands.dto';
+import { Brand, BrandIdDto } from 'src/common/dto/brands.dto';
 import { WriteAccess } from '../jwt-auth.guard';
 
 
@@ -9,9 +9,13 @@ import { WriteAccess } from '../jwt-auth.guard';
 
 export default class BrandController {
   constructor(private readonly brandsService: BrandsService) {}
-  @Get('/')
+  @Get('/viewall')
   async getBrands(): Promise<any> {
     return this.brandsService.getBrands();
+  }
+  @Post('/view')
+  async getBrandsByIds(@Body() body: BrandIdDto): Promise<any> {
+    return this.brandsService.getBrandsByIds(body);
   }
   @Post('/')
   @UseGuards(WriteAccess)

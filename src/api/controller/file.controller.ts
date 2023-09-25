@@ -3,19 +3,14 @@ import {
   Controller,
   Post,
   UseInterceptors,
-  UploadedFile,
   UploadedFiles,
   Body,
-  UseGuards,
 } from '@nestjs/common';
 import {
-  FileInterceptor,
-  FileFieldsInterceptor,
   FilesInterceptor,
 } from '@nestjs/platform-express';
 import { FileUploadService } from '../service/file-upload.service';
 import { SampleDto,downloadDto } from 'src/common/dto/sample.dto';
-import { Express } from 'express';
 
 @Controller('file')
 export class FileUploadController {
