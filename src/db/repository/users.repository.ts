@@ -43,6 +43,9 @@ import { UserDto } from 'src/common/dto/users.dto';
         user.profileType = body.profileType;
         user.permissions = body.permissions;
         user.brandIds = body.brandIds;
+        if(body.password=="Reset") {
+          user.password = "user@123";
+        }
         user.save();
         return true;
       } catch (error) {

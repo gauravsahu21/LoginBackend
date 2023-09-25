@@ -71,6 +71,10 @@ import {
   
     @IsNotEmpty()
     @IsString()
+    password: string;
+  
+    @IsNotEmpty()
+    @IsString()
     userId: string;
   
     @IsNotEmpty()
