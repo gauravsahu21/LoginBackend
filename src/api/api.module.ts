@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import UserController from './controller/user.controller';
+import UserController from './controller/login.controller';
 import CertificateController from './controller/certificates.controller';
 import BrandController from './controller/brands.controller';
 import CatalogueController from './controller/catalogue.controller';
@@ -26,6 +26,9 @@ import VideoRepository from 'src/db/repository/videos.repository';
 import FileRepository from 'src/db/repository/fileserver.repository';
 import { FileUploadController } from './controller/file.controller';
 import { FileUploadService } from './service/file-upload.service';
+import UsersRepository from 'src/db/repository/users.repository';
+import { UsersService } from './service/users.service';
+import UsersController from './controller/users.controller';
 @Module({
   imports: [],
   controllers: [
@@ -36,7 +39,8 @@ import { FileUploadService } from './service/file-upload.service';
     CertificateController,
     CareersController,
     VideoController,
-    FileUploadController
+    FileUploadController,
+    UsersController
   ],
   providers: [
     JwtService,
@@ -54,7 +58,9 @@ import { FileUploadService } from './service/file-upload.service';
     CareersRepository,
     VideoRepository,
     FileUploadService,
-    FileRepository
+    FileRepository,
+    UsersRepository,
+    UsersService
   ],
 })
 export class ApiModule {}

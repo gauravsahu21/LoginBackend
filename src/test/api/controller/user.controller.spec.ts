@@ -1,5 +1,5 @@
 import UserService from "src/api/service/user.service";
-import UserController from "../../../api/controller/user.controller";
+import UserController from "../../../api/controller/login.controller";
 import UserRepository from "src/db/repository/user.repository";
 
 // beforeAll(async () => {

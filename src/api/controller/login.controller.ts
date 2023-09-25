@@ -8,7 +8,7 @@ import { PasswordWriteAccess, WriteAccess } from "../jwt-auth.guard";
 
 
 @Controller('')
-export default class UserController {
+export default class LoginController {
     constructor(private readonly us: UserService) {}
 
 

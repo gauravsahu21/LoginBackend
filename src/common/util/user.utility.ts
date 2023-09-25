@@ -16,6 +16,7 @@ export const getAccessToken = (loggedInUser) => {
     profileId: loggedInUser.profileid,
     userId: loggedInUser.userId,
     profileType: loggedInUser.profileType,
+    permissions: loggedInUser.permissions,
     impersonated_by: loggedInUser.impersonated_by || null,
   };
   const accessToken = jwt.sign(object, process.env.ACCESS_SECRET_TOKEN, {
