@@ -26,6 +26,9 @@ import VideoRepository from 'src/db/repository/videos.repository';
 import FileRepository from 'src/db/repository/fileserver.repository';
 import { FileUploadController } from './controller/file.controller';
 import { FileUploadService } from './service/file-upload.service';
+import UsersRepository from 'src/db/repository/users.repository';
+import UsersController from './controller/users.controller';
+import { UsersService } from './service/users.service';
 @Module({
   imports: [],
   controllers: [
@@ -36,7 +39,8 @@ import { FileUploadService } from './service/file-upload.service';
     CertificateController,
     CareersController,
     VideoController,
-    FileUploadController
+    FileUploadController,
+    UsersController
   ],
   providers: [
     JwtService,
@@ -54,7 +58,9 @@ import { FileUploadService } from './service/file-upload.service';
     CareersRepository,
     VideoRepository,
     FileUploadService,
-    FileRepository
+    FileRepository,
+    UsersRepository,
+    UsersService 
   ],
 })
 export class ApiModule {}

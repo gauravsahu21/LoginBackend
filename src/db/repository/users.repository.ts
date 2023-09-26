@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
     HttpCode,
     HttpException,
@@ -26,6 +27,8 @@ import { UserDto } from 'src/common/dto/users.dto';
           'user.imageId as imageId',
           'user.resetPasswordToken as resetPasswordToken ',
           'user.resetPasswordExpire as resetPasswordExpire',
+          'user.brandIds as brandIds',
+           'user.emailId as emailId'
         ]).getRawMany();
         return users
       } catch (error) {
@@ -35,16 +38,17 @@ import { UserDto } from 'src/common/dto/users.dto';
     }
     async addUpdateUser(body: UserDto) {
       try {
+        
         const user = new Authorization();
         user.profileId = body.profileId || uuidv4();
         user.firstName = body.firstName;
         user.lastName = body.lastName;
         user.userId = body.userId;
-        user.emailId = body.emailId;
         user.profileType = body.profileType;
         user.permissions = body.permissions;
+        user.emailId = body.emailId;
         user.brandIds = body.brandIds;
-        if(body.password=="Reset") {
+        if(body.password==="Reset") {
           user.password = await bcrypt.hash("user@123", 10);
         }
         user.save();

@@ -7,7 +7,7 @@ import { UserDto } from 'src/common/dto/users.dto';
 
 @Controller('users')
 
-export default class BrandController {
+export default class UsersController {
   constructor(private readonly UsersService: UsersService) {}
   @Get('/')
   async getUsers(): Promise<any> {
