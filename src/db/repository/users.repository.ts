@@ -29,7 +29,9 @@ import { UserDto } from 'src/common/dto/users.dto';
           'user.resetPasswordExpire as resetPasswordExpire',
           'user.brandIds as brandIds',
            'user.emailId as emailId'
-        ]).getRawMany();
+        ])
+        .where('user.profileType NOT IN (:...profileTypes)', { profileTypes: ['admin', 'master'] })
+        .getRawMany();
         return users
       } catch (error) {
         console.log(error);
