@@ -8,7 +8,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 
-import { ILoginBody } from 'src/common/dto/user.dto';
+import { ILoginBody } from 'src/common/dto/login.dto';
 import { Authorization } from 'src/db/entity/authorization.entity';
 import { findUserFromUserId } from 'src/common/util/user.utility';
 import { generateExceptionMessage } from 'src/common/lib/exceptionMessageGenerator';

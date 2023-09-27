@@ -78,6 +78,10 @@ export class Catalogue {
   orderId: number;
 
   @IsNotEmpty()
+  @IsString()
+  s3Link: string;
+
+  @IsNotEmpty()
   @Type(() => detailsDto)
   productDetails: detailsDto;
 }

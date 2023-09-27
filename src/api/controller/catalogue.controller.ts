@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { CatalogueService } from '../service/catalogue.service';
 import { Catalogue } from 'src/common/dto/catelogue.dto';
-import { WriteAccess } from '../jwt-auth.guard';
+import { PermissionsAuthGuard, WriteAccess } from '../jwt-auth.guard';
 
 @Controller('catalogue')
 export default class CatalogueController {
@@ -20,12 +20,12 @@ export default class CatalogueController {
     return this.catalogueService.getCatalogue(brandId.brandId);
   }
   @Post('/')
-  @UseGuards(WriteAccess)
+  @UseGuards(PermissionsAuthGuard)
   async addCatalogue(@Body() body: Catalogue): Promise<any> {
     return this.catalogueService.addCatalogue(body);
   }
   @Delete('/')
-  @UseGuards(WriteAccess)
+  @UseGuards(PermissionsAuthGuard)
   async deleteCatalogue(@Query() query: any): Promise<any> {
     return this.catalogueService.deleteCatelogue(query.catalogueId);
   }

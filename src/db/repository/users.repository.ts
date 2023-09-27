@@ -22,8 +22,9 @@ import { UserDto } from 'src/common/dto/users.dto';
           'user.profileId as profileId',
           'user.profileType as profileType',
           'user.firstName as firstName',
-          'user.lastName as lastName',
+          'user.lastName as lastName', 
           'user.imageId as imageId',
+          'user.s3Link as s3Link',
           'user.resetPasswordToken as resetPasswordToken ',
           'user.resetPasswordExpire as resetPasswordExpire',
         ]).getRawMany();
@@ -41,11 +42,13 @@ import { UserDto } from 'src/common/dto/users.dto';
         user.lastName = body.lastName;
         user.userId = body.userId;
         user.emailId = body.emailId;
+        user.imageId = body.imageId;
+        user.s3link = body.s3Link;
         user.profileType = body.profileType;
         user.permissions = body.permissions;
         user.brandIds = body.brandIds;
-        if(body.password=="Reset") {
-          user.password = await bcrypt.hash("user@123", 10);
+        if(body.password) {
+          user.password = await bcrypt.hash(body.password, 10);
         }
         user.save();
         return true;
