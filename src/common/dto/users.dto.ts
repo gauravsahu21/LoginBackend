@@ -3,25 +3,22 @@ import {
     IsNotEmpty,
     IsString,
     ValidateNested,
+    IsArray,
   } from 'class-validator';
  import { Type } from 'class-transformer';
 
  export class permissionsDto {
     @IsNotEmpty()
     @IsString()
-    read: string;
+    view: boolean;
   
     @IsNotEmpty()
     @IsString()
-    write: string;
+    addEdit: boolean;
   
     @IsNotEmpty()
     @IsString()
-    delete: string;
-  
-    @IsNotEmpty()
-    @IsString()
-    update: string;
+    update: boolean;
  }
 
  export class moduleDto {
@@ -29,7 +26,7 @@ import {
     @IsNotEmpty()
     @ValidateNested({ each: true })
     @Type(() => permissionsDto)
-    brands: permissionsDto;
+    brand: permissionsDto;
 
     @IsNotEmpty()
     @ValidateNested({ each: true })
@@ -54,11 +51,29 @@ import {
     @IsNotEmpty()
     @ValidateNested({ each: true })
     @Type(() => permissionsDto)
+    video: permissionsDto;
+
+    @IsNotEmpty()
+    @ValidateNested({ each: true })
+    @Type(() => permissionsDto)
+    certificates: permissionsDto;
+
+    @IsNotEmpty()
+    @ValidateNested({ each: true })
+    @Type(() => permissionsDto)
+    profile: permissionsDto;
+
+    @IsNotEmpty()
+    @ValidateNested({ each: true })
+    @Type(() => permissionsDto)
     applicants: permissionsDto;
 
     @IsNotEmpty()
-    @IsString()
-    brandIds: any;
+    @ValidateNested({ each: true })
+    @Type(() => permissionsDto)
+    queries: permissionsDto;
+
+    
  }
   export class UserDto {
     @IsOptional()
@@ -67,6 +82,10 @@ import {
     @IsNotEmpty()
     @IsString()
     firstName: string;
+  
+    @IsNotEmpty()
+    @IsString()
+    password: string;
   
     @IsNotEmpty()
     @IsString()
@@ -82,10 +101,22 @@ import {
   
     @IsNotEmpty()
     @IsString()
+    imageId: string;
+  
+    @IsNotEmpty()
+    @IsString()
+    s3Link: string;
+  
+    @IsNotEmpty()
+    @IsString()
     profileType: string;
   
     @IsNotEmpty()
     @Type(() => moduleDto)
     permissions: moduleDto;
+  
+    @IsNotEmpty()
+    @IsArray()
+    brandIds: any;
   }
   

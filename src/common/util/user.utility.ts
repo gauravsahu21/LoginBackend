@@ -16,6 +16,8 @@ export const getAccessToken = (loggedInUser) => {
     profileId: loggedInUser.profileid,
     userId: loggedInUser.userId,
     profileType: loggedInUser.profileType,
+    permissions: loggedInUser.permissions,
+    brandIds: loggedInUser.brandIds,
     impersonated_by: loggedInUser.impersonated_by || null,
   };
   const accessToken = jwt.sign(object, process.env.ACCESS_SECRET_TOKEN, {
@@ -50,7 +52,9 @@ export const findUserFromUserId = async (userid: string) => {
   const user = await Authorization.createQueryBuilder('user')
     .select([
       'user.userId as userId',
+      'user.password as password',
       'user.permissions as permissions',
+      'user.brandIds as brandIds',
       'user.profileId as profileId',
       'user.profileType as profileType',
       'user.firstName as firstName',
