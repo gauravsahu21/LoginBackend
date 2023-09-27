@@ -8,6 +8,9 @@ export class CatalogueEntity extends BaseEntity{
     @Column({ type: 'varchar', length: 255, nullable: true })
     imageId: string;
 
+    @Column({ type: 'text', nullable: true })
+    s3link: string;
+
     @Column({ type: 'varchar', length: 100 })
     productName: string;
 

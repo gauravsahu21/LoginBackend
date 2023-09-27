@@ -4,11 +4,11 @@ export default function accessibility  (
   url: string,
 )  {
   const mappings = {
-    // 'brands': {
-    //   GET: permissions['brand']['view'],
-    //   POST: permissions['brand']['addEdit'],
-    //   DELETE: permissions['brand']['delete'],
-    // },
+    'brands': {
+      GET: permissions['brand']['view'],
+      POST: permissions['brand']['addEdit'],
+      DELETE: permissions['brand']['delete'],
+    },
     // 'changepassword':{
     //     POST: permissions['changePassword']['addEdit'],
         
@@ -18,11 +18,11 @@ export default function accessibility  (
       POST: permissions['users']['addEdit'],
       DELETE: permissions['users']['delete'],
     },
-    // 'catelogues': {
-    //   GET: permissions['catelogues']['view'],
-    //   POST: permissions['catelogues']['addEdit'],
-    //   DELETE: permissions['catelogues']['delete'],
-    // },
+    'catalogue': {
+      GET: permissions['catelogues']['view'],
+      POST: permissions['catelogues']['addEdit'],
+      DELETE: permissions['catelogues']['delete'],
+    },
     // 'careers': {
     //   GET: permissions['careers']['view'],
     //   POST: permissions['careers']['addEdit'],

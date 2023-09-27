@@ -8,6 +8,9 @@ import { JwtService } from '@nestjs/jwt';
 import * as dotenv from 'dotenv';
 import { Reflector } from '@nestjs/core';
 import accessibility from './routes';
+import { Brand } from 'src/common/dto/brands.dto';
+import { BrandEntity } from 'src/db/entity/brands.entity';
+import { CatalogueEntity } from 'src/db/entity/catalogue.entity';
 dotenv.config();
 
 @Injectable()
@@ -63,50 +66,11 @@ export class PasswordWriteAccess implements CanActivate {
   }
 }
 
-// @Injectable()
-// export class PermissionsAuthGuard implements CanActivate {
-//   constructor(private readonly reflector: Reflector) {}
-
-//   canActivate(context: ExecutionContext): boolean {
-//     const request = context.switchToHttp().getRequest();
-//     const permissionsHeader = request.headers['permissions'];
-
-//     if (!permissionsHeader) {
-//       throw new UnauthorizedException('Permissions header not found');
-//     }
-
-//     const permissions = JSON.parse(permissionsHeader);
-
-//     const route = this.reflector.get<string>('route', context.getHandler());
-
-//     if (!route) {
-//       throw new UnauthorizedException('Route not found in metadata');
-//     }
-
-//     const requiredPermission = permissions[route];
-
-//     if (!requiredPermission) {
-//       throw new UnauthorizedException('Permission not defined for this route');
-//     }
-
-//     // Check if the user has the necessary permission (e.g., 'view', 'edit', 'add', 'delete')
-//     if (!requiredPermission.view) {
-//       throw new UnauthorizedException('Access denied');
-//     }
-
-//     return true;
-//   }
-// }
-
-// import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
-// import { Reflector } from '@nestjs/core';
-// import { JwtService } from '@nestjs/jwt';
-
 @Injectable()
 export class PermissionsAuthGuard implements CanActivate {
   constructor(private readonly jwtService: JwtService) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = this.extractToken(request);
 
@@ -126,6 +90,16 @@ export class PermissionsAuthGuard implements CanActivate {
     const permissions = user.permissions;
     console.log(permissions, user);
     let access = accessibility(permissions, method, moduleName);
+    console.log(
+      'ACCESS',
+      access,
+      user.profileType,
+      moduleName,
+      method,
+      user.userId,
+      request.body.userId,
+    );
+
     if (typeof access == 'string') {
       throw new UnauthorizedException(accessibility);
     }
@@ -141,10 +115,33 @@ export class PermissionsAuthGuard implements CanActivate {
       method == 'POST' &&
       user.userId !== request.body.userId
     ) {
-        console.log( user.userId , request.body.userId)
+      console.log(user.userId, request.body.userId);
       // It means user is trying to update other user's profile
       console.log('User is trying to update other user profile');
       throw new UnauthorizedException('Access denied');
+    }
+
+    request.user = user;
+    if (moduleName == 'catelogue' && user.profileType != 'admin') {
+      if (method === 'GET') {
+        const brandId = request.query.brandId;
+        if (!user.brandIds.includes(brandId)) {
+          throw new UnauthorizedException('Access denied');
+        }
+      } else if (method === 'DELETE') {
+        const catelogueId = request.query.catelogueId;
+        const product = await CatalogueEntity.findOne({
+          where: { catelogueId },
+        });
+        if (!user.brandIds.includes(product.brandId)) {
+          throw new UnauthorizedException('Access denied');
+        }
+      } else if (method === 'POST') {
+        const brandId = request.body.brandId;
+        if (!user.brandIds.includes(brandId)) {
+          throw new UnauthorizedException('Access denied');
+        }
+      }
     }
     console.log(access);
     return true;

@@ -6,22 +6,15 @@ import BrandsRepository from 'src/db/repository/brands.repository';
 @Injectable()
 export class BrandsService {
   constructor(private readonly brandsRepository: BrandsRepository) {}
-  async getBrands() {
+  async getBrands(user:any) {
     try {
-      const list = await this.brandsRepository.getBrands();
+      const list = await this.brandsRepository.getBrands(user);
       return HttpResponse.success(list, 'Brands Data Fetched succesfully', 200);
     } catch (error) {
       return HttpResponse.error(error.message);
     }
   }
-  async getBrandsByIds(brandIds: BrandIdDto) {
-    try {
-      const list = await this.brandsRepository.getBrands();
-      return HttpResponse.success(list, 'Brands Data Fetched succesfully', 200);
-    } catch (error) {
-      return HttpResponse.error(error.message);
-    }
-  }
+  
   async addBrand(body: Brand) {
     try {
       const response = await this.brandsRepository.addBrand(body);

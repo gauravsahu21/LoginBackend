@@ -14,9 +14,14 @@ import { KmpDatasource } from '../Datasource/KmpDatasource';
 
 @Injectable()
 export default class BrandsRepository {
-  async getBrands() {
+  async getBrands(user:any) {
     try {
-      const brands = await BrandEntity.find();
+      let brands:any;
+      if(user.profileType === 'admin'){
+      brands = await BrandEntity.find();
+      }else{
+        brands = await BrandEntity.find({where:{brandId:In(user.brandIds)}})
+      }
       return brands;
     } catch (error) {
       console.log(error);
