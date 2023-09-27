@@ -23,10 +23,7 @@ import { UserDto } from 'src/common/dto/users.dto';
           'user.profileId as profileId',
           'user.profileType as profileType',
           'user.firstName as firstName',
-          'user.lastName as lastName',
-          'user.imageId as imageId',
-          'user.resetPasswordToken as resetPasswordToken ',
-          'user.resetPasswordExpire as resetPasswordExpire',
+          'user.lastName as lastName', 
           'user.brandIds as brandIds',
            'user.emailId as emailId'
         ])

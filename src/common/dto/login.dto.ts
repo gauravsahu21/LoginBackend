@@ -31,20 +31,4 @@ export class IChangePassword {
   userId: string;
 }
 
-export class AddOrEditCertificate {
-  @IsOptional()
-  @IsString()
-  certificatesId: string;
 
-  @IsNotEmpty()
-  @IsString()
-  imageId: string;
-
-  @IsNotEmpty()
-  @IsString()
-  certificateName: string;
-
-  @IsNotEmpty()
-  @IsString()
-  certificateType: string;
-}

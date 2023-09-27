@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, UseGuards, Query } from '@nestjs/common';
 import { VideoService } from '../service/videos.service';
 import { VideoEntity } from '../../db/entity/videos.entity';
 import { VideoDto } from 'src/common/dto/videos.dto';
@@ -19,9 +19,9 @@ export class VideoController {
     return await this.videoService.createVideo(videoData);
   }
 
-  @Delete(':id')
+  @Delete()
   @UseGuards(WriteAccess)
-  async deleteVideo(@Param('id') videoId: string){
+  async deleteVideo(@Query('id')videoId: string){
     return await this.videoService.deleteVideo(videoId);
   }
 }

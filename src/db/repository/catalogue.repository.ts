@@ -30,6 +30,7 @@ export default class CatalogueRepository {
       const catelogue = new CatalogueEntity();
       catelogue.catelogueId = body.catalogueId || uuidv4();
       catelogue.imageId = body.imageId;
+      catelogue.s3link = body.s3Link;
       catelogue.productName = body.productName;
       catelogue.productDetails = body.productDetails;
       catelogue.productCategory = body.productCategory;

@@ -11,6 +11,9 @@ export class VideoDto {
   @IsOptional()
   videoId: string;
 
+  @IsNumber()
+  orderId:number;
+
   @IsString()
   title: string;
 
@@ -20,9 +23,12 @@ export class VideoDto {
   @IsString()
   description: string;
 
-  @IsUrl()
+  @IsString()
   videoLink: string;
 
-  @IsString({ each: true })
-  tags: string[];
+  @IsString()
+  s3Link: string;
+
+  @IsArray()
+  tags: {};
 }

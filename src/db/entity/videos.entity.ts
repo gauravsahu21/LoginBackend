@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
 @Entity('videos')
-export class VideoEntity extends BaseEntity  {
+export class VideoEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   videoId: string;
 
@@ -17,9 +17,12 @@ export class VideoEntity extends BaseEntity  {
   @Column()
   description: string;
 
-  @Column()
+  @Column({name:"videoBucketId"})
   videoLink: string;
-  
-  @Column({ type: 'json' })
-  tags:{};
+
+  @Column()
+  s3link: string;
+
+  @Column({ type: "json" })
+  tags: {};
 }

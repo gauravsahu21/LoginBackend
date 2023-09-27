@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { AddOrEditCertificate } from 'src/common/dto/user.dto';
+import { AddOrEditCertificate } from 'src/common/dto/certificates.dto';
 import HttpResponse from 'src/common/lib/http-response';
-import UserRepository from 'src/db/repository/user.repository';
+import CertificateRepository from 'src/db/repository/certificates.repository';
 
 @Injectable()
 export default class CertificateServices {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: CertificateRepository) {}
 
   async getCertificates() {
     try {

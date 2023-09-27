@@ -9,6 +9,9 @@ export class Certificate extends BaseEntity  {
   imageId: string;
 
   @Column()
+  s3link:string;
+
+  @Column()
   certificateName: string;
 
   @Column()
