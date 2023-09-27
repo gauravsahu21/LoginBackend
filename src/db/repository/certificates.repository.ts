@@ -31,9 +31,12 @@ export default class CertificateRepository {
     try {
       let { certificatesId, imageId,s3link, certificateName, certificateType } =
         addOrEditCertificates;
-      const certificateToUpdate = await Certificate.findOne({
+        let certificateToUpdate
+        if(certificatesId){
+       certificateToUpdate = await Certificate.findOne({
         where: { certificatesId: certificatesId },
       });
+    }
       if (certificateToUpdate || certificatesId) {
         certificateToUpdate.imageId = imageId;
         certificateToUpdate.s3link = s3link;
@@ -50,6 +53,7 @@ export default class CertificateRepository {
         await Certificate.save(certificate);
       }
     } catch (error) {
+      console.log(error);
       const message = generateExceptionMessage(
         false,
         {},
