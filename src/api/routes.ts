@@ -43,11 +43,10 @@ export default function accessibility  (
       POST: permissions['video']['addEdit'],
       DELETE: permissions['video']['delete'],
     },
-    // 'applicants': {
-    //   GET: permissions['applicants']['view'],
-    //   POST: permissions['applicants']['addEdit'],
-    //   DELETE: permissions['applicants']['delete'],
-    // },
+    'applicants': {
+      GET: permissions['applicants']['view'],
+      POST: permissions['applicants']['addEdit'],
+    },
   };
   if(!mappings[url]) return "Route not found in metadata";
   return mappings[url][method];
