@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
     IsOptional,
     IsNotEmpty,
@@ -98,14 +99,6 @@ import {
     @IsNotEmpty()
     @IsString()
     emailId: string;
-  
-    @IsNotEmpty()
-    @IsString()
-    imageId: string;
-  
-    @IsNotEmpty()
-    @IsString()
-    s3Link: string;
   
     @IsNotEmpty()
     @IsString()

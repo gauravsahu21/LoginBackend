@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
     HttpCode,
     HttpException,
@@ -23,11 +24,11 @@ import { UserDto } from 'src/common/dto/users.dto';
           'user.profileType as profileType',
           'user.firstName as firstName',
           'user.lastName as lastName', 
-          'user.imageId as imageId',
-          'user.s3Link as s3Link',
-          'user.resetPasswordToken as resetPasswordToken ',
-          'user.resetPasswordExpire as resetPasswordExpire',
-        ]).getRawMany();
+          'user.brandIds as brandIds',
+           'user.emailId as emailId'
+        ])
+        .where('user.profileType NOT IN (:...profileTypes)', { profileTypes: ['admin', 'master'] })
+        .getRawMany();
         return users
       } catch (error) {
         console.log(error);
@@ -36,19 +37,18 @@ import { UserDto } from 'src/common/dto/users.dto';
     }
     async addUpdateUser(body: UserDto) {
       try {
+        
         const user = new Authorization();
         user.profileId = body.profileId || uuidv4();
         user.firstName = body.firstName;
         user.lastName = body.lastName;
         user.userId = body.userId;
-        user.emailId = body.emailId;
-        user.imageId = body.imageId;
-        user.s3link = body.s3Link;
         user.profileType = body.profileType;
         user.permissions = body.permissions;
+        user.emailId = body.emailId;
         user.brandIds = body.brandIds;
-        if(body.password) {
-          user.password = await bcrypt.hash(body.password, 10);
+        if(body.password==="Reset") {
+          user.password = await bcrypt.hash("user@123", 10);
         }
         user.save();
         return true;

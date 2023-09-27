@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { Brand } from 'src/common/dto/brands.dto';
 import { UserDto } from 'src/common/dto/users.dto';
@@ -36,7 +37,7 @@ export class UsersService {
     try {
       const response = await this.usersRepository.deleteUser(profileId);
       if(response){
-      return HttpResponse.success(null, 'Brand Deleted succesfully', 200);}
+      return HttpResponse.success(null, 'User Deleted succesfully', 200);}
       else{
         return HttpResponse.error("Something Went wrong");
       

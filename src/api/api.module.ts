@@ -26,6 +26,9 @@ import VideoRepository from 'src/db/repository/videos.repository';
 import FileRepository from 'src/db/repository/fileserver.repository';
 import { FileUploadController } from './controller/file.controller';
 import { FileUploadService } from './service/file-upload.service';
+import UsersRepository from 'src/db/repository/users.repository';
+import UsersController from './controller/users.controller';
+import { UsersService } from './service/users.service';
 import CertificateRepository from 'src/db/repository/certificates.repository';
 
 @Module({
@@ -39,6 +42,7 @@ import CertificateRepository from 'src/db/repository/certificates.repository';
     CareersController,
     VideoController,
     FileUploadController,
+    UsersController,
     CertificateController,
   ],
   providers: [
@@ -58,6 +62,8 @@ import CertificateRepository from 'src/db/repository/certificates.repository';
     VideoRepository,
     FileUploadService,
     FileRepository,
+    UsersRepository,
+    UsersService ,
     CertificateRepository,
   ],
 })
