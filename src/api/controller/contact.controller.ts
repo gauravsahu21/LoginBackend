@@ -15,37 +15,38 @@ import {
   updateEnquiryDto,
 } from 'src/common/dto/contact.dto';
 import { ContactUsService } from '../service/contact.service';
-import { WriteAccess } from '../jwt-auth.guard';
+import { PermissionsAuthGuard } from '../jwt-auth.guard';
 
 @Controller('contactus')
 export class ContactUsController {
   constructor(private readonly messagesService: ContactUsService) {}
 
   @Post('submit')
+  @UseGuards(PermissionsAuthGuard)
   composeContactUs(@Body() contactUs: contactUsDto) {
     return this.messagesService.composeContactUs(contactUs);
   }
 
   @Get('newsubmissions')
-  @UseGuards(WriteAccess)
+  @UseGuards(PermissionsAuthGuard)
   getContactUs() {
     return this.messagesService.getContactUs();
   }
 
   @Post('submissions')
-  @UseGuards(WriteAccess)
+  @UseGuards(PermissionsAuthGuard)
   getAllEnquiries(@Body() enquiry: enquiriesDto) {
     return this.messagesService.getAllEnquiries(enquiry);
   }
 
   @Post('update')
-  @UseGuards(WriteAccess)
+  @UseGuards(PermissionsAuthGuard)
   updateContactUs(@Body() update: updateEnquiryDto) {
     return this.messagesService.updateContactUs(update);
   }
 
   @Delete('delete/:id')
-  @UseGuards(WriteAccess)
+  @UseGuards(PermissionsAuthGuard)
   deleteContactUs(@Param('id') id: string) {
     return this.messagesService.deleteContactUs(id);
   }
