@@ -10,6 +10,7 @@ import { CatalogueEntity } from 'src/db/entity/catalogue.entity';
 import { ContactUsEntity } from 'src/db/entity/contactus.entity';
 import { CareerEntity } from 'src/db/entity/careers.entity';
 import { VideoEntity } from 'src/db/entity/videos.entity';
+import { Applicant } from 'src/db/entity/applicants.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -21,6 +22,7 @@ import { VideoEntity } from 'src/db/entity/videos.entity';
       database: config.database.kmp.database,
       synchronize: false,
       entities: [
+        Applicant,
         Authorization,
         Certificate,
         BrandEntity,

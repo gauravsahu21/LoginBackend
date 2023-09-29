@@ -30,6 +30,9 @@ import UsersRepository from 'src/db/repository/users.repository';
 import UsersController from './controller/users.controller';
 import { UsersService } from './service/users.service';
 import CertificateRepository from 'src/db/repository/certificates.repository';
+import ApplicantsController from './controller/applicants.controller';
+import ApplicantsServices from './service/applicants.service';
+import ApplicantsRepository from 'src/db/repository/applicants.repository';
 
 @Module({
   imports: [],
@@ -44,6 +47,7 @@ import CertificateRepository from 'src/db/repository/certificates.repository';
     FileUploadController,
     UsersController,
     CertificateController,
+    ApplicantsController
   ],
   providers: [
     JwtService,
@@ -65,6 +69,8 @@ import CertificateRepository from 'src/db/repository/certificates.repository';
     UsersRepository,
     UsersService ,
     CertificateRepository,
+    ApplicantsServices,
+    ApplicantsRepository
   ],
 })
 export class ApiModule {}
