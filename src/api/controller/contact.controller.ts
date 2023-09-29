@@ -17,7 +17,7 @@ import {
 import { ContactUsService } from '../service/contact.service';
 import { PermissionsAuthGuard } from '../jwt-auth.guard';
 
-@Controller('contactus')
+@Controller('queries')
 export class ContactUsController {
   constructor(private readonly messagesService: ContactUsService) {}
 
