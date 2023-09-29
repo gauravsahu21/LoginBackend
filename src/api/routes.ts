@@ -28,7 +28,7 @@ export default function accessibility  (
       POST: permissions['careers']['addEdit'],
       DELETE: permissions['careers']['delete'],
     },
-    'certificates': {
+    'certificates': { 
       GET: permissions['certificates']['view'],
       POST: permissions['certificates']['addEdit'],
       DELETE: permissions['certificates']['delete'],
