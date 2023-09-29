@@ -11,7 +11,6 @@ export default function accessibility  (
     },
     'changepassword':{
         POST: true,
-        
     },
     'users': {
       GET: permissions['users']['view'],
@@ -33,11 +32,11 @@ export default function accessibility  (
       POST: permissions['certificates']['addEdit'],
       DELETE: permissions['certificates']['delete'],
     },
-    // 'contactus': {
-    //   GET: permissions['queries']['view'],
-    //   POST: permissions['queries']['addEdit'],
-    //   DELETE: permissions['queries']['delete'],
-    // },
+    'queries': {
+      GET: permissions['queries']['view'],
+      POST: permissions['queries']['addEdit'],
+      DELETE: permissions['queries']['delete'],
+    },
     'videos': {
       GET: permissions['video']['view'],
       POST: permissions['video']['addEdit'],

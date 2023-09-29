@@ -70,7 +70,6 @@ export class CareerDto {
   noOfOpenings: number;
 
   @IsInt()
-  @IsEnum([1, 2, 3]) // Define the possible employementType values
   employementType: number;
 
   @IsString()

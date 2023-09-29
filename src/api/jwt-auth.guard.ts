@@ -86,19 +86,8 @@ export class PermissionsAuthGuard implements CanActivate {
 
     // Extract the first word from the pathname
     const moduleName = pathName.split('/')[1];
-    console.log(moduleName);
     const permissions = user.permissions;
-    console.log(permissions, user);
     let access = accessibility(permissions, method, moduleName);
-    console.log(
-      'ACCESS',
-      access,
-      user.profileType,
-      moduleName,
-      method,
-      user.userId,
-      request.body.userId,
-    );
 
     if (typeof access == 'string') {
       throw new UnauthorizedException(accessibility);
@@ -115,9 +104,6 @@ export class PermissionsAuthGuard implements CanActivate {
       method == 'POST' &&
       user.userId !== request.body.userId
     ) {
-      console.log(user.userId, request.body.userId);
-      // It means user is trying to update other user's profile
-      console.log('User is trying to update other user profile');
       throw new UnauthorizedException('Access denied');
     }
 
@@ -143,7 +129,6 @@ export class PermissionsAuthGuard implements CanActivate {
         }
       }
     }
-    console.log(access);
     return true;
   }
 
