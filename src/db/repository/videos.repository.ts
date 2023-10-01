@@ -23,7 +23,7 @@ export default class VideoRepository {
 
   async createVideo(videoData: VideoDto) {
     try {
-      let { videoId, videoLink, description, duration, tags, title,orderId,s3Link } =
+      let { videoId, videoLink, description, duration, tags, title,orderId,s3link } =
         videoData;
       const isExited = await VideoEntity.findOne({
         where: { videoId: videoId },
@@ -34,7 +34,7 @@ export default class VideoRepository {
         isExited.duration = duration;
         isExited.description = description;
         isExited.videoLink = videoLink;
-        isExited.s3link = s3Link;
+        isExited.s3link = s3link;
         isExited.tags = tags;
         await VideoEntity.save(isExited);
       } else {
@@ -45,7 +45,7 @@ export default class VideoRepository {
         video.duration = duration;
         video.description = description;
         video.videoLink = videoLink;
-        video.s3link = s3Link;
+        video.s3link = s3link;
         video.tags = tags;
         await VideoEntity.save(video);
       }

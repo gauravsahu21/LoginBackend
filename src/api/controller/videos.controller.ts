@@ -22,7 +22,7 @@ export class VideoController {
 
   @Delete()
   @UseGuards(PermissionsAuthGuard)
-  async deleteVideo(@Query('id')videoId: string){
+  async deleteVideo(@Query('id') videoId: string){
     return await this.videoService.deleteVideo(videoId);
   }
 }
