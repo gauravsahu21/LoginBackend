@@ -33,7 +33,9 @@ import CertificateRepository from 'src/db/repository/certificates.repository';
 import ApplicantsController from './controller/applicants.controller';
 import ApplicantsServices from './service/applicants.service';
 import ApplicantsRepository from 'src/db/repository/applicants.repository';
-
+import { DashboardController } from './controller/dashboard.controller';
+import DashboardRepository from 'src/db/repository/dashboard.repository';
+import { DasboardService } from './service/dashboard.service';
 @Module({
   imports: [],
   controllers: [
@@ -47,7 +49,8 @@ import ApplicantsRepository from 'src/db/repository/applicants.repository';
     FileUploadController,
     UsersController,
     CertificateController,
-    ApplicantsController
+    ApplicantsController,
+    DashboardController
   ],
   providers: [
     JwtService,
@@ -70,7 +73,9 @@ import ApplicantsRepository from 'src/db/repository/applicants.repository';
     UsersService ,
     CertificateRepository,
     ApplicantsServices,
-    ApplicantsRepository
+    ApplicantsRepository,
+    DashboardRepository,
+    DasboardService
   ],
 })
 export class ApiModule {}
