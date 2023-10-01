@@ -1,7 +1,7 @@
 export default function accessibility(
-  permissions: any,
-  method: string,
-  url: string,
+  permissions,
+  method,
+  url,
 ) {
   const mappings = {
     brands: {
@@ -13,14 +13,14 @@ export default function accessibility(
       POST: true,
     },
     users: {
-      GET: permissions['users']['view'],
-      POST: permissions['users']['addEdit'],
-      DELETE: permissions['users']['delete'],
+      GET: permissions?.users?.view,
+      POST: permissions?.users?.addEdit,
+      DELETE: permissions?.users?.delete,
     },
     catalogues: {
-      GET: permissions['catalogues']['view'],
-      POST: permissions['catalogues']['addEdit'],
-      DELETE: permissions['catalogues']['delete'],
+      GET: permissions?.catalogues?.view,
+      POST: permissions?.catalogues?.addEdit,
+      DELETE: permissions?.catalogues?.delete,
     },
     careers: {
       GET: permissions?.careers?.view,
@@ -33,20 +33,31 @@ export default function accessibility(
       DELETE: permissions?.certificates?.delete,
     },
     queries: {
-      GET: permissions['queries']['view'],
-      POST: permissions['queries']['addEdit'],
-      DELETE: permissions['queries']['delete'],
+      GET: permissions?.queries?.view,
+      POST: permissions?.queries?.addEdit,
+      DELETE: permissions?.queries?.delete,
     },
     videos: {
-      GET: permissions['videos']['view'],
-      POST: permissions['videos']['addEdit'],
-      DELETE: permissions['videos']['delete'],
+      GET: permissions?.videos?.view,
+      POST: permissions?.videos?.addEdit,
+      DELETE: permissions?.videos?.delete,
     },
     applicants: {
-      GET: permissions['applicants']['view'],
-      POST: permissions['applicants']['addEdit'],
+      GET: permissions?.applicants?.view,
+      POST: permissions?.applicants?.addEdit,
     },
   };
-  if (!mappings[url]) return 'Route not found in metadata';
+  if (!mappings[url]) {
+    console.error(`Route not found in metadata for URL: ${url}`);
+    return null; 
+  }
+
+  // Check if the method is supported for the given URL
+  if (!mappings[url][method]) {
+    console.error(`Method not supported for URL: ${url}, Method: ${method}`);
+    return null; // Return null to indicate that the method is not supported
+  }
+
+  // Return the corresponding permission
   return mappings[url][method];
 }
