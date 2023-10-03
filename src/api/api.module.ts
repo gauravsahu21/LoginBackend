@@ -31,6 +31,11 @@ import UsersController from './controller/users.controller';
 import { UsersService } from './service/users.service';
 import CertificateRepository from 'src/db/repository/certificates.repository';
 
+
+import ForgetController from './controller/forgetpassword.controller';
+import { ForgetPassService } from './service/forgetpassword.service';
+import ForgetPassRepository from 'src/db/repository/forgetpassword.repository';
+
 @Module({
   imports: [],
   controllers: [
@@ -44,6 +49,7 @@ import CertificateRepository from 'src/db/repository/certificates.repository';
     FileUploadController,
     UsersController,
     CertificateController,
+    ForgetController
   ],
   providers: [
     JwtService,
@@ -65,6 +71,8 @@ import CertificateRepository from 'src/db/repository/certificates.repository';
     UsersRepository,
     UsersService ,
     CertificateRepository,
+    ForgetPassService,
+    ForgetPassRepository
   ],
 })
 export class ApiModule {}
