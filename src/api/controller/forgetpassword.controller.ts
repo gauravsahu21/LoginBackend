@@ -16,7 +16,7 @@ export default class ForgetController {
   
   @Post('/reset')
   async reset(@Body() newpassword:newpasswordDto){
-
+  
    return this.forgetService.reset(newpassword);
   }
 

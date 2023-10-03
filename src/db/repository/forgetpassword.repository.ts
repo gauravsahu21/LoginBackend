@@ -45,7 +45,7 @@ export default class ForgetPassRepository {
         console.log('true');
         const info = await transporter.sendMail({
           from: 'kampayee@zohomail.in',
-          to: 'gk989kumar@gmail.com',
+          to:email,
           subject: 'Reset Code',
           text: `Your Reset Code is ${sixDigitCode}`,
         });
