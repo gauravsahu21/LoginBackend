@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Delete, Param, Body, UseGuards, Query } from '@nestjs/common';
 import { VideoService } from '../service/videos.service';
 import { VideoEntity } from '../../db/entity/videos.entity';
