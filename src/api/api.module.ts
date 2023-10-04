@@ -36,6 +36,12 @@ import ForgetController from './controller/forgetpassword.controller';
 import { ForgetPassService } from './service/forgetpassword.service';
 import ForgetPassRepository from 'src/db/repository/forgetpassword.repository';
 
+import ApplicantsController from './controller/applicants.controller';
+import ApplicantsServices from './service/applicants.service';
+import ApplicantsRepository from 'src/db/repository/applicants.repository';
+import { DashboardController } from './controller/dashboard.controller';
+import DashboardRepository from 'src/db/repository/dashboard.repository';
+import { DasboardService } from './service/dashboard.service';
 @Module({
   imports: [],
   controllers: [
@@ -49,7 +55,9 @@ import ForgetPassRepository from 'src/db/repository/forgetpassword.repository';
     FileUploadController,
     UsersController,
     CertificateController,
-    ForgetController
+    ForgetController,
+    ApplicantsController,
+    DashboardController
   ],
   providers: [
     JwtService,
@@ -72,7 +80,11 @@ import ForgetPassRepository from 'src/db/repository/forgetpassword.repository';
     UsersService ,
     CertificateRepository,
     ForgetPassService,
-    ForgetPassRepository
+    ForgetPassRepository,
+    ApplicantsServices,
+    ApplicantsRepository,
+    DashboardRepository,
+    DasboardService
   ],
 })
 export class ApiModule {}

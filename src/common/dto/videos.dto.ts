@@ -27,7 +27,7 @@ export class VideoDto {
   videoLink: string;
 
   @IsString()
-  s3Link: string;
+  s3link: string;
 
   @IsArray()
   tags: {};

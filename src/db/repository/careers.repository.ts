@@ -33,7 +33,7 @@ export default class CareersRepository {
     } = createCareerDto;
     try {
       const isExited = await CareerEntity.findOne({ where: { careerId } });
-      if (isExited) {
+      if (isExited && careerId ) {
         isExited.jobTitle = jobTitle;
         isExited.department = department;
         isExited.experienceLevel = experienceLevel;
