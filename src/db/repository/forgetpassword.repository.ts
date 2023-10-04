@@ -21,30 +21,26 @@ import { newpasswordDto } from 'src/common/dto/forget.dto';
 export default class ForgetPassRepository {
   async forget(email: string) {
     try {
-      console.log('yes', email);
       const user = await Authorization.createQueryBuilder('user')
         .where('user.emailId = :emailId', { emailId: email })
         .getRawOne();
 
       if (user) {
-        console.log('userid is found');
         const code = Math.floor(100000 + Math.random() * 900000);
         const dataToHash = `${process.env.secretCode}${code}`;
         const hash = CryptoJS.SHA256(dataToHash);
         const sixDigitCode = hash.toString().substring(0, 6);
-        console.log(sixDigitCode, 'SixDigitCode');
 
         const transporter = nodemailer.createTransport({
-          host: 'smtp.zoho.in',
-          port: 587,
+          host:`${process.env.host}`,
+          port:587,
           auth: {
-            user: 'kampayee@zohomail.in',
-            pass: 'gauravkumarsahu',
+            user:`${process.env.useremail}`,
+            pass:`${process.env.userpass}`,
           },
         });
-        console.log('true');
         const info = await transporter.sendMail({
-          from: 'kampayee@zohomail.in',
+          from: `${process.env.useremail}`,
           to:email,
           subject: 'Reset Code',
           text: `Your Reset Code is ${sixDigitCode}`,
