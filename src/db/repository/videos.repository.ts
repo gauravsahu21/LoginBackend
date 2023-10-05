@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   HttpCode,
   HttpException,
@@ -23,7 +24,7 @@ export default class VideoRepository {
 
   async createVideo(videoData: VideoDto) {
     try {
-      let { videoId, videoLink, description, duration, tags, title,orderId,s3link } =
+      const { videoId, videoBucketId, description, duration, tags, title,orderId,s3link } =
         videoData;
       const isExited = await VideoEntity.findOne({
         where: { videoId: videoId },
@@ -31,20 +32,20 @@ export default class VideoRepository {
       if (isExited && videoId) {
         isExited.title = title;
         isExited.orderId = orderId;
-        isExited.duration = duration;
+        isExited.duration =duration;
         isExited.description = description;
-        isExited.videoLink = videoLink;
+        isExited.videoBucketId = videoBucketId;
         isExited.s3link = s3link;
         isExited.tags = tags;
         await VideoEntity.save(isExited);
       } else {
-        let video = new VideoEntity();
+        const video = new VideoEntity();
         video.videoId = uuidv4();
         video.orderId = orderId;
         video.title = title;
         video.duration = duration;
         video.description = description;
-        video.videoLink = videoLink;
+        video.videoBucketId = videoBucketId;
         video.s3link = s3link;
         video.tags = tags;
         await VideoEntity.save(video);
