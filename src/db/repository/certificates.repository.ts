@@ -29,7 +29,7 @@ export default class CertificateRepository {
 
   async addCertificates(addOrEditCertificates: AddOrEditCertificate) {
     try {
-      let { certificatesId, imageId,s3link, certificateName, certificateType } =
+      let { certificatesId, imageId,s3link, certificateName, certificateType,logoImageId,logoS3link } =
         addOrEditCertificates;
         let certificateToUpdate
         if(certificatesId){
@@ -42,6 +42,8 @@ export default class CertificateRepository {
         certificateToUpdate.s3link = s3link;
         certificateToUpdate.certificateName = certificateName;
         certificateToUpdate.certificateType = certificateType;
+        certificateToUpdate.logoImageId = logoImageId;
+        certificateToUpdate.logoS3link = logoS3link;
         await Certificate.save(certificateToUpdate);
       } else {
         let certificate = new Certificate();
@@ -50,6 +52,8 @@ export default class CertificateRepository {
         certificate.s3link = s3link;
         certificate.certificateName = certificateName;
         certificate.certificateType = certificateType;
+        certificate.logoImageId = logoImageId;
+        certificate.logoS3link = logoS3link;
         await Certificate.save(certificate);
       }
     } catch (error) {

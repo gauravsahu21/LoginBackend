@@ -18,4 +18,10 @@ export class AddOrEditCertificate {
   @IsNotEmpty()
   @IsString()
   certificateType: string;
+
+  @IsString()
+  logoImageId: string;
+  
+  @IsString()
+  logoS3link: string;
 }
