@@ -13,7 +13,7 @@ export class VideoEntity extends BaseEntity {
   title: string;
 
   @Column()
-  duration: number;
+  duration: string;
 
   @Column()
   description: string;

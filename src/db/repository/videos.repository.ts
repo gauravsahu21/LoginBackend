@@ -32,7 +32,7 @@ export default class VideoRepository {
       if (isExited && videoId) {
         isExited.title = title;
         isExited.orderId = orderId;
-        isExited.duration = duration;
+        isExited.duration =duration;
         isExited.description = description;
         isExited.videoBucketId = videoBucketId;
         isExited.s3link = s3link;

@@ -18,8 +18,8 @@ export class VideoDto {
   @IsString()
   title: string;
 
-  @IsNumber()
-  duration: number;
+  @IsString()
+  duration:string;
 
   @IsString()
   description: string;
