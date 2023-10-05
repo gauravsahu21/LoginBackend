@@ -30,6 +30,12 @@ import UsersRepository from 'src/db/repository/users.repository';
 import UsersController from './controller/users.controller';
 import { UsersService } from './service/users.service';
 import CertificateRepository from 'src/db/repository/certificates.repository';
+
+
+import ForgetController from './controller/forgetpassword.controller';
+import { ForgetPassService } from './service/forgetpassword.service';
+import ForgetPassRepository from 'src/db/repository/forgetpassword.repository';
+
 import ApplicantsController from './controller/applicants.controller';
 import ApplicantsServices from './service/applicants.service';
 import ApplicantsRepository from 'src/db/repository/applicants.repository';
@@ -49,6 +55,7 @@ import { DasboardService } from './service/dashboard.service';
     FileUploadController,
     UsersController,
     CertificateController,
+    ForgetController,
     ApplicantsController,
     DashboardController
   ],
@@ -72,6 +79,8 @@ import { DasboardService } from './service/dashboard.service';
     UsersRepository,
     UsersService ,
     CertificateRepository,
+    ForgetPassService,
+    ForgetPassRepository,
     ApplicantsServices,
     ApplicantsRepository,
     DashboardRepository,

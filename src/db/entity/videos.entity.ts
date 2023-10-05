@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
 @Entity('videos')
@@ -12,17 +13,17 @@ export class VideoEntity extends BaseEntity {
   title: string;
 
   @Column()
-  duration: number;
+  duration: string;
 
   @Column()
   description: string;
 
-  @Column({name:"videoBucketId"})
-  videoLink: string;
+  @Column()
+  videoBucketId: string;
 
   @Column()
   s3link: string;
 
-  @Column({ type: "json" })
-  tags: {};
+  @Column()
+  tags:string;
 }

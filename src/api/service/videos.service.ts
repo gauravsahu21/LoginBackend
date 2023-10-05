@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import HttpResponse from 'src/common/lib/http-response';
 import { VideoDto } from 'src/common/dto/videos.dto';

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   IsString,
   IsNumber,
@@ -17,18 +18,18 @@ export class VideoDto {
   @IsString()
   title: string;
 
-  @IsNumber()
-  duration: number;
+  @IsString()
+  duration:string;
 
   @IsString()
   description: string;
 
   @IsString()
-  videoLink: string;
+  videoBucketId: string;
 
   @IsString()
   s3link: string;
 
-  @IsArray()
-  tags: {};
+  @IsString()
+  tags:string;
 }
