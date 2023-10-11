@@ -87,6 +87,12 @@ import {
     @IsNotEmpty()
     @IsString()
     password: string;
+
+    @IsString()
+    s3link:string;
+
+    @IsString()
+    imageId:string;
   
     @IsNotEmpty()
     @IsString()
@@ -108,7 +114,7 @@ import {
     @Type(() => moduleDto)
     permissions: moduleDto;
   
-    @IsNotEmpty()
+ 
     @IsArray()
     brandIds: any;
   }

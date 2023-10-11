@@ -25,7 +25,10 @@ import { UserDto } from 'src/common/dto/users.dto';
           'user.firstName as firstName',
           'user.lastName as lastName', 
           'user.brandIds as brandIds',
-           'user.emailId as emailId'
+           'user.emailId as emailId',
+           'user.s3link as s3link',
+           'user.imageId as imageId'
+
         ])
         .where('user.profileType NOT IN (:...profileTypes)', { profileTypes: ['admin', 'master'] })
         .getRawMany();
@@ -47,6 +50,8 @@ import { UserDto } from 'src/common/dto/users.dto';
         user.permissions = body.permissions;
         user.emailId = body.emailId;
         user.brandIds = body.brandIds;
+        user.s3link=body.s3link;
+        user.imageId=body.imageId;
         if(body.password==="Reset") {
           user.password = await bcrypt.hash("user@123", 10);
         }
