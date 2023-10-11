@@ -52,10 +52,12 @@ import { UserDto } from 'src/common/dto/users.dto';
         user.brandIds = body.brandIds;
         user.s3link=body.s3link;
         user.imageId=body.imageId;
-        if(body.password==="Reset") {
+        if(body.password.length===0) {
           user.password = await bcrypt.hash("user@123", 10);
+        }else{
+          user.password = await bcrypt.hash(body.password, 10);
         }
-        user.save();
+       await  user.save();
         return true;
       } catch (error) {
         console.log(error);
