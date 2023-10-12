@@ -84,7 +84,7 @@ import {
     @IsString()
     firstName: string;
   
-    @IsNotEmpty()
+    
     @IsString()
     password: string;
 

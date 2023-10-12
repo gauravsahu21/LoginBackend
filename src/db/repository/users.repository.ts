@@ -40,7 +40,7 @@ import { UserDto } from 'src/common/dto/users.dto';
     }
     async addUpdateUser(body: UserDto) {
       try {
-        
+       
         const user = new Authorization();
         user.profileId = body.profileId || uuidv4();
         user.firstName = body.firstName;
@@ -52,7 +52,8 @@ import { UserDto } from 'src/common/dto/users.dto';
         user.brandIds = body.brandIds;
         user.s3link=body.s3link;
         user.imageId=body.imageId;
-        user.password = await bcrypt.hash(body.password, 10);
+        if(body.password.length>0)
+        {user.password = await bcrypt.hash(body.password, 10);}
     
        await  user.save();
         return true;
