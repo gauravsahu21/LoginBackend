@@ -21,19 +21,29 @@ export default class CareersRepository {
         .getRawMany();
 
       const outputObject = {};
+      const statusMap = {
+        '0': 'applied',
+        '1': 'shortlist',
+        '2': 'interview',
+        '3': 'offer'
+      };
 
       applicant.forEach((item) => {
         const { careerId, applicantStatus } = item;
         if (!outputObject[careerId]) {
-          outputObject[careerId] = { '0': 0, '1': 0, '2': 0, '3': 0 };
+          outputObject[careerId] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0 };
         }
 
         if (!outputObject[careerId][applicantStatus]) {
-          outputObject[careerId][applicantStatus] = 0;
+          outputObject[careerId][statusMap[applicantStatus]] = 0;
         }
 
-        outputObject[careerId][applicantStatus]++;
+        outputObject[careerId][statusMap[applicantStatus]]++;
       });
+
+     
+
+      
 
       for (let i = 0; i < response.length; i++) {
         const careerId = response[i].careerId;
