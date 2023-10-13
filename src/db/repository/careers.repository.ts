@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   HttpCode,
   HttpException,
@@ -7,12 +8,45 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { CareerEntity } from '../entity/careers.entity';
 import { CareerDto } from 'src/common/dto/careers.dto';
+import { Applicant } from '../entity/applicants.entity';
 
 @Injectable()
 export default class CareersRepository {
   async getAllCareers() {
     try {
       const response = await CareerEntity.find();
+      const applicant = await Applicant.createQueryBuilder('people')
+        .select('careerId')
+        .addSelect('applicantStatus')
+        .getRawMany();
+
+      const outputObject = {};
+
+      applicant.forEach((item) => {
+        const { careerId, applicantStatus } = item;
+        if (!outputObject[careerId]) {
+          outputObject[careerId] = {};
+        }
+
+        if (!outputObject[careerId][applicantStatus]) {
+          outputObject[careerId][applicantStatus] = 0;
+        }
+
+        outputObject[careerId][applicantStatus]++;
+      });
+
+      for (let i = 0; i < response.length; i++) {
+        const careerId = response[i].careerId;
+
+        // Check if dataObject has a matching key for the current careerId
+        if (outputObject[careerId]) {
+          // Update the object with the values from dataObject
+          response[i]['candidatesstatus'] = outputObject[careerId];
+        }
+      }
+
+      console.log(outputObject, '!');
+      console.log(applicant, '!@#');
       return response;
     } catch (error) {
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
@@ -20,7 +54,7 @@ export default class CareersRepository {
   }
 
   async createCareer(createCareerDto: CareerDto) {
-    let {
+    const {
       careerId,
       jobTitle,
       department,
@@ -33,7 +67,7 @@ export default class CareersRepository {
     } = createCareerDto;
     try {
       const isExited = await CareerEntity.findOne({ where: { careerId } });
-      if (isExited && careerId ) {
+      if (isExited && careerId) {
         isExited.jobTitle = jobTitle;
         isExited.department = department;
         isExited.experienceLevel = experienceLevel;
