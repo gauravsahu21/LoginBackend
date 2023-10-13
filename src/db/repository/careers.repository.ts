@@ -25,7 +25,7 @@ export default class CareersRepository {
       applicant.forEach((item) => {
         const { careerId, applicantStatus } = item;
         if (!outputObject[careerId]) {
-          outputObject[careerId] = {};
+          outputObject[careerId] = { '0': 0, '1': 0, '2': 0, '3': 0 };
         }
 
         if (!outputObject[careerId][applicantStatus]) {
@@ -37,11 +37,10 @@ export default class CareersRepository {
 
       for (let i = 0; i < response.length; i++) {
         const careerId = response[i].careerId;
-
-        // Check if dataObject has a matching key for the current careerId
         if (outputObject[careerId]) {
-          // Update the object with the values from dataObject
           response[i]['candidatesstatus'] = outputObject[careerId];
+        } else {
+          response[i]['candidatesstatus'] = {};
         }
       }
 
