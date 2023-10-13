@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
 @Entity('applicants')
@@ -10,6 +11,9 @@ export class Applicant extends BaseEntity {
 
   @Column({ type: 'json', nullable: true })
   contact: object;
+
+  @Column({ type: 'json', nullable: true })
+  experienceinfo: object;
 
   @Column({ type: 'varchar', length: 255 })
   resumeId: string;

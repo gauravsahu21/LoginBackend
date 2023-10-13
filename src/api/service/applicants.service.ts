@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { EditApplicants } from 'src/common/dto/applicants.dto';
 import { AddOrEditCertificate } from 'src/common/dto/certificates.dto';
@@ -8,9 +9,9 @@ import ApplicantsRepository from 'src/db/repository/applicants.repository';
 export default class ApplicantsServices {
   constructor(private readonly applicantRepository: ApplicantsRepository) {}
 
-  async getApplicants() {
+  async getApplicants(jobId:string) {
     try {
-      const response = await this.applicantRepository.getApplicants();
+      const response = await this.applicantRepository.getApplicants(jobId);
       return HttpResponse.success(
          response ,
         'Applicants fetched succesfully',
