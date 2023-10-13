@@ -90,7 +90,7 @@ export default class CareersRepository {
         await CareerEntity.save(isExited);
       } else {
         const career = new CareerEntity();
-        career.careerId = uuidv4();
+        career.careerId = uuidv4().substring(0, 6);
         career.jobTitle = jobTitle;
         career.department = department;
         career.experienceLevel = experienceLevel;
