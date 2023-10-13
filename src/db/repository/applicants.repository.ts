@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   HttpCode,
   HttpException,
@@ -12,20 +13,28 @@ import { EditApplicants } from 'src/common/dto/applicants.dto';
 
 @Injectable()
 export default class ApplicantsRepository {
-  async getApplicants() {
+  async getApplicants(jobId: string) {
     try {
-      const response = await Applicant.find();
+      
+     const response = await Applicant.find({
+        where: {
+          careerId:jobId,
+        }
+      });
+
       return response;
     } catch (error) {
-        console.log(error)
+      console.log(error);
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
 
   async editApplicantStatus(editApplicant: EditApplicants) {
-    let { applicantId, applicantStatus, careerId } = editApplicant;
+    const { applicantId, applicantStatus, careerId } = editApplicant;
     try {
-      const applicant = await Applicant.findOne({where:{careerId:careerId,applicantId:applicantId}})
+      const applicant = await Applicant.findOne({
+        where: { careerId: careerId, applicantId: applicantId },
+      });
       if (!applicant)
         throw new HttpException('Applicant not found!', HttpStatus.NOT_FOUND);
       applicant.applicantStatus = applicantStatus;
