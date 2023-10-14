@@ -6,8 +6,21 @@ import { DasboardService } from '../service/dashboard.service';
 export class DashboardController {
   constructor(private dashboardService: DasboardService) {}
 
-  @Get('/')
+  @Get('/admin')
   async upload(): Promise<any> {
     return await this.dashboardService.getDashborad();
+  }
+
+  @Get('/hr')
+  async hrDash(): Promise<any> {
+    return await this.dashboardService.getHrDashborad();
+  }
+  @Get('/brandrep')
+  async brandDash(): Promise<any> {
+    return await this.dashboardService.getBrandRepDashboard();
+  }
+  @Get('/management')
+  async managementDash(): Promise<any> {
+    return await this.dashboardService.getManagementDashboard();
   }
 }
