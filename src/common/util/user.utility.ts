@@ -6,7 +6,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 dotenv.config();
 //1hr in ms
-export const normalExpireTime: number = 3600;
+export const normalExpireTime: number = 3600000;
 
 //1hr in ms
 const rememberExpireTime: number = 60 * 60 * 24 * 1000;
