@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Delete, Param, Body, UseGuards } from '@nestjs/common';
 import { CareersService } from '../service/careers.service';
 import { CareerEntity } from 'src/db/entity/careers.entity';

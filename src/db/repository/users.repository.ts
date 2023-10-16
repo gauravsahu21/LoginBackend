@@ -25,7 +25,10 @@ import { UserDto } from 'src/common/dto/users.dto';
           'user.firstName as firstName',
           'user.lastName as lastName', 
           'user.brandIds as brandIds',
-           'user.emailId as emailId'
+           'user.emailId as emailId',
+           'user.s3link as s3link',
+           'user.imageId as imageId'
+
         ])
         .where('user.profileType NOT IN (:...profileTypes)', { profileTypes: ['admin', 'master'] })
         .getRawMany();
@@ -37,7 +40,7 @@ import { UserDto } from 'src/common/dto/users.dto';
     }
     async addUpdateUser(body: UserDto) {
       try {
-        
+       
         const user = new Authorization();
         user.profileId = body.profileId || uuidv4();
         user.firstName = body.firstName;
@@ -47,10 +50,12 @@ import { UserDto } from 'src/common/dto/users.dto';
         user.permissions = body.permissions;
         user.emailId = body.emailId;
         user.brandIds = body.brandIds;
-        if(body.password==="Reset") {
-          user.password = await bcrypt.hash("user@123", 10);
-        }
-        user.save();
+        user.s3link=body.s3link;
+        user.imageId=body.imageId;
+        if(body.password.length>0)
+        {user.password = await bcrypt.hash(body.password, 10);}
+    
+       await  user.save();
         return true;
       } catch (error) {
         console.log(error);
