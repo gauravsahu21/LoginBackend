@@ -11,7 +11,7 @@ import { CatalogueService } from '../service/catalogue.service';
 import { Catalogue } from 'src/common/dto/catelogue.dto';
 import { PermissionsAuthGuard, WriteAccess } from '../jwt-auth.guard';
 
-@Controller('catalogue')
+@Controller('catalogues')
 export default class CatalogueController {
   constructor(private readonly catalogueService: CatalogueService) {}
 
