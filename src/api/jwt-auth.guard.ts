@@ -88,6 +88,7 @@ export class PermissionsAuthGuard implements CanActivate {
     const moduleName = pathName.split('/')[1];
     const permissions = user.permissions;
     let access = accessibility(permissions, method, moduleName);
+    console.log(permissions,"dsdasdsad")
 
     if (typeof access == 'string') {
       throw new UnauthorizedException(accessibility);
