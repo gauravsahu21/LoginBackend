@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { ProfileType, UserType } from 'src/common/models/user.model';
 import {
   Entity,
