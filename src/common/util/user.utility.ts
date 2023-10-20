@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import * as jwt from 'jsonwebtoken';
 import * as crypto from 'crypto';
 import * as dotenv from 'dotenv'; 
@@ -84,8 +85,8 @@ export const getResetPasswordToken = (): string => {
 export const getRefactoredUser = (user: Authorization) => {
   delete user.password;
   delete user.profileId;
-  delete user.profileType;
-  delete user.userId;
+  // delete user.profileType;
+  // delete user.userId;
 
   return user;
 };

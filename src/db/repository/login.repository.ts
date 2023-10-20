@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   HttpCode,
   HttpException,
@@ -17,7 +18,7 @@ import { Certificate } from '../entity/certificates.entity';
 @Injectable()
 export default class UserRepository {
   async getLoginUser(loginData: ILoginBody) {
-    let { userid, password } = loginData;
+    const { userid, password } = loginData;
     const user = await findUserFromUserId(userid);
     if (user && bcrypt.compareSync(password, user.password)) {
       return user;
@@ -30,8 +31,8 @@ export default class UserRepository {
 
   async changePassword(iChangePassword: any) {
     try {
-      let { userId, oldPassword, newPassword } = iChangePassword;
-      var user = await findUserFromUserId(userId);
+      const { userId, oldPassword, newPassword } = iChangePassword;
+      const user = await findUserFromUserId(userId);
       if (user && bcrypt.compareSync(oldPassword, user.password)) {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         user.password = hashedPassword;
