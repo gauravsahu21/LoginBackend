@@ -12,7 +12,7 @@ export class VideoDto {
   @IsOptional()
   videoId: string;
 
-  @IsNumber()
+  @IsString()
   orderId:number;
 
   @IsString()

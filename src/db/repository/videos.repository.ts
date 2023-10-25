@@ -13,7 +13,7 @@ import { VideoEntity } from '../entity/videos.entity';
 export default class VideoRepository {
   async getAllVideo() {
     try {
-      let response = await VideoEntity.find();
+      const response = await VideoEntity.find();
       return response;
     } catch (error) {
       console.log(VideoEntity,"dasdasdasdasdsadadadadsad")
@@ -24,14 +24,17 @@ export default class VideoRepository {
 
   async createVideo(videoData: VideoDto) {
     try {
+      
       const { videoId, videoBucketId, description, duration, tags, title,orderId,s3link } =
         videoData;
+        console.log(Number(orderId),"!@#")
       const isExited = await VideoEntity.findOne({
         where: { videoId: videoId },
       });
       if (isExited && videoId) {
+        
         isExited.title = title;
-        isExited.orderId = orderId;
+        isExited.orderId = Number(orderId);
         isExited.duration =duration;
         isExited.description = description;
         isExited.videoBucketId = videoBucketId;
@@ -41,7 +44,7 @@ export default class VideoRepository {
       } else {
         const video = new VideoEntity();
         video.videoId = uuidv4();
-        video.orderId = orderId;
+        video.orderId =Number(orderId);
         video.title = title;
         video.duration = duration;
         video.description = description;
