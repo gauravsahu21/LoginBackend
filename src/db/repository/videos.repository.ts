@@ -31,8 +31,39 @@ export default class VideoRepository {
       const isExited = await VideoEntity.findOne({
         where: { videoId: videoId },
       });
+      console.log(isExited);
       if (isExited && videoId) {
-        
+         if(isExited.orderId!=Number(orderId))
+         {
+            if(isExited.orderId>Number(orderId))
+            {
+              console.log("yes its updating")
+             const videoIdLower=orderId;
+             const videoIdUpper=isExited.orderId;
+
+            await VideoEntity
+            .createQueryBuilder()
+            .update(VideoEntity)
+            .set({ orderId: () => `orderId+1` })
+            .where('orderId >= :videoIdLower  AND orderId < :videoIdUpper', { videoIdLower, videoIdUpper })
+            .execute();
+            }
+          
+            if(isExited.orderId<Number(orderId))
+            {
+              console.log("yes its updating")
+             const videoIdLower=orderId;
+             const videoIdUpper=isExited.orderId;
+
+            await VideoEntity
+            .createQueryBuilder()
+            .update(VideoEntity)
+            .set({ orderId: () => `orderId-1` })
+            .where('orderId > :videoIdUpper  AND orderId <= :videoIdLower', { videoIdLower, videoIdUpper })
+            .execute();
+            }
+         }
+      
         isExited.title = title;
         isExited.orderId = Number(orderId);
         isExited.duration =duration;
@@ -41,8 +72,10 @@ export default class VideoRepository {
         isExited.s3link = s3link;
         isExited.tags = tags;
         await VideoEntity.save(isExited);
+         
       } else {
         const video = new VideoEntity();
+
         video.videoId = uuidv4();
         video.orderId =Number(orderId);
         video.title = title;
