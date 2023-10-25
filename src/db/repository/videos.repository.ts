@@ -13,26 +13,69 @@ import { VideoEntity } from '../entity/videos.entity';
 export default class VideoRepository {
   async getAllVideo() {
     try {
-      let response = await VideoEntity.find();
+      const response = await VideoEntity.find();
+      response.sort((a, b) => a.orderId - b.orderId);
       return response;
     } catch (error) {
-      console.log(VideoEntity,"dasdasdasdasdsadadadadsad")
-      console.log(error,"dasdadsadadsa")
+      console.log(VideoEntity, 'dasdasdasdasdsadadadadsad');
+      console.log(error, 'dasdadsadadsa');
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
 
   async createVideo(videoData: VideoDto) {
     try {
-      const { videoId, videoBucketId, description, duration, tags, title,orderId,s3link } =
-        videoData;
+      const {
+        videoId,
+        videoBucketId,
+        description,
+        duration,
+        tags,
+        title,
+        orderId,
+        s3link,
+      } = videoData;
+      console.log(Number(orderId), '!@#');
       const isExited = await VideoEntity.findOne({
         where: { videoId: videoId },
       });
+      console.log(isExited);
       if (isExited && videoId) {
+        if (isExited.orderId != Number(orderId)) {
+          if (isExited.orderId > Number(orderId)) {
+            console.log('yes its updating');
+            const videoIdLower = orderId;
+            const videoIdUpper = isExited.orderId;
+
+            await VideoEntity.createQueryBuilder()
+              .update(VideoEntity)
+              .set({ orderId: () => `orderId+1` })
+              .where('orderId >= :videoIdLower  AND orderId < :videoIdUpper', {
+                videoIdLower,
+                videoIdUpper,
+              })
+              .execute();
+          }
+
+          if (isExited.orderId < Number(orderId)) {
+            console.log('yes its updating');
+            const videoIdLower = orderId;
+            const videoIdUpper = isExited.orderId;
+
+            await VideoEntity.createQueryBuilder()
+              .update(VideoEntity)
+              .set({ orderId: () => `orderId-1` })
+              .where('orderId > :videoIdUpper  AND orderId <= :videoIdLower', {
+                videoIdLower,
+                videoIdUpper,
+              })
+              .execute();
+          }
+        }
+
         isExited.title = title;
-        isExited.orderId = orderId;
-        isExited.duration =duration;
+        isExited.orderId = Number(orderId);
+        isExited.duration = duration;
         isExited.description = description;
         isExited.videoBucketId = videoBucketId;
         isExited.s3link = s3link;
@@ -40,8 +83,9 @@ export default class VideoRepository {
         await VideoEntity.save(isExited);
       } else {
         const video = new VideoEntity();
+        
         video.videoId = uuidv4();
-        video.orderId = orderId;
+        video.orderId = Number(orderId);
         video.title = title;
         video.duration = duration;
         video.description = description;
@@ -49,10 +93,16 @@ export default class VideoRepository {
         video.s3link = s3link;
         video.tags = tags;
         await VideoEntity.save(video);
+        
+        await VideoEntity.createQueryBuilder()
+        .update(VideoEntity)
+        .set({ orderId: () => `orderId+1` })
+        .where('orderId > :orderId', {orderId})
+        .execute();
       }
       return true;
     } catch (error) {
-        console.log(error.message)
+      console.log(error.message);
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -63,7 +113,14 @@ export default class VideoRepository {
         where: { videoId: videoId },
       });
       if (isExited) {
-        let response = await VideoEntity.delete(videoId);
+        const response = await VideoEntity.delete(videoId);
+        const videoIdUpper = isExited.orderId;
+        await VideoEntity.createQueryBuilder()
+          .update(VideoEntity)
+          .set({ orderId: () => `orderId-1` })
+          .where('orderId >= :videoIdUpper ', { videoIdUpper })
+          .execute();
+
         return true;
       } else {
         return false;
