@@ -14,6 +14,7 @@ export default class VideoRepository {
   async getAllVideo() {
     try {
       const response = await VideoEntity.find();
+      response.sort((a, b) => a.orderId - b.orderId);
       return response;
     } catch (error) {
       console.log(VideoEntity, 'dasdasdasdasdsadadadadsad');
