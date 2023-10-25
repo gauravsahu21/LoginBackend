@@ -22,7 +22,6 @@ export default class CatalogueRepository {
         .getMany();
       return catalogEntries;
     } catch (error) {
-      console.log(error);
       throw new HttpException('Something Went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -31,7 +30,7 @@ export default class CatalogueRepository {
       const catelogue = new CatalogueEntity();
       catelogue.catelogueId = body.catalogueId || uuidv4();
       catelogue.imageId = body.imageId;
-      catelogue.s3link = body.s3Link;
+      catelogue.s3link = body.s3link;
       catelogue.productName = body.productName;
       catelogue.productDetails = body.productDetails;
       catelogue.productCategory = body.productCategory;
@@ -40,7 +39,6 @@ export default class CatalogueRepository {
       catelogue.save();
       return true;
     } catch (error) {
-      console.log(error);
       throw new HttpException('Something Went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -55,7 +53,6 @@ export default class CatalogueRepository {
       }
       return false;
     } catch (error) {
-      console.log(error);
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
