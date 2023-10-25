@@ -82,7 +82,7 @@ export default class VideoRepository {
         await VideoEntity.save(isExited);
       } else {
         const video = new VideoEntity();
-
+        
         video.videoId = uuidv4();
         video.orderId = Number(orderId);
         video.title = title;
@@ -92,6 +92,12 @@ export default class VideoRepository {
         video.s3link = s3link;
         video.tags = tags;
         await VideoEntity.save(video);
+        
+        await VideoEntity.createQueryBuilder()
+        .update(VideoEntity)
+        .set({ orderId: () => `orderId+1` })
+        .where('orderId > :orderId', {orderId})
+        .execute();
       }
       return true;
     } catch (error) {
