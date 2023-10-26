@@ -42,6 +42,10 @@ import ApplicantsRepository from 'src/db/repository/applicants.repository';
 import { DashboardController } from './controller/dashboard.controller';
 import DashboardRepository from 'src/db/repository/dashboard.repository';
 import { DasboardService } from './service/dashboard.service';
+
+import DeployController from './controller/deploy.controller';
+import DeployRepo from 'src/db/repository/deploy.repository';
+import { DeployService } from './service/deploy.service';
 @Module({
   imports: [],
   controllers: [
@@ -57,7 +61,8 @@ import { DasboardService } from './service/dashboard.service';
     CertificateController,
     ForgetController,
     ApplicantsController,
-    DashboardController
+    DashboardController,
+    DeployController
   ],
   providers: [
     JwtService,
@@ -84,7 +89,9 @@ import { DasboardService } from './service/dashboard.service';
     ApplicantsServices,
     ApplicantsRepository,
     DashboardRepository,
-    DasboardService
+    DasboardService,
+    DeployRepo,
+    DeployService
   ],
 })
 export class ApiModule {}
