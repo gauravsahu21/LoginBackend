@@ -50,7 +50,7 @@ export default class CareersRepository {
         if (outputObject[careerId]) {
           response[i]['candidatesstatus'] = outputObject[careerId];
         } else {
-          response[i]['candidatesstatus'] = {};
+          response[i]['candidatesstatus'] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0 };
         }
       }
       return response;
@@ -126,6 +126,39 @@ export default class CareersRepository {
   async getCareersById(careerId: string) {
     try {
       const response = await CareerEntity.findOne({ where: { careerId } });
+      const applicant = await Applicant.createQueryBuilder('people')
+        .select('careerId')
+        .addSelect('applicantStatus')
+        .getRawMany();
+
+      const outputObject = {};
+      const statusMap = {
+        '0': 'applied',
+        '1': 'shortlist',
+        '2': 'interview',
+        '3': 'offer'
+      };
+
+      applicant.forEach((item) => {
+        const { careerId, applicantStatus } = item;
+        if (!outputObject[careerId]) {
+          outputObject[careerId] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0 };
+        }
+
+        if (!outputObject[careerId][applicantStatus]) {
+          outputObject[careerId][statusMap[applicantStatus]] = 0;
+        }
+
+        outputObject[careerId][statusMap[applicantStatus]]++;
+      });
+
+     
+        if (outputObject[response.careerId]) {
+          response['candidatesstatus'] = outputObject[response.careerId];
+        } else {
+          response['candidatesstatus'] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0 };
+        }
+
       return response;
     } catch (error) {
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
