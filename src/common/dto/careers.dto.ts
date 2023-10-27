@@ -60,6 +60,9 @@ export class CareerDto {
   experienceLevel: ExperienceLevelDto;
 
   @IsInt()
+  jobstatus: number;
+
+  @IsInt()
   workMode: number;
 
   @IsObject()

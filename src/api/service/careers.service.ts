@@ -51,4 +51,17 @@ export class CareersService {
       return HttpResponse.error(error.message);
     }
   }
+
+  async getCareersById(careerId: string) {
+    try {
+      const response = await this.careerRepository.getCareersById(careerId);
+      if (response) {
+        return HttpResponse.success(response, 'Job Data Fetched succesfully', 200);
+      } else {
+        return HttpResponse.error('Something Went wrong');
+      }
+    } catch (error) {
+      return HttpResponse.error(error.message);
+    }
+  }
 }
