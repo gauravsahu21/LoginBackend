@@ -5,6 +5,7 @@ import {
   IsUrl,
   IsArray,
   IsOptional,
+  IsNotEmpty,
 } from 'class-validator';
 
 export class VideoDto {
@@ -12,7 +13,7 @@ export class VideoDto {
   @IsOptional()
   videoId: string;
 
-  @IsNumber()
+  @IsNotEmpty()
   orderId:number;
 
   @IsString()
