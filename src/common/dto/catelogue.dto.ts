@@ -55,7 +55,7 @@ class detailsDto {
 }
 export class Catalogue {
   @IsOptional()
-  catalogueId: string;
+  catelogueId: string;
 
   @IsNotEmpty()
   @IsString()

@@ -15,6 +15,9 @@ export class CareerEntity extends BaseEntity {
   
     @Column({ type: 'json' })
     experienceLevel: { min: number; max: number };
+
+    @Column({type: 'int'})
+    jobstatus: number;
   
     @Column({ type: 'int' })
     workMode: number;

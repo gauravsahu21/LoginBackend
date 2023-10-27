@@ -1,17 +1,19 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Delete, Param, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, UseGuards, Query } from '@nestjs/common';
 import { CareersService } from '../service/careers.service';
 import { CareerEntity } from 'src/db/entity/careers.entity';
 import { CareerDto } from 'src/common/dto/careers.dto';
 import { PermissionsAuthGuard, WriteAccess } from '../jwt-auth.guard';
+import { parse } from 'path/posix';
 
 @Controller('careers')
 export class CareersController {
   constructor(private readonly careersService: CareersService) {}
 
-  @Get()
+  @Get('/')
   @UseGuards(PermissionsAuthGuard)
   async getAllCareers() {
+    console.log('dasdasd')
     return this.careersService.getAllCareers();
   }
 
@@ -21,9 +23,15 @@ export class CareersController {
     return this.careersService.createCareer(createCareerDto);
   }
 
-  @Delete(':careerId')
+  @Delete('/')
   @UseGuards(PermissionsAuthGuard)
-  async deleteCareer(@Param('careerId') careerId: string) {
-    return this.careersService.deleteCareer(careerId);
+  async deleteCareer(@Query() query: any) { 
+    return this.careersService.deleteCareer(query.careersId);
+  }
+
+  @Get('/Id/')
+  @UseGuards(PermissionsAuthGuard)
+  async getCareersById(@Query() query: any): Promise<any> {
+    return this.careersService.getCareersById(query.careerId);
   }
 }

@@ -17,7 +17,7 @@ export default class CatalogueController {
 
   @Get('/')
   async getCatalogue(@Query() brandId: any): Promise<any> {
-    return this.catalogueService.getCatalogue(brandId.brandId);
+    return this.catalogueService.getCatalogue();
   }
   @Post('/')
   @UseGuards(PermissionsAuthGuard)

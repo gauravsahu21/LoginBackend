@@ -12,31 +12,41 @@ import { Catalogue } from 'src/common/dto/catelogue.dto';
 
 @Injectable()
 export default class CatalogueRepository {
-  async getCatalogue(brandId: string) {
+  async getCatalogue() {
     try {
-      console.log(brandId);
-      const catalogEntries = await CatalogueEntity.createQueryBuilder(
-        'catelogues',
-      )
-        .where('catelogues.brandId = :brandId', { brandId })
-        .getMany();
+      const catalogEntries = await CatalogueEntity.find();
       return catalogEntries;
     } catch (error) {
       throw new HttpException('Something Went wrong!', HttpStatus.NOT_FOUND);
     }
   }
   async addCatalogue(body: Catalogue) {
+    const {catelogueId,imageId,s3link,productName,productDetails,productCategory,orderId,brandId} = body;
     try {
-      const catelogue = new CatalogueEntity();
-      catelogue.catelogueId = body.catalogueId || uuidv4();
-      catelogue.imageId = body.imageId;
-      catelogue.s3link = body.s3link;
-      catelogue.productName = body.productName;
-      catelogue.productDetails = body.productDetails;
-      catelogue.productCategory = body.productCategory;
-      catelogue.orderId = body.orderId;
-      catelogue.brandId = body.brandId;
-      catelogue.save();
+      const isExited = await CatalogueEntity.findOne({where:{catelogueId:catelogueId}});
+      console.log(isExited,catelogueId);
+      if(isExited && catelogueId) {
+        isExited.catelogueId = catelogueId;
+        isExited.imageId =  imageId;
+        isExited.s3link = s3link;
+        isExited.productName = productName;
+        isExited.productDetails = productDetails;
+        isExited.productCategory = productCategory;
+        isExited.orderId = orderId;
+        isExited.brandId = brandId;
+        await CatalogueEntity.save(isExited);
+      } else {
+        const catelogue = new CatalogueEntity();
+        catelogue.catelogueId = body.catelogueId || uuidv4();
+        catelogue.imageId = body.imageId;
+        catelogue.s3link = body.s3link;
+        catelogue.productName = body.productName;
+        catelogue.productDetails = body.productDetails;
+        catelogue.productCategory = body.productCategory;
+        catelogue.orderId = body.orderId;
+        catelogue.brandId = body.brandId;
+        await CatalogueEntity.save(catelogue);
+      }
       return true;
     } catch (error) {
       throw new HttpException('Something Went wrong!', HttpStatus.NOT_FOUND);

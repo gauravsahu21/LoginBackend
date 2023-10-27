@@ -53,9 +53,6 @@ export default class CareersRepository {
           response[i]['candidatesstatus'] = {};
         }
       }
-
-      console.log(outputObject, '!');
-      console.log(applicant, '!@#');
       return response;
     } catch (error) {
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
@@ -66,6 +63,7 @@ export default class CareersRepository {
     const {
       careerId,
       jobTitle,
+      jobstatus,
       department,
       experienceLevel,
       location,
@@ -78,6 +76,7 @@ export default class CareersRepository {
       const isExited = await CareerEntity.findOne({ where: { careerId } });
       if (isExited && careerId) {
         isExited.jobTitle = jobTitle;
+        isExited.jobstatus= jobstatus
         isExited.department = department;
         isExited.experienceLevel = experienceLevel;
         isExited.location = location;
@@ -92,6 +91,7 @@ export default class CareersRepository {
         const career = new CareerEntity();
         career.careerId = uuidv4().substring(0, 6);
         career.jobTitle = jobTitle;
+        career.jobstatus = jobstatus;
         career.department = department;
         career.experienceLevel = experienceLevel;
         career.location = location;
@@ -105,7 +105,6 @@ export default class CareersRepository {
       }
       return true;
     } catch (error) {
-      console.log(error.message, 'adsdasdasdasd');
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -123,4 +122,14 @@ export default class CareersRepository {
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
+
+  async getCareersById(careerId: string) {
+    try {
+      const response = await CareerEntity.findOne({ where: { careerId } });
+      return response;
+    } catch (error) {
+      throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
+    }
+  }
+
 }

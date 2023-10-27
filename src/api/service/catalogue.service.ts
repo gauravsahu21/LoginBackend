@@ -7,9 +7,9 @@ import CatalogueRepository from 'src/db/repository/catalogue.repository';
 export class CatalogueService {
   constructor(private readonly catalogueRepository: CatalogueRepository) {}
 
-  async getCatalogue(brandId: string) {
+  async getCatalogue() {
     try {
-      const list = await this.catalogueRepository.getCatalogue(brandId);
+      const list = await this.catalogueRepository.getCatalogue();
       return HttpResponse.success(
         list,
         'Catalogue Data Fetched succesfully',
