@@ -61,6 +61,8 @@ export const findUserFromUserId = async (userid: string) => {
       'user.firstName as firstName',
       'user.lastName as lastName',
       'user.imageId as imageId',
+      'user.emailId as emailId',
+      'user.s3link as s3link',
       'user.resetPasswordToken as resetPasswordToken ',
       'user.resetPasswordExpire as resetPasswordExpire',
     ])
