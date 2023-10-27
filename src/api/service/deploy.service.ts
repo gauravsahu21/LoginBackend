@@ -13,7 +13,7 @@ export class DeployService {
         return HttpResponse.success(
           { link: deployLink },
           'Error while saving succesfully',
-          400,
+          404,
         );
       } else {
         return HttpResponse.success(
