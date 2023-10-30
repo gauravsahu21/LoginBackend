@@ -113,6 +113,22 @@ export default class DashboardRepository {
             totalVistors: { count: 20, percentage: 18, trend: 'down' },
           },
           brandLogo: 'https://eu2.contabostorage.com/9dd2a840e58b42c489771172af879655:brand/588df699-579a-4f85-be0c-b81329408d35.png',
+          highVisit:{
+            "product1":"40",
+            "product2":"30",
+            "product3":"20",
+            "product4":"50",
+            "product5":"30",
+          
+          },
+          lowVisit:{
+            "product1":"40",
+            "product2":"30",
+            "product3":"20",
+            "product4":"50",
+            "product5":"30",
+          
+          }
         },
         {
           last7Days: {
@@ -124,6 +140,22 @@ export default class DashboardRepository {
             totalVistors: { count: 20, percentage: 18, trend: 'down' },
           },
           brandLogo: 'https://eu2.contabostorage.com/9dd2a840e58b42c489771172af879655:brand/686e4e9b-ef54-4144-a2df-5c565903a90d.png',
+          highVisit:{
+            "product1":"40",
+            "product2":"30",
+            "product3":"20",
+            "product4":"50",
+            "product5":"30",
+          
+          },
+          lowVisit:{
+            "product1":"40",
+            "product2":"30",
+            "product3":"20",
+            "product4":"50",
+            "product5":"30",
+          
+          }
         },
       ],
       pageUserCount: {
