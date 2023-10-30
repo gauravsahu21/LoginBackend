@@ -14,10 +14,12 @@ import { Authorization } from 'src/db/entity/authorization.entity';
 import { findUserFromUserId } from 'src/common/util/user.utility';
 import { generateExceptionMessage } from 'src/common/lib/exceptionMessageGenerator';
 import { Certificate } from '../entity/certificates.entity';
+import logger from '../../connections/logger/logger';
 
 @Injectable()
 export default class UserRepository {
   async getLoginUser(loginData: ILoginBody) {
+    try{
     const { userid, password } = loginData;
     const user = await findUserFromUserId(userid);
     if (user && bcrypt.compareSync(password, user.password)) {
@@ -27,6 +29,11 @@ export default class UserRepository {
         'Invalid email or password',
         HttpStatus.NOT_FOUND,
       );
+    }catch(error){
+      logger.info("Error occured in getApplicants.Repo")
+      logger.error(error);
+      throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
+    }
   }
 
   async changePassword(iChangePassword: any) {
@@ -41,6 +48,8 @@ export default class UserRepository {
         throw new Error('Old Password not match');
       }
     } catch (error) {
+      logger.info("Error occured in changePassword")
+      logger.error(error)
       const message = generateExceptionMessage(
         false,
         {},

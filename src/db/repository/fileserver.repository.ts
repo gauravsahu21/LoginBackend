@@ -6,6 +6,7 @@ import { S3 } from 'aws-sdk';
 import { error } from 'console';
 import { v4 as uuidv4 } from 'uuid';
 import * as dotenv from 'dotenv';
+import logger from '../../connections/logger/logger';
 dotenv.config();
 @Injectable()
 export default class FileRepository {
@@ -41,6 +42,8 @@ export default class FileRepository {
                 });
             });
         } catch (error) {
+            logger.info("Error occured in uploadAndDownload.Repo")
+            logger.error(error)
             throw error;
         }
     }
@@ -83,6 +86,8 @@ export default class FileRepository {
 
             return uploadresponse;
         } catch (err) {
+            logger.info("Error occured in uploadandDownloadMultiplesFiles.Repo")
+            logger.error(error)
             throw err;
         }
     }
@@ -123,6 +128,8 @@ export default class FileRepository {
                 });
             });
         } catch (err) {
+            logger.info("Error occured in deleteFilefromServer.Repo")
+            logger.error(error)
             throw err;
         }
     }
@@ -144,6 +151,8 @@ export default class FileRepository {
             }
             return { ids: delete_data };
         } catch (err) {
+            logger.info("Error occured in deleteMultiplesFile.Repo")
+            logger.error(error)
             throw err;
         }
     }

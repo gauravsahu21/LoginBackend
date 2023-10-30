@@ -4,6 +4,8 @@ import { Injectable } from '@nestjs/common';
 import { newpasswordDto } from 'src/common/dto/forget.dto';
 import HttpResponse from 'src/common/lib/http-response';
 import ForgetPassRepository from 'src/db/repository/forgetpassword.repository';
+import logger from '../../connections/logger/logger';
+
 @Injectable()
 export class ForgetPassService {
   constructor(private readonly forgetRepo: ForgetPassRepository) {}
@@ -16,6 +18,8 @@ export class ForgetPassService {
         return HttpResponse.error(`No user Id found with this email ${email}`);
       }
     } catch (error) {
+      logger.info("Error occured in forget.Service")
+      logger.error(error)
       return HttpResponse.error('No user is present with this email');
     }
   }
@@ -31,6 +35,8 @@ export class ForgetPassService {
         );
       }
     } catch (error) {
+      logger.info("Error occured in reset.Service")
+      logger.error(error)
       return HttpResponse.error(error.message);
     }
   }

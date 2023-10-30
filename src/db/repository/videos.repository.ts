@@ -8,6 +8,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { VideoDto } from 'src/common/dto/videos.dto';
 import { VideoEntity } from '../entity/videos.entity';
+import logger from '../../connections/logger/logger';
 
 @Injectable()
 export default class VideoRepository {
@@ -17,8 +18,8 @@ export default class VideoRepository {
       response.sort((a, b) => a.orderId - b.orderId);
       return response;
     } catch (error) {
-      console.log(VideoEntity, 'dasdasdasdasdsadadadadsad');
-      console.log(error, 'dasdadsadadsa');
+      logger.info("Error occured in getAllVideo.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -102,7 +103,8 @@ export default class VideoRepository {
       }
       return true;
     } catch (error) {
-      console.log(error.message);
+      logger.info("Error occured in createVideo.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -126,6 +128,8 @@ export default class VideoRepository {
         return false;
       }
     } catch (error) {
+      logger.info("Error occured in deleteVideo.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
