@@ -1,7 +1,9 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { AddOrEditCertificate } from 'src/common/dto/certificates.dto';
 import HttpResponse from 'src/common/lib/http-response';
 import CertificateRepository from 'src/db/repository/certificates.repository';
+import logger from '../../connections/logger/logger';
 
 @Injectable()
 export default class CertificateServices {
@@ -16,6 +18,8 @@ export default class CertificateServices {
         200,
       );
     } catch (error) {
+      logger.info("Error occured in getCertificates.Service")
+      logger.error(error)
       return HttpResponse.error(error.message);
     }
   }
@@ -31,6 +35,8 @@ export default class CertificateServices {
         200,
       );
     } catch (error) {
+      logger.info("Error occured in addCertificates.Service")
+      logger.error(error)
       return HttpResponse.error(error.message);
     }
   }
@@ -44,6 +50,8 @@ export default class CertificateServices {
         200,
       );
     } catch (error) {
+      logger.info("Error occured in deleteCertificates.Service")
+      logger.error(error)
       return HttpResponse.error(error.message);
     }
   }

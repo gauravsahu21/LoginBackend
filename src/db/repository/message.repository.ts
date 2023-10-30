@@ -10,6 +10,7 @@ import {
   updateEnquiryDto,
 } from 'src/common/dto/contact.dto';
 import { ContactUsEntity } from '../entity/contactus.entity';
+import logger from '../../connections/logger/logger';
 
 @Injectable()
 export default class ContactUsRepository {
@@ -23,6 +24,8 @@ export default class ContactUsRepository {
         this.channel.sendToQueue('contactus', contactusform);
       }
     } catch (error) {
+      logger.info("Error occured in composeContactUs.Repo")
+      logger.error(error)
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
@@ -42,6 +45,8 @@ export default class ContactUsRepository {
       newContactUs.additionalNotes = contactUs.additionalNotes;
       await ContactUsEntity.save(newContactUs);
     } catch (err) {
+      logger.info("Error occured in insertData.Repo")
+      logger.error(err)
       throw err;
     }
   }
@@ -57,6 +62,8 @@ export default class ContactUsRepository {
             this.insertData(messageObj);
             this.channel.ack(contact);
           } catch (error) {
+            logger.info("Error occured in composeContactUs.Repo")
+            logger.error(error)
             console.error('Error processing contact us form:', error);
           }
         });
@@ -64,7 +71,8 @@ export default class ContactUsRepository {
 
       return totalNewContactUsForm;
     } catch (error) {
-      console.log(error, 'asd');
+      logger.info("Error occured ingetContactUs.Repo")
+      logger.error(error)
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
@@ -189,6 +197,8 @@ export default class ContactUsRepository {
         totalPages,
       };
     } catch (error) {
+      logger.info("Error occured in getAllEnquiries.Repo")
+      logger.error(error)
       throw error;
     }
   }
@@ -204,6 +214,8 @@ export default class ContactUsRepository {
         .execute();
       return updateContact;
     } catch (error) {
+      logger.info("Error occured in  updateContactUs.Repo")
+      logger.error(error)
       throw error;
     }
   }
@@ -217,6 +229,8 @@ export default class ContactUsRepository {
         .execute();
       return deleteStatus;
     } catch (error) {
+      logger.info("Error occured in  deleteContactUs.Repo")
+      logger.error(error)
       throw error;
     }
   }

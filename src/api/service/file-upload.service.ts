@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import HttpResponse from 'src/common/lib/http-response';
 import FileRepository from 'src/db/repository/fileserver.repository';
 import { downloadDto } from 'src/common/dto/sample.dto';
+import logger from '../../connections/logger/logger';
 
 @Injectable()
 export class FileUploadService {
@@ -18,6 +19,8 @@ export class FileUploadService {
       );
   
     } catch (error) {
+      logger.info("Error occured in uploadFile.Service")
+      logger.error(error)
       return HttpResponse.error("Error While Uploading/Downloading");
     }
   }
@@ -32,6 +35,8 @@ export class FileUploadService {
         200,
       );
     } catch (error) {
+      logger.info("Error occured in deleteFile.Service")
+      logger.error(error)
       return HttpResponse.error("Error While Deleting");
     }
   }

@@ -12,6 +12,7 @@ import { Brand, BrandIdDto } from 'src/common/dto/brands.dto';
 import { In } from 'typeorm';
 import { Authorization } from '../entity/authorization.entity';
 import { KmpDatasource } from '../Datasource/KmpDatasource';
+import logger from '../../connections/logger/logger';
 
 @Injectable()
 export default class BrandsRepository {
@@ -25,7 +26,8 @@ export default class BrandsRepository {
       }
       return brands;
     } catch (error) {
-      console.log(error);
+      logger.info("Error occured in getBrands.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -38,7 +40,8 @@ export default class BrandsRepository {
       });
       return brands;
     } catch (error) {
-      console.log(error);
+      logger.info("Error occured in BrandIdDto.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -54,7 +57,8 @@ export default class BrandsRepository {
       brand.save();
       return true;
     } catch (error) {
-      console.log(error);
+      logger.info("Error occured in addBrand.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -89,7 +93,8 @@ export default class BrandsRepository {
   
       return result; // Return true for success, false for brand not found
     } catch (error) {
-      console.error(error);
+      logger.info("Error occured in deleteBrand.Repo")
+      logger.error(error)
       throw new Error('Something went wrong!');
     }
   }

@@ -16,6 +16,7 @@ import * as dotenv from 'dotenv';
 import * as crypto from 'crypto';
 import * as CryptoJS from 'crypto-js';
 import { newpasswordDto } from 'src/common/dto/forget.dto';
+import logger from '../../connections/logger/logger';
 
 @Injectable()
 export default class ForgetPassRepository {
@@ -52,6 +53,8 @@ export default class ForgetPassRepository {
         return false;
       }
     } catch (error) {
+      logger.info("Error occured in forget.Repo")
+      logger.error(error)
       return error;
     }
   }
@@ -78,6 +81,8 @@ export default class ForgetPassRepository {
         return false;
       }
     } catch (error) {
+      logger.info("Error occured in reset.Repo")
+      logger.error(error)
       throw error;
     }
   }

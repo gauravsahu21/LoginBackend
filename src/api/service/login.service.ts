@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { IChangePassword, ILoginBody } from 'src/common/dto/login.dto';
 import HttpResponse from 'src/common/lib/http-response';
@@ -8,6 +9,8 @@ import {
   normalExpireTime,
 } from 'src/common/util/user.utility';
 import * as dotenv from 'dotenv';
+import logger from '../../connections/logger/logger';
+
 
 dotenv.config();
 
@@ -23,14 +26,15 @@ export default class UserService {
       const accessToken: string = getAccessToken(user);
       const expiresOn = new Date().getTime() + normalExpireTime;
       const refactoredUser = getRefactoredUser(user);
+      logger.info(`${loginData} user logged In`);
       return HttpResponse.success(
         { ...refactoredUser, accessToken, expiresOn },
         'Logged In succesfully',
         200,
       );
     } catch (error) {
-      console.log(error);
-
+      logger.info("Error occured in login.Service")
+      logger.error(error)
       return HttpResponse.error(error.message, {
         errorData: error,
         errorCode: error.status,
@@ -50,6 +54,8 @@ export default class UserService {
         200,
       );
     } catch (error) {
+      logger.info("Error occured in changePassword")
+      logger.error(error)
       return HttpResponse.error(error.message);
     }
   }

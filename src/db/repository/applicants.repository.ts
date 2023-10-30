@@ -10,6 +10,7 @@ import { CareerEntity } from '../entity/careers.entity';
 import { CareerDto } from 'src/common/dto/careers.dto';
 import { Applicant } from '../entity/applicants.entity';
 import { EditApplicants } from 'src/common/dto/applicants.dto';
+import logger from '../../connections/logger/logger';
 
 @Injectable()
 export default class ApplicantsRepository {
@@ -24,7 +25,8 @@ export default class ApplicantsRepository {
 
       return response;
     } catch (error) {
-      console.log(error);
+      logger.info("Error occured in getApplicants.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -41,7 +43,8 @@ export default class ApplicantsRepository {
       applicant.save();
       return true;
     } catch (error) {
-      console.log(error.message, 'adsdasdasdasd');
+      logger.info("Error occured in editApplicantStatus.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }

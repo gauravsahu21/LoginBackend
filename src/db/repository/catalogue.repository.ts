@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { CatalogueEntity } from '../entity/catalogue.entity';
 import { Catalogue } from 'src/common/dto/catelogue.dto';
+import logger from '../../connections/logger/logger';
 
 @Injectable()
 export default class CatalogueRepository {
@@ -17,6 +18,8 @@ export default class CatalogueRepository {
       const catalogEntries = await CatalogueEntity.find();
       return catalogEntries;
     } catch (error) {
+      logger.info("Error occured in getCatalogue.Repo")
+      logger.error(error)
       throw new HttpException('Something Went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -49,6 +52,8 @@ export default class CatalogueRepository {
       }
       return true;
     } catch (error) {
+      logger.info("Error occured in addCatalogue.Repo")
+      logger.error(error)
       throw new HttpException('Something Went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -63,6 +68,8 @@ export default class CatalogueRepository {
       }
       return false;
     } catch (error) {
+      logger.info("Error occured in deleteCatelogue.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
