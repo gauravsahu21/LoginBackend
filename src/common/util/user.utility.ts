@@ -86,7 +86,6 @@ export const getResetPasswordToken = (): string => {
 
 export const getRefactoredUser = (user: Authorization) => {
   delete user.password;
-  delete user.profileId;
   // delete user.profileType;
   // delete user.userId;
 
