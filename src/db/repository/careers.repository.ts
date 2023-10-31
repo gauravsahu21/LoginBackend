@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { CareerEntity } from '../entity/careers.entity';
 import { CareerDto } from 'src/common/dto/careers.dto';
 import { Applicant } from '../entity/applicants.entity';
+import logger from '../../connections/logger/logger';
 
 @Injectable()
 export default class CareersRepository {
@@ -55,6 +56,8 @@ export default class CareersRepository {
       }
       return response;
     } catch (error) {
+      logger.info("Error occured in getAllCareers.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -105,6 +108,8 @@ export default class CareersRepository {
       }
       return true;
     } catch (error) {
+      logger.info("Error occured in createCareer.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -119,6 +124,8 @@ export default class CareersRepository {
         return false;
       }
     } catch (error) {
+      logger.info("Error occured in deleteCareer.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
@@ -161,6 +168,8 @@ export default class CareersRepository {
 
       return response;
     } catch (error) {
+      logger.info("Error occured in getCareersById.Repo")
+      logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }

@@ -2,6 +2,8 @@
 import { Injectable } from '@nestjs/common';
 import HttpResponse from 'src/common/lib/http-response';
 import DeployRepo from 'src/db/repository/deploy.repository';
+import logger from '../../connections/logger/logger';
+
 
 @Injectable()
 export class DeployService {
@@ -22,7 +24,9 @@ export class DeployService {
           200,
         );
       }
-    } catch {
+    } catch(error) {
+      logger.info("Error occured in saveFileDeploy.Service")
+      logger.error(error)
       return HttpResponse.error('Error While Uploading/Downloading');
     }
   }

@@ -2,7 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import HttpResponse from 'src/common/lib/http-response';
 import DashboardRepository from 'src/db/repository/dashboard.repository';
-
+import logger from '../../connections/logger/logger';
 @Injectable()
 export class DasboardService {
   constructor(private readonly dashboardRepository: DashboardRepository) {}
@@ -16,6 +16,8 @@ export class DasboardService {
         200,
       );
     } catch (error) {
+      logger.info("Error occured in getDashborad.Service")
+      logger.error(error)
         return HttpResponse.error(error.message);
     }
   }
@@ -29,7 +31,9 @@ export class DasboardService {
         200,
       );
     } catch (error) {
-        return HttpResponse.error(error.message);
+      logger.info("Error occured in getHrDashborad.Service")
+      logger.error(error)
+      return HttpResponse.error(error.message);
     }
   }
 
@@ -42,7 +46,9 @@ export class DasboardService {
         200,
       );
     } catch (error) {
-        return HttpResponse.error(error.message);
+      logger.info("Error occured in getManagementDashboard.Service")
+      logger.error(error)
+      return HttpResponse.error(error.message);
     }
   }
 
@@ -55,6 +61,8 @@ export class DasboardService {
         200,
       );
     } catch (error) {
+      logger.info("Error occured in getBrandRepDashboard.Service")
+      logger.error(error)
         return HttpResponse.error(error.message);
     }
   }

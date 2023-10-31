@@ -10,7 +10,7 @@ import {
   
 import { Authorization } from '../entity/authorization.entity';
 import { UserDto } from 'src/common/dto/users.dto';
-  
+import logger from '../../connections/logger/logger';
   @Injectable()
   export default class UsersRepository {
   
@@ -34,7 +34,8 @@ import { UserDto } from 'src/common/dto/users.dto';
         .getRawMany();
         return users
       } catch (error) {
-        console.log(error);
+        logger.info("Error occured in getUsers.Repo")
+        logger.error(error)
         throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
       }
     }
@@ -58,7 +59,8 @@ import { UserDto } from 'src/common/dto/users.dto';
        await  user.save();
         return true;
       } catch (error) {
-        console.log(error);
+        logger.info("Error occured in addUpdateUser.Repo")
+        logger.error(error)
         throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
       }
     }
@@ -70,7 +72,8 @@ import { UserDto } from 'src/common/dto/users.dto';
           return true;
         }
       } catch (error) {
-        console.log(error);
+        logger.info("Error occured in deleteUser.Repo")
+        logger.error(error)
         throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
       }
     }

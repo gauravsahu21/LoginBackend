@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   HttpException,
   HttpStatus,
@@ -9,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AddOrEditCertificate } from 'src/common/dto/certificates.dto';
 import { generateExceptionMessage } from 'src/common/lib/exceptionMessageGenerator';
 import { Certificate } from '../entity/certificates.entity';
+import logger from '../../connections/logger/logger';
 
 @Injectable()
 export default class CertificateRepository {
@@ -17,6 +19,8 @@ export default class CertificateRepository {
       const response = await Certificate.find();
       return response;
     } catch (error) {
+      logger.info("Error occured in getCertificates.Repo")
+      logger.error(error)
       const message = generateExceptionMessage(
         false,
         {},
@@ -57,7 +61,8 @@ export default class CertificateRepository {
         await Certificate.save(certificate);
       }
     } catch (error) {
-      console.log(error);
+      logger.info("Error occured in addCertificates.Repo")
+      logger.error(error)
       const message = generateExceptionMessage(
         false,
         {},
@@ -78,6 +83,8 @@ export default class CertificateRepository {
       }
       await Certificate.delete(id);
     } catch (error) {
+      logger.info("Error occured in deleteCertificates.Repo")
+      logger.error(error)
       const message = generateExceptionMessage(
         false,
         {},

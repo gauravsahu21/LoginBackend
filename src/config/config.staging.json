@@ -13,5 +13,12 @@
       "queueLimit": 0,
       "timezone": "UTC"
     }
+  },
+  "logger": {
+    "name": "elasticSearch",
+    "host": "https://eslogs.in-sciencelabs.com/",
+    "authorization": "Basic ZWxhc3RpYzplbGFzdGljcEAkJHdvcmQ=",
+    "index": "Kmplogs",
+    "level": "info"
   }
 }
