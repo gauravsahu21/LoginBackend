@@ -24,4 +24,10 @@ export default class UsersController {
   async deleteUser(@Query() query:any): Promise<any> {
     return this.UsersService.deleteUser(query.profileId);
   }
+
+  @Get('/id/')
+  @UseGuards(PermissionsAuthGuard)
+  async getUserById(@Query() query:any): Promise<any> {
+    return this.UsersService.getUserById(query.profileId)
+  }
 }

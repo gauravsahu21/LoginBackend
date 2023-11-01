@@ -53,4 +53,20 @@ export class UsersService {
       return HttpResponse.error(error.message);
     }
   }
+
+  async getUserById(profileId:string) {
+    try {
+      const response = await this.usersRepository.getUserById(profileId);
+      if(response){
+      return HttpResponse.success(response, 'User Deleted succesfully', 200);}
+      else{
+        return HttpResponse.error("Something Went wrong");
+      
+      }
+    } catch (error) {
+      logger.info("Error occured in deleteUser.Service")
+      logger.error(error)
+      return HttpResponse.error(error.message);
+    }
+  }
 }
