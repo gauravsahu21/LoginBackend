@@ -92,4 +92,5 @@ export default class UsersRepository {
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
+
 }

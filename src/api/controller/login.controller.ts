@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import UserService from '../service/login.service';
-import { IChangePassword, ILoginBody } from 'src/common/dto/login.dto';
+import { IChangePassword, ILoginBody, MasterChangePassword } from 'src/common/dto/login.dto';
 import { Request } from 'express';
 import { PasswordWriteAccess, WriteAccess } from '../jwt-auth.guard';
 
@@ -31,5 +31,14 @@ export default class LoginController {
     @Req() req: Request,
   ) {
     return this.us.changePassword(iChangePassword);
+  }
+
+  @Post('/masterchangepassword')
+  @UseGuards(PasswordWriteAccess)
+  async masterChangePassword(
+    @Body() iChangePassword: MasterChangePassword,
+    @Req() req: Request,
+  ){
+    return this.us.masterChangePassword(iChangePassword)
   }
 }

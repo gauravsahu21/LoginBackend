@@ -1,6 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { IChangePassword, ILoginBody } from 'src/common/dto/login.dto';
+import {
+  IChangePassword,
+  ILoginBody,
+  MasterChangePassword,
+} from 'src/common/dto/login.dto';
 import HttpResponse from 'src/common/lib/http-response';
 import UserRepository from 'src/db/repository/login.repository';
 import {
@@ -10,7 +14,6 @@ import {
 } from 'src/common/util/user.utility';
 import * as dotenv from 'dotenv';
 import logger from '../../connections/logger/logger';
-
 
 dotenv.config();
 
@@ -33,8 +36,8 @@ export default class UserService {
         200,
       );
     } catch (error) {
-      logger.info("Error occured in login.Service")
-      logger.error(error)
+      logger.info('Error occured in login.Service');
+      logger.error(error);
       return HttpResponse.error(error.message, {
         errorData: error,
         errorCode: error.status,
@@ -54,8 +57,25 @@ export default class UserService {
         200,
       );
     } catch (error) {
-      logger.info("Error occured in changePassword")
-      logger.error(error)
+      logger.info('Error occured in changePassword');
+      logger.error(error);
+      return HttpResponse.error(error.message);
+    }
+  }
+
+  async masterChangePassword(iChangePassword: MasterChangePassword) {
+    try {
+      const response = await this.userRepository.masterChangePassword(
+        iChangePassword,
+      );
+      return HttpResponse.success(
+        { response },
+        'Admin Changed password is updated succesfully',
+        200,
+      );
+    } catch (error) {
+      logger.info('Error occured in changePassword');
+      logger.error(error);
       return HttpResponse.error(error.message);
     }
   }
