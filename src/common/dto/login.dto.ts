@@ -32,3 +32,17 @@ export class IChangePassword {
 }
 
 
+export class MasterChangePassword {
+
+  @IsNotEmpty()
+  @IsString()
+  newPassword: string;
+
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
+}
+
+
+
+
