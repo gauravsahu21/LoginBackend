@@ -19,7 +19,7 @@ export default class BrandsRepository {
   async getBrands(user:any) {
     try {
       let brands:any;
-      if(user.profileType === 'admin'){
+      if(user.profileType === 'admin' || user.profileType === 'Management' || user.profileType ==='Brand Representative'){
       brands = await BrandEntity.find();
       }else{
         brands = await BrandEntity.find({where:{brandId:In(user.brandIds)}})
