@@ -5,6 +5,8 @@ import { CatalogueEntity } from '../entity/catalogue.entity';
 import { CareerEntity } from '../entity/careers.entity';
 import FileRepository from './fileserver.repository';
 import logger from '../../connections/logger/logger';
+import { Certificate } from '../entity/certificates.entity';
+import { VideoEntity } from '../entity/videos.entity';
 
 @Injectable()
 export default class DeployRepo {
@@ -14,8 +16,9 @@ export default class DeployRepo {
     try {
       const brands = await BrandEntity.find();
       const catalogue = await CatalogueEntity.find();
-      const careers = await CareerEntity.find();
-      const data= { brands: brands, catalogue: catalogue, careers: careers };
+      const certificate = await Certificate.find();
+      const video = await VideoEntity.find();
+      const data= { brands: brands, catalogue: catalogue,certificate:certificate,video:video };
       const jsonData = JSON.stringify(data);
       const buffer = Buffer.from(jsonData);  
      const url=await this.fileRepo.uploadAndDownload("websitedata","website",buffer)
