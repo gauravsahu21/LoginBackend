@@ -9,9 +9,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { VideoDto } from 'src/common/dto/videos.dto';
 import { VideoEntity } from '../entity/videos.entity';
 import logger from '../../connections/logger/logger';
+import FileRepository from './fileserver.repository';
 
 @Injectable()
 export default class VideoRepository {
+  constructor(private fileRepo:FileRepository) {}
   async getAllVideo() {
     try {
       const response = await VideoEntity.find();
@@ -47,7 +49,7 @@ export default class VideoRepository {
             console.log('yes its updating');
             const videoIdLower = orderId;
             const videoIdUpper = isExited.orderId;
-
+            
             await VideoEntity.createQueryBuilder()
               .update(VideoEntity)
               .set({ orderId: () => `orderId+1` })
@@ -56,6 +58,7 @@ export default class VideoRepository {
                 videoIdUpper,
               })
               .execute();
+       
           }
 
           if (isExited.orderId < Number(orderId)) {
@@ -114,15 +117,18 @@ export default class VideoRepository {
       const isExited = await VideoEntity.findOne({
         where: { videoId: videoId },
       });
+      console.log(isExited,"VIDEP")
       if (isExited) {
         const response = await VideoEntity.delete(videoId);
+        
         const videoIdUpper = isExited.orderId;
         await VideoEntity.createQueryBuilder()
           .update(VideoEntity)
           .set({ orderId: () => `orderId-1` })
           .where('orderId >= :videoIdUpper ', { videoIdUpper })
           .execute();
-
+          await this.fileRepo.deleteFilefromServer('videos',isExited?.videoBucketId||"");
+        
         return true;
       } else {
         return false;
