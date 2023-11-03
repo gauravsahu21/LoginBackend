@@ -59,7 +59,7 @@ export class PasswordWriteAccess implements CanActivate {
       throw new UnauthorizedException('login in once again');
     }
     console.log(request.user.profileType);
-    if (!['admin', 'master'].includes(request.user.profileType)) {
+    if (!['admin', 'master','Management','Brand Representative'].includes(request.user.profileType)) {
       throw new UnauthorizedException('Need Read access!!!');
     }
     return true;
