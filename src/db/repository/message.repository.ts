@@ -22,6 +22,18 @@ export default class ContactUsRepository {
       if (this.channel) {
         const contactusform = Buffer.from(JSON.stringify(contactus));
         this.channel.sendToQueue('contactus', contactusform);
+
+        await this.channel.consume('contactus', async (contact) => {
+          try {
+            const messageObj = JSON.parse(contact.content.toString());
+            this.insertData(messageObj);
+            this.channel.ack(contact);
+          } catch (error) {
+            logger.info("Error occured in composeContactUs.Repo")
+            logger.error(error)
+            console.error('Error processing contact us form:', error);
+          }
+        });
       }
     } catch (error) {
       logger.info("Error occured in composeContactUs.Repo")
