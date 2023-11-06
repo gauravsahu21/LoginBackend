@@ -29,7 +29,6 @@ export class CareersController {
   }
 
   @Get('/Id/')
-  @UseGuards(PermissionsAuthGuard)
   async getCareersById(@Query() query: any): Promise<any> {
     return this.careersService.getCareersById(query.careerId);
   }
