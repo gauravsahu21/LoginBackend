@@ -11,7 +11,6 @@ export class CareersController {
   constructor(private readonly careersService: CareersService) {}
 
   @Get('/')
-  @UseGuards(PermissionsAuthGuard)
   async getAllCareers() {
     console.log('dasdasd')
     return this.careersService.getAllCareers();
