@@ -10,7 +10,7 @@ export class ContactUsService {
     constructor(private readonly contactusRepo: ContactUsRepository) { }
     async composeContactUs(contactus: contactUsDto) {
         try {
-            await this.contactusRepo.composeContactUs(contactus);
+            await this.contactusRepo.insertData(contactus);
             return HttpResponse.success(
                 null,'Contactus form submitted successfully',200
             );
