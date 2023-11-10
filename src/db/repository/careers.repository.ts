@@ -10,6 +10,7 @@ import { CareerEntity } from '../entity/careers.entity';
 import { CareerDto } from 'src/common/dto/careers.dto';
 import { Applicant } from '../entity/applicants.entity';
 import logger from '../../connections/logger/logger';
+import ShortUniqueId  from 'short-unique-id';
 
 @Injectable()
 export default class CareersRepository {
@@ -91,8 +92,12 @@ export default class CareersRepository {
         isExited.description = description;
         await CareerEntity.save(isExited);
       } else {
+        console.log("yes");
+        const uid = new ShortUniqueId({ dictionary: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], length: 6 });
+        const numericId1 = uid.randomUUID(); // Example: 456789
+        // console.log(numericId1,"123")
         const career = new CareerEntity();
-        career.careerId = uuidv4().substring(0, 6);
+        career.careerId =numericId1;
         career.jobTitle = jobTitle;
         career.jobstatus = jobstatus;
         career.department = department;
