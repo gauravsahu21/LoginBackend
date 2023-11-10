@@ -27,13 +27,14 @@ export default class CareersRepository {
         '0': 'applied',
         '1': 'shortlist',
         '2': 'interview',
-        '3': 'offer'
+        '3': 'offer',
+        '4':'reject'
       };
 
       applicant.forEach((item) => {
         const { careerId, applicantStatus } = item;
         if (!outputObject[careerId]) {
-          outputObject[careerId] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0 };
+          outputObject[careerId] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0,'reject':0 };
         }
 
         if (!outputObject[careerId][applicantStatus]) {
@@ -42,20 +43,16 @@ export default class CareersRepository {
 
         outputObject[careerId][statusMap[applicantStatus]]++;
       });
-
-     
-
-      
-
       for (let i = 0; i < response.length; i++) {
         const careerId = response[i].careerId;
         if (outputObject[careerId]) {
           response[i]['candidatesstatus'] = outputObject[careerId];
         } else {
-          response[i]['candidatesstatus'] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0 };
+          response[i]['candidatesstatus'] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0,'reject':0 };
         }
       }
       return response;
+
     } catch (error) {
       logger.info("Error occured in getAllCareers.Repo")
       logger.error(error)
@@ -148,13 +145,14 @@ export default class CareersRepository {
         '0': 'applied',
         '1': 'shortlist',
         '2': 'interview',
-        '3': 'offer'
+        '3': 'offer',
+        '4':'reject'
       };
 
       applicant.forEach((item) => {
         const { careerId, applicantStatus } = item;
         if (!outputObject[careerId]) {
-          outputObject[careerId] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0 };
+          outputObject[careerId] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0,'reject':0 };
         }
 
         if (!outputObject[careerId][applicantStatus]) {
@@ -168,7 +166,7 @@ export default class CareersRepository {
         if (outputObject[response.careerId]) {
           response['candidatesstatus'] = outputObject[response.careerId];
         } else {
-          response['candidatesstatus'] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0 };
+          response['candidatesstatus'] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0 ,'reject':0};
         }
 
       return response;
