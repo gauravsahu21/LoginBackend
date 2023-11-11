@@ -72,6 +72,8 @@ export default class CareersRepository {
       employementType,
       workMode,
       description,
+      publishDate,
+      unPublishDate
     } = createCareerDto;
     try {
       const isExited = await CareerEntity.findOne({ where: { careerId } });
@@ -81,8 +83,8 @@ export default class CareersRepository {
         isExited.department = department;
         isExited.experienceLevel = experienceLevel;
         isExited.location = location;
-        isExited.publishDate = new Date();
-        isExited.unPublishDate = new Date();
+        isExited.publishDate =publishDate;
+        isExited.unPublishDate = unPublishDate;
         isExited.noOfOpenings = noOfOpenings;
         isExited.employementType = employementType;
         isExited.workMode = workMode;
