@@ -8,6 +8,7 @@ import {
   Max,
   IsDateString,
   IsEnum,
+  IsNotEmpty,
   IsOptional,
 } from 'class-validator';
 
@@ -65,6 +66,13 @@ export class CareerDto {
 
   @IsInt()
   workMode: number;
+
+  @IsNotEmpty()
+  publishDate: Date;
+
+  @IsNotEmpty()
+  unPublishDate: Date;
+
 
   @IsObject()
   location: LocationDto;
