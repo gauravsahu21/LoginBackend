@@ -12,6 +12,7 @@ import {
 import { ContactUsEntity } from '../entity/contactus.entity';
 import logger from '../../connections/logger/logger';
 
+
 @Injectable()
 export default class ContactUsRepository {
   private channel: any;
@@ -119,7 +120,7 @@ export default class ContactUsRepository {
       if (toDate === null && fromDate === null) {
         const totalconnectUs = await ContactUsEntity.count({
           where: {
-            connectStatus: connectStatus,
+            connectStatus: In(connectStatus),
             contactUsType: In([...type]),
           },
         });
@@ -127,7 +128,7 @@ export default class ContactUsRepository {
         totalPages = Math.ceil(totalconnectUs / contactusPerPage);
         response = await ContactUsEntity.find({
           where: {
-            connectStatus: connectStatus,
+            connectStatus: In(connectStatus),
             contactUsType: In([...type]),
           },
           take: contactusPerPage,
@@ -139,7 +140,7 @@ export default class ContactUsRepository {
         const date = this.getDate();
         response = await ContactUsEntity.find({
           where: {
-            connectStatus: connectStatus,
+            connectStatus: In(connectStatus),
             contactTime: Between(fromDate, date),
             contactUsType: In([...type]),
           },
@@ -150,7 +151,7 @@ export default class ContactUsRepository {
 
         const totalconnectUs = await ContactUsEntity.count({
           where: {
-            connectStatus: connectStatus,
+            connectStatus: In(connectStatus),
             contactTime: Between(fromDate, date),
             contactUsType: In([...type]),
           },
@@ -163,7 +164,7 @@ export default class ContactUsRepository {
         console.log(date, '@');
         response = await ContactUsEntity.find({
           where: {
-            connectStatus: connectStatus,
+            connectStatus: In(connectStatus),
             contactTime: Between(date, toDate),
             contactUsType: In([...type]),
           },
@@ -173,7 +174,7 @@ export default class ContactUsRepository {
         });
         const totalconnectUs = await ContactUsEntity.count({
           where: {
-            connectStatus: connectStatus,
+            connectStatus: In(connectStatus),
             contactTime: Between(date, toDate),
             contactUsType: In([...type]),
           },
@@ -184,7 +185,7 @@ export default class ContactUsRepository {
         console.log('nothing null');
         response = await ContactUsEntity.find({
           where: {
-            connectStatus: connectStatus,
+            connectStatus: In(connectStatus),
             contactTime: Between(fromDate, toDate),
             contactUsType: In([...type]),
           },
@@ -195,7 +196,7 @@ export default class ContactUsRepository {
 
         const totalconnectUs = await ContactUsEntity.count({
           where: {
-            connectStatus: connectStatus,
+            connectStatus: In(connectStatus),
             contactTime: Between(fromDate, toDate),
             contactUsType: In([...type]),
           },
