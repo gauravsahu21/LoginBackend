@@ -64,8 +64,11 @@ export class CareerDto {
   @IsInt()
   jobstatus: number;
 
+  @IsString()
+  createdDate:string;
+
   @IsInt()
-  workMode: number;
+  workMode: number; 
 
   @IsNotEmpty()
   publishDate: Date;

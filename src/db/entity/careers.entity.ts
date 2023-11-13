@@ -37,7 +37,7 @@ export class CareerEntity extends BaseEntity {
   department: string;
 
   @Column({ type: 'varchar', length: 30 })
- createdDate: Date;
+ createdDate: string;
 
   @Column({ type: 'json' })
   description: {

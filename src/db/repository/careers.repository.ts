@@ -74,6 +74,7 @@ export default class CareersRepository {
       description,
       publishDate,
       unPublishDate,
+      createdDate
 
     } = createCareerDto;
     try {
@@ -95,7 +96,6 @@ export default class CareersRepository {
         console.log("yes");
         const uid = new ShortUniqueId({ dictionary: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], length: 6 });
         const numericId1 = uid.randomUUID(); // Example: 456789
-        // console.log(numericId1,"123")
         const career = new CareerEntity();
         career.careerId =numericId1;
         career.jobTitle = jobTitle;
@@ -106,7 +106,7 @@ export default class CareersRepository {
         career.noOfOpenings = noOfOpenings;
         career.publishDate = publishDate;
         career.unPublishDate = unPublishDate;
-        career.createdDate=new Date();
+        career.createdDate=createdDate;
         career.employementType = employementType;
         career.workMode = workMode;
         career.description = description;
