@@ -25,7 +25,7 @@ export class Brand {
 
   @IsNotEmpty()
   @IsString()
-  Description:string;
+  description:string;
 
   @IsNotEmpty()
   @IsString()

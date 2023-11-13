@@ -11,7 +11,7 @@ export class BrandEntity extends BaseEntity {
     brandName: string;
     
     @Column({ type: 'text' })
-    Description: string;
+    description: string;
 
     @Column({ type: 'json', nullable: true })
     productCategory: any;
