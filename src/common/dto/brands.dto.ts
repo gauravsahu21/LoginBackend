@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   IsOptional,
   IsNotEmpty,
@@ -21,6 +22,10 @@ export class Brand {
   @IsNotEmpty()
   @IsString()
   brandName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  Description:string;
 
   @IsNotEmpty()
   @IsString()

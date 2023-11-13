@@ -50,6 +50,7 @@ export default class BrandsRepository {
       const brand = new BrandEntity();
       brand.brandId = body.brandId || uuidv4();
       brand.brandName = body.brandName;
+      brand.Description=body.Description;
       brand.productCategory = body.productCategory;
       brand.website = body.website;
       brand.s3Link = body.s3Link;
