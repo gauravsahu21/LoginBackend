@@ -44,3 +44,5 @@ export class BrandIdDto{
   @IsNotEmpty()
   brandIds: string[];
 }
+
+

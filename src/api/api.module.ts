@@ -46,6 +46,9 @@ import { DasboardService } from './service/dashboard.service';
 import DeployController from './controller/deploy.controller';
 import DeployRepo from 'src/db/repository/deploy.repository';
 import { DeployService } from './service/deploy.service';
+import ImagesController from './controller/images.controller';
+import { ImagesService } from './service/images.service';
+import ImagesRepository from 'src/db/repository/images.repository';
 @Module({
   imports: [],
   controllers: [
@@ -62,7 +65,8 @@ import { DeployService } from './service/deploy.service';
     ForgetController,
     ApplicantsController,
     DashboardController,
-    DeployController
+    DeployController,
+    ImagesController
   ],
   providers: [
     JwtService,
@@ -91,7 +95,9 @@ import { DeployService } from './service/deploy.service';
     DashboardRepository,
     DasboardService,
     DeployRepo,
-    DeployService
+    DeployService,
+    ImagesService,
+    ImagesRepository
   ],
 })
 export class ApiModule {}

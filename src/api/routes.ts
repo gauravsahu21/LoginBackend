@@ -46,6 +46,10 @@ export default function accessibility(
       GET: permissions?.applicants?.view,
       POST: permissions?.applicants?.addEdit,
     },
+    images: {
+      GET: permissions?.images?.view,
+      POST: permissions?.images?.addEdit,
+    }
   };
   if (!mappings[url]) {
     console.error(`Route not found in metadata for URL: ${url}`);

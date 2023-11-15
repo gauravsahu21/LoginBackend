@@ -11,6 +11,7 @@ import { ContactUsEntity } from 'src/db/entity/contactus.entity';
 import { CareerEntity } from 'src/db/entity/careers.entity';
 import { VideoEntity } from 'src/db/entity/videos.entity';
 import { Applicant } from 'src/db/entity/applicants.entity';
+import { ImagesEntity } from 'src/db/entity/pictures.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -30,6 +31,7 @@ import { Applicant } from 'src/db/entity/applicants.entity';
         ContactUsEntity,
         CareerEntity,
         VideoEntity,
+        ImagesEntity,
       ],
     }),
   ],
