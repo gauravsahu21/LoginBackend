@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Entity, Column, PrimaryColumn, BaseEntity } from "typeorm";
 
 @Entity({ name: 'brands' })
@@ -8,6 +9,9 @@ export class BrandEntity extends BaseEntity {
 
     @Column({ type: 'varchar', length: 100 })
     brandName: string;
+    
+    @Column({ type: 'text' })
+    description: string;
 
     @Column({ type: 'json', nullable: true })
     productCategory: any;

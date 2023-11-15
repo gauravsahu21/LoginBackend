@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   IsString,
   IsInt,
@@ -7,6 +8,7 @@ import {
   Max,
   IsDateString,
   IsEnum,
+  IsNotEmpty,
   IsOptional,
 } from 'class-validator';
 
@@ -62,8 +64,18 @@ export class CareerDto {
   @IsInt()
   jobstatus: number;
 
+  @IsString()
+  createdDate:string;
+
   @IsInt()
-  workMode: number;
+  workMode: number; 
+
+  @IsNotEmpty()
+  publishDate: Date;
+
+  @IsNotEmpty()
+  unPublishDate: Date;
+
 
   @IsObject()
   location: LocationDto;

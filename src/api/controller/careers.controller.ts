@@ -11,7 +11,6 @@ export class CareersController {
   constructor(private readonly careersService: CareersService) {}
 
   @Get('/')
-  @UseGuards(PermissionsAuthGuard)
   async getAllCareers() {
     console.log('dasdasd')
     return this.careersService.getAllCareers();
@@ -30,7 +29,6 @@ export class CareersController {
   }
 
   @Get('/Id/')
-  @UseGuards(PermissionsAuthGuard)
   async getCareersById(@Query() query: any): Promise<any> {
     return this.careersService.getCareersById(query.careerId);
   }

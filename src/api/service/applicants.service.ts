@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
-import { EditApplicants } from 'src/common/dto/applicants.dto';
+import { ApplyJobDto, EditApplicants } from 'src/common/dto/applicants.dto';
 import { AddOrEditCertificate } from 'src/common/dto/certificates.dto';
 import HttpResponse from 'src/common/lib/http-response';
 import ApplicantsRepository from 'src/db/repository/applicants.repository';
@@ -36,6 +36,20 @@ export default class ApplicantsServices {
         200,
       );
     } catch (error) {
+      logger.info("Error occured in editApplicantStatus.Service")
+      logger.error(error)
+      return HttpResponse.error(error.message);
+    }
+  }
+  async applyJob(applicantDetails:ApplyJobDto){
+    try{
+     await this.applicantRepository.applyJob(applicantDetails); 
+     return HttpResponse.success(
+      null,
+      'Job Applied Successfully',
+      200,
+    );
+    }catch(error){
       logger.info("Error occured in editApplicantStatus.Service")
       logger.error(error)
       return HttpResponse.error(error.message);

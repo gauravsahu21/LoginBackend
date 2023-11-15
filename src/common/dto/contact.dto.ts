@@ -55,8 +55,8 @@ export class enquiriesDto {
   toDate: any;
 
   @IsNotEmpty()
-  @IsNumber()
-  connectStatus: number;
+  connectStatus: number[];
+  // @IsNotEmpty()  reportProfileType: number[];
 
   @IsNotEmpty()
   @IsNumber()

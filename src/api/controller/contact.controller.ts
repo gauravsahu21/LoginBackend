@@ -22,7 +22,6 @@ export class ContactUsController {
   constructor(private readonly messagesService: ContactUsService) {}
 
   @Post('submit')
-  @UseGuards(PermissionsAuthGuard)
   composeContactUs(@Body() contactUs: contactUsDto) {
     return this.messagesService.composeContactUs(contactUs);
   }

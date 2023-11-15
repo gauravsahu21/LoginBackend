@@ -20,8 +20,9 @@ export default class DeployRepo {
       const video = await VideoEntity.find();
       const data= { brands: brands, catalogue: catalogue,certificate:certificate,video:video };
       const jsonData = JSON.stringify(data);
-      const buffer = Buffer.from(jsonData);  
-     const url=await this.fileRepo.uploadAndDownload("websitedata","website",buffer)
+      const buffer = Buffer.from(jsonData); 
+      const fileName="websitedata.json";
+     const url=await this.fileRepo.uploadAndDownload(fileName,"website",buffer)
      return url;
     } catch(error) {
       logger.info("Error occured in  saveFile.Repo")
