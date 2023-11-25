@@ -26,4 +26,10 @@ export class VideoEntity extends BaseEntity {
 
   @Column()
   tags:string;
+
+  @Column()
+  thumbnailId: string;
+
+  @Column()
+  s3linkThumbnail: string;
 }
