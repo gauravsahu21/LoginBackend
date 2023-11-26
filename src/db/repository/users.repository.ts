@@ -29,7 +29,7 @@ export default class UsersRepository {
           'user.imageId as imageId',
         ])
         .where('user.profileType NOT IN (:...profileTypes)', {
-          profileTypes: ['admin', 'master'],
+          profileTypes: ['admin', 'master','intrinsic'],
         })
         .getRawMany();
       return users;
