@@ -10,17 +10,39 @@ export class DeployService {
   constructor(private readonly deploy: DeployRepo) {}
   async saveFile() {
     try {
-      const deployLink = await this.deploy.saveFile();
+      const deployLink = await this.deploy.saveKayempeeFile();
       if (deployLink == undefined || deployLink == 'not uploaded') {
         return HttpResponse.success(
-          { link: deployLink },
+          {},
           'Error while saving succesfully',
           404,
         );
       } else {
         return HttpResponse.success(
-          { link: deployLink },
-          'Saved succesfully',
+          {},
+          'Website Information fetched successfully',
+          200,
+        );
+      }
+    } catch(error) {
+      logger.info("Error occured in saveFileDeploy.Service")
+      logger.error(error)
+      return HttpResponse.error('Error While Uploading/Downloading');
+    }
+  }
+  async saveBrandFile(brandId:string) {
+    try {
+      const deployLink = await this.deploy.saveBrandFile(brandId);
+      if (deployLink == undefined || deployLink == 'not uploaded') {
+        return HttpResponse.success(
+          {},
+          'Error while saving succesfully',
+          404,
+        );
+      } else {
+        return HttpResponse.success(
+          {},
+          'Website Information fetched successfully',
           200,
         );
       }
