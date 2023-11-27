@@ -14,17 +14,34 @@ export default class DeployRepo {
 
   async saveFile() {
     try {
-      const brands = await BrandEntity.find();
-      const catalogue = await CatalogueEntity.find();
+      const brands = await BrandEntity.createQueryBuilder('brand')
+      .select('brandId')
+      .addSelect('brandName')
+      .addSelect('website')
+      .getRawMany();;
       const certificate = await Certificate.find();
       const video = await VideoEntity.find();
-      const data= { brands: brands, catalogue: catalogue,certificate:certificate,video:video };
+      const data= { brands: brands,certificate:certificate,video:video };
       const jsonData = JSON.stringify(data);
       const buffer = Buffer.from(jsonData); 
-      const fileName="websitedata.json";
+      const fileName="kayempee.json";
      const url=await this.fileRepo.uploadAndDownload(fileName,"website",buffer)
      return url;
     } catch(error) {
+      logger.info("Error occured in  saveFile.Repo")
+      logger.error(error)
+      throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async saveKayempeeFile(){
+    try{
+      const catalogue = await CatalogueEntity.find({
+        where: { brandId:"8766a938-1e7c-485d-a19d-b156d298841f" },
+      });
+      console.log(catalogue,"catalogue");
+      return "String";
+    }catch(error){
       logger.info("Error occured in  saveFile.Repo")
       logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);

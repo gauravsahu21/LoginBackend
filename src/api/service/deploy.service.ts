@@ -13,14 +13,14 @@ export class DeployService {
       const deployLink = await this.deploy.saveFile();
       if (deployLink == undefined || deployLink == 'not uploaded') {
         return HttpResponse.success(
-          { link: deployLink },
+          {},
           'Error while saving succesfully',
           404,
         );
       } else {
         return HttpResponse.success(
-          { link: deployLink },
-          'Saved succesfully',
+          {},
+          'Website Information fetched successfully',
           200,
         );
       }
