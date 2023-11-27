@@ -10,40 +10,54 @@ import { VideoEntity } from '../entity/videos.entity';
 
 @Injectable()
 export default class DeployRepo {
-  constructor(private fileRepo:FileRepository) {}
+  constructor(private fileRepo: FileRepository) {}
 
-  async saveFile() {
+  async saveKayempeeFile() {
     try {
       const brands = await BrandEntity.createQueryBuilder('brand')
-      .select('brandId')
-      .addSelect('brandName')
-      .addSelect('website')
-      .getRawMany();;
+        .select('brandId')
+        .addSelect('brandName')
+        .addSelect('website')
+        .getRawMany();
       const certificate = await Certificate.find();
       const video = await VideoEntity.find();
-      const data= { brands: brands,certificate:certificate,video:video };
+      const data = { brands: brands, certificate: certificate, video: video };
       const jsonData = JSON.stringify(data);
-      const buffer = Buffer.from(jsonData); 
-      const fileName="kayempee.json";
-     const url=await this.fileRepo.uploadAndDownload(fileName,"website",buffer)
-     return url;
-    } catch(error) {
-      logger.info("Error occured in  saveFile.Repo")
-      logger.error(error)
+      const buffer = Buffer.from(jsonData);
+      const fileName = 'kayempee.json';
+      const url = await this.fileRepo.uploadAndDownload(
+        fileName,
+        'website',
+        buffer,
+      );
+      return url;
+    } catch (error) {
+      logger.info('Error occured in  saveFile.Repo');
+      logger.error(error);
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
 
-  async saveKayempeeFile(){
-    try{
+  async saveBrandFile(brandId: string) {
+    try {
       const catalogue = await CatalogueEntity.find({
-        where: { brandId:"8766a938-1e7c-485d-a19d-b156d298841f" },
+        where: { brandId: brandId },
       });
-      console.log(catalogue,"catalogue");
-      return "String";
-    }catch(error){
-      logger.info("Error occured in  saveFile.Repo")
-      logger.error(error)
+      const brandName = await BrandEntity.findOne({ where: { brandId } });
+      const data = { catelogues: catalogue };
+      const jsonData = JSON.stringify(data);
+      const buffer = Buffer.from(jsonData);
+      const fileName = `${brandName.brandName}.json`;
+
+      const url = await this.fileRepo.uploadAndDownload(
+        fileName,
+        'website',
+        buffer,
+      );
+      return url;
+    } catch (error) {
+      logger.info('Error occured in  saveFile.Repo');
+      logger.error(error);
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
