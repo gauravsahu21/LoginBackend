@@ -33,16 +33,22 @@ export default class CareersRepository {
 
       applicant.forEach((item) => {
         const { careerId, applicantStatus } = item;
+        console.log(careerId,"gaurav")
         if (!outputObject[careerId]) {
+          console.log("yes")
           outputObject[careerId] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0,'reject':0 };
         }
+        // console.log(outputObject,"!@#$%^");
 
-        if (!outputObject[careerId][applicantStatus]) {
-          outputObject[careerId][statusMap[applicantStatus]] = 0;
-        }
+        // if (!outputObject[careerId][applicantStatus]) {
+        //   outputObject[careerId][statusMap[applicantStatus]] = 0;
+        // }
 
         outputObject[careerId][statusMap[applicantStatus]]++;
       });
+
+
+      console.log(outputObject,"!@#$%");
       for (let i = 0; i < response.length; i++) {
         const careerId = response[i].careerId;
         if (outputObject[careerId]) {
@@ -51,6 +57,7 @@ export default class CareersRepository {
           response[i]['candidatesstatus'] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0,'reject':0 };
         }
       }
+      console.log(response,"surah")
       return response;
 
     } catch (error) {
@@ -159,9 +166,9 @@ export default class CareersRepository {
           outputObject[careerId] = { 'applied': 0, 'shortlist': 0, 'interview': 0, 'offer': 0,'reject':0 };
         }
 
-        if (!outputObject[careerId][applicantStatus]) {
-          outputObject[careerId][statusMap[applicantStatus]] = 0;
-        }
+        // if (!outputObject[careerId][applicantStatus]) {
+        //   outputObject[careerId][statusMap[applicantStatus]] = 0;
+        // }
 
         outputObject[careerId][statusMap[applicantStatus]]++;
       });
