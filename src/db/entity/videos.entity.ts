@@ -32,4 +32,7 @@ export class VideoEntity extends BaseEntity {
 
   @Column()
   s3linkThumbnail: string;
+
+  @Column()
+  brandId: string;
 }
