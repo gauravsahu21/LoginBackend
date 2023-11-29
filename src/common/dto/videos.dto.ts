@@ -47,4 +47,8 @@ export class VideoDto {
   @IsString()
   @IsNotEmpty()
   s3linkThumbnail: string;
+
+  @IsString()
+  @IsNotEmpty()
+  brandId: string;
 }

@@ -38,7 +38,8 @@ export default class VideoRepository {
         orderId,
         s3link,
         thumbnailId,
-        s3linkThumbnail
+        s3linkThumbnail,
+        brandId
 
       } = videoData;
       console.log(Number(orderId), '!@#');
@@ -89,6 +90,7 @@ export default class VideoRepository {
         isExited.tags = tags;
         isExited.thumbnailId=thumbnailId;
         isExited.s3linkThumbnail=s3linkThumbnail;
+        isExited.brandId=brandId
         await VideoEntity.save(isExited);
       } else {
         const video = new VideoEntity();
@@ -103,6 +105,7 @@ export default class VideoRepository {
         video.tags = tags;
         video.thumbnailId=thumbnailId;
         video.s3linkThumbnail=s3linkThumbnail;
+        video.brandId=brandId;
         await VideoEntity.save(video);
         
         await VideoEntity.createQueryBuilder()
