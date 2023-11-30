@@ -8,6 +8,4 @@ export class ImagesDto {
   @IsOptional()
   information: string[]; 
    
-  @IsNotEmpty()
-  orderId:number;
 }
