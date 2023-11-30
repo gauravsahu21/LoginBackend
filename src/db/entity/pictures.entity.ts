@@ -9,7 +9,4 @@ export class ImagesEntity extends BaseEntity {
     @Column({type:'json'})
     information: string[]
 
-    @Column()
-    orderId: number;
-
 }
