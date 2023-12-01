@@ -14,11 +14,11 @@ export class CatalogueService {
       const list = await this.catalogueRepository.getCatalogue();
       return HttpResponse.success(
         list,
-        'Catalogue Data Fetched succesfully',
+        'Catalogue Data Fetched successfully',
         200,
       );
     } catch (error) {
-      logger.info('Error occured in getCatalogue.Service');
+      logger.info('Error occurred in getCatalogue.Service');
       logger.error(error);
       return HttpResponse.error(error.message);
     }
@@ -27,31 +27,31 @@ export class CatalogueService {
     try {
       const response = await this.catalogueRepository.addCatalogue(body);
       if (response) {
-        return HttpResponse.success(null, 'Catalogue Updated succesfully', 200);
+        return HttpResponse.success(null, 'Catalogue Updated successfully', 200);
       } else {
-        logger.info('Error occured in addCatalogue.Service');
+        logger.info('Error occurred in addCatalogue.Service');
         return HttpResponse.error('Something Went wrong');
       }
     } catch (error) {
-      logger.info('Error occured in addCatalogue.Service');
+      logger.info('Error occurred in addCatalogue.Service');
       logger.error(error);
       return HttpResponse.error(error.message);
     }
   }
 
-  async deleteCatelogue(catelogueId: string) {
+  async deleteCatalogue(catalogueId: string) {
     try {
       const response = await this.catalogueRepository.deleteCatalogue(
-        catelogueId,
+        catalogueId,
       );
       if (response) {
-        return HttpResponse.success(null, 'Catelogue Deleted succesfully', 200);
+        return HttpResponse.success(null, 'Catalogue Deleted successfully', 200);
       } else {
-        logger.info('Error occured in deleteCatelogue.Service');
+        logger.info('Error occurred in deleteCatalogue.Service');
         return HttpResponse.error('Something Went wrong');
       }
     } catch (error) {
-      logger.info('Error occured in deleteCatelogue.Service');
+      logger.info('Error occurred in deleteCatalogue.Service');
       logger.error(error);
       return HttpResponse.error(error.message);
     }

@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryColumn, BaseEntity } from "typeorm";
 @Entity({ name: 'catelogues' })
 export class CatalogueEntity extends BaseEntity{
     @PrimaryColumn({ type: 'varchar', length: 255 })
-    catelogueId: string;
+    catalogueId: string;
 
     @Column({ type: 'varchar', length: 255, nullable: true })
     imageId: string;

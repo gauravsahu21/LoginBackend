@@ -27,6 +27,6 @@ export default class CatalogueController {
   @Delete('/')
   @UseGuards(PermissionsAuthGuard)
   async deleteCatalogue(@Query() query: any): Promise<any> {
-    return this.catalogueService.deleteCatelogue(query.catalogueId);
+    return this.catalogueService.deleteCatalogue(query.catalogueId);
   }
 }

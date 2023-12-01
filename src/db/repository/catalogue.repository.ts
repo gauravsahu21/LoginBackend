@@ -40,11 +40,10 @@ export default class CatalogueRepository {
     } = body;
     try {
       const isExited = await CatalogueEntity.findOne({
-        where: { catelogueId: catalogueId },
+        where: { catalogueId: catalogueId },
       });
-      console.log(isExited, catalogueId);
       if (isExited && catalogueId) {
-        isExited.catelogueId = catalogueId;
+        isExited.catalogueId = catalogueId;
         isExited.imageId = imageId;
         isExited.s3link = s3link;
         isExited.productName = productName;
@@ -59,7 +58,7 @@ export default class CatalogueRepository {
         await CatalogueEntity.save(isExited);
       } else {
         const catalogue = new CatalogueEntity();
-        catalogue.catelogueId = body.catalogueId || uuidv4();
+        catalogue.catalogueId = body.catalogueId || uuidv4();
         catalogue.imageId = body.imageId;
         catalogue.s3link = body.s3link;
         catalogue.productName = body.productName;
@@ -67,10 +66,10 @@ export default class CatalogueRepository {
         catalogue.productCategory = body.productCategory;
         catalogue.orderId = body.orderId;
         catalogue.brandId = body.brandId;
-        catalogue.videoBucketId =  body.videoBucketId;
-        catalogue.thumbnailId =  body.thumbnailId;
-        catalogue.s3linkVideo =  body.s3linkVideo;
-        catalogue.s3linkThumbnail =  body.s3linkThumbnail;
+        catalogue.videoBucketId = body.videoBucketId;
+        catalogue.thumbnailId = body.thumbnailId;
+        catalogue.s3linkVideo = body.s3linkVideo;
+        catalogue.s3linkThumbnail = body.s3linkThumbnail;
         await CatalogueEntity.save(catalogue);
       }
       return true;
@@ -83,7 +82,7 @@ export default class CatalogueRepository {
   async deleteCatalogue(catalogueId: string) {
     try {
       const catalogue = await CatalogueEntity.find({
-        where: { catelogueId: catalogueId },
+        where: { catalogueId },
       });
       if (catalogue) {
         await CatalogueEntity.delete(catalogueId);
