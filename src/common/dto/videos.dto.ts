@@ -17,20 +17,38 @@ export class VideoDto {
   orderId:number;
 
   @IsString()
+  @IsNotEmpty()
   title: string;
 
   @IsString()
+  @IsNotEmpty()
   duration:string;
 
   @IsString()
+  @IsNotEmpty()
   description: string;
 
   @IsString()
+  @IsNotEmpty()
   videoBucketId: string;
 
   @IsString()
+  @IsNotEmpty()
   s3link: string;
 
   @IsString()
+  @IsNotEmpty()
   tags:string;
+
+  @IsString()
+  @IsNotEmpty()
+  thumbnailId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  s3linkThumbnail: string;
+
+  @IsString()
+  @IsNotEmpty()
+  brandId: string;
 }

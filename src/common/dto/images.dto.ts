@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IsOptional, IsNotEmpty } from 'class-validator';
 
 export class ImagesDto {
@@ -6,4 +7,5 @@ export class ImagesDto {
 
   @IsOptional()
   information: string[]; 
+   
 }
