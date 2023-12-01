@@ -55,7 +55,7 @@ class detailsDto {
 }
 export class Catalogue {
   @IsOptional()
-  catelogueId: string;
+  catalogueId: string;
 
   @IsNotEmpty()
   @IsString()
@@ -79,6 +79,18 @@ export class Catalogue {
 
   @IsNotEmpty()
   s3link: string;
+
+  @IsOptional()
+  videoBucketId: string
+
+  @IsOptional()
+  s3linkVideo: string
+
+  @IsOptional()
+  thumbnailId: string
+
+  @IsOptional()
+  s3linkThumbnail: string
 
   @IsNotEmpty()
   @Type(() => detailsDto)

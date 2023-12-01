@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CatalogueService } from '../service/catalogue.service';
-import { Catalogue } from 'src/common/dto/catelogue.dto';
+import { Catalogue } from 'src/common/dto/catalogue.dto';
 import { PermissionsAuthGuard, WriteAccess } from '../jwt-auth.guard';
 
 @Controller('catalogues')
