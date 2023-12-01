@@ -116,9 +116,9 @@ export class PermissionsAuthGuard implements CanActivate {
           throw new UnauthorizedException('Access denied');
         }
       } else if (method === 'DELETE') {
-        const catelogueId = request.query.catelogueId;
+        const catalogueId = request.query.catalogueId;
         const product = await CatalogueEntity.findOne({
-          where: { catelogueId },
+          where: { catalogueId },
         });
         if (!user.brandIds.includes(product.brandId)) {
           throw new UnauthorizedException('Access denied');
