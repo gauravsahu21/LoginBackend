@@ -25,4 +25,16 @@ export class CatalogueEntity extends BaseEntity{
 
     @Column({ type: 'json' })
     productDetails: any;
+
+    @Column({ type: 'varchar', length: 255 })
+    videoBucketId: string
+
+    @Column({ type: 'varchar', length: 255 })
+    thumbnailId: string
+
+    @Column({ type: 'text', nullable: true })
+    s3linkVideo:string
+
+    @Column({ type: 'text', nullable: true })
+    s3linkThumbnail:string;
 }
