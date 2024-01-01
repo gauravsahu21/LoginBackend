@@ -44,18 +44,19 @@ export default class ContactUsRepository {
   // }
   async insertData(contactUs: contactUsDto) {
     try {
+      console.log(contactUs.messages,"&&&&&&&&&&&&")
       const newContactUs = new ContactUsEntity();
       newContactUs.contactUsId = uuidv4();
-      newContactUs.contactUsType = contactUs.contactUsType;
-      newContactUs.message = contactUs.message;
-      newContactUs.countryCode = contactUs.countryCode;
-      newContactUs.contactNumber = contactUs.contactNumber;
+      newContactUs.contactUsType ="0";
+      newContactUs.message = contactUs.messages;
+      newContactUs.countryCode = "+91";
+      newContactUs.contactNumber = contactUs.phone;
       newContactUs.email = contactUs.email;
-      newContactUs.connectorName = contactUs.connectorName;
-      newContactUs.contactSubject = contactUs.contactSubject;
-      newContactUs.contactTime = contactUs.contactTime;
-      newContactUs.connectStatus = contactUs.connectStatus;
-      newContactUs.additionalNotes = contactUs.additionalNotes;
+      newContactUs.connectorName =`${contactUs.firstName} ${contactUs.lastName}`;
+      newContactUs.contactSubject ={"brandId": "", "brandName": "Kayempee", "categoryId": "", "categoryName": "Kayempee"};
+      newContactUs.contactTime = new Date();
+      newContactUs.connectStatus =0;
+      newContactUs.additionalNotes = contactUs.messages;
       await ContactUsEntity.save(newContactUs);
     } catch (err) {
       logger.info("Error occured in insertData.Repo")

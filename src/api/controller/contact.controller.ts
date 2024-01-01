@@ -8,6 +8,7 @@ import {
   Get,
   Delete,
   Param,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   contactUsDto,
@@ -16,15 +17,19 @@ import {
 } from 'src/common/dto/contact.dto';
 import { ContactUsService } from '../service/contact.service';
 import { PermissionsAuthGuard } from '../jwt-auth.guard';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('queries')
 export class ContactUsController {
   constructor(private readonly messagesService: ContactUsService) {}
 
   @Post('submit')
+  @UseInterceptors(FilesInterceptor(''))
   composeContactUs(@Body() contactUs: contactUsDto) {
+   console.log(contactUs,"&&&&&&&&&&")
     return this.messagesService.composeContactUs(contactUs);
   }
+
 
   @Get('newsubmissions')
   @UseGuards(PermissionsAuthGuard)
