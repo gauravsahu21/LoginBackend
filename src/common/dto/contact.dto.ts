@@ -11,42 +11,21 @@ import {
 export class contactUsDto {
   @IsNotEmpty()
   @IsString()
-  contactUsType: string;
+  firstName :string;
 
   @IsNotEmpty()
   @IsString()
-  message: string;
+  lastName :string;
 
   @IsNotEmpty()
   @IsString()
-  countryCode: string;
+  messages: string;
 
   @IsNotEmpty()
-  @IsString()
-  contactNumber: string;
+  phone:any;
 
   @IsNotEmpty()
-  @IsString()
-  email: string;
-
-  @IsNotEmpty()
-  @IsString()
-  connectorName: string;
-
-  @IsNotEmpty()
-  contactSubject: any;
-
-  @IsNotEmpty()
-  contactTime: Date;
-
-  @IsNotEmpty()
-  @IsNumber()
-  @IsIn([0,1])
-  connectStatus: number;
-
-  @IsNotEmpty()
-  @IsString()
-  additionalNotes: string;
+  email:any;
 }
 
 export class enquiriesDto {

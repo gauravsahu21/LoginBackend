@@ -41,9 +41,9 @@ export default class ApplicantsServices {
       return HttpResponse.error(error.message);
     }
   }
-  async applyJob(applicantDetails:ApplyJobDto){
+  async applyJob(applicantDetails:ApplyJobDto,resume:any){
     try{
-     await this.applicantRepository.applyJob(applicantDetails); 
+     await this.applicantRepository.applyJob(applicantDetails,resume); 
      return HttpResponse.success(
       null,
       'Job Applied Successfully',

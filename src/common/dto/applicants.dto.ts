@@ -18,31 +18,19 @@ export class EditApplicants {
 export class ApplyJobDto{
   @IsNotEmpty()
   @IsString()
-  applicantName :string;
-
-  @IsNotEmpty()
-  contact:any;
-
-  @IsNotEmpty()
-  experienceinfo:any;
+  firstName :string;
 
   @IsNotEmpty()
   @IsString()
-  resumeId:string;
+  lastName :string;
 
   @IsNotEmpty()
-  @IsString()
-  s3Link:string;
+  phone:any;
 
   @IsNotEmpty()
-  appliedOn:Date;
+  email:any;
 
   @IsNotEmpty()
-  @IsString()
-  careerId:string;
-
-  @IsNotEmpty()
-  @IsNumber()
-  applicantStatus: number;
+  experience:any;
 
 }

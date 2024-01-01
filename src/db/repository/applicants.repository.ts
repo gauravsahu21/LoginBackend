@@ -11,15 +11,17 @@ import { CareerDto } from 'src/common/dto/careers.dto';
 import { Applicant } from '../entity/applicants.entity';
 import { ApplyJobDto, EditApplicants } from 'src/common/dto/applicants.dto';
 import logger from '../../connections/logger/logger';
+import FileRepository from './fileserver.repository';
 
 @Injectable()
 export default class ApplicantsRepository {
+  constructor(private fileRepo: FileRepository) { }
   async getApplicants(jobId: string) {
     try {
-      
-     const response = await Applicant.find({
+
+      const response = await Applicant.find({
         where: {
-          careerId:jobId,
+          careerId: jobId,
         }
       });
 
@@ -49,21 +51,23 @@ export default class ApplicantsRepository {
     }
   }
 
-  async applyJob(applicantDetails:ApplyJobDto){
-    try{
-      const newJob=new Applicant();
-       newJob.applicantId= uuidv4();
-       newJob.applicantName=applicantDetails.applicantName;
-       newJob.contact=applicantDetails.contact;
-       newJob.experienceinfo=applicantDetails.experienceinfo;
-       newJob.resumeId=applicantDetails.resumeId;
-       newJob.s3Link=applicantDetails.s3Link;
-       newJob.appliedOn=applicantDetails.appliedOn;
-       newJob.careerId=applicantDetails.careerId;
-       newJob.applicantStatus=applicantDetails.applicantStatus;
+  async applyJob(applicantDetails: ApplyJobDto, resume: any) {
+    try {
+      const uploadedFile = await this.fileRepo.uploadandDownloadMultiplesFiles("resume", resume);
+      const file = uploadedFile[resume[0].originalname];
+      const newJob = new Applicant();
+      newJob.applicantId = uuidv4();
+      newJob.applicantName = `${applicantDetails.firstName} ${applicantDetails.lastName}`;
+      newJob.contact = { email: applicantDetails.email, mobile: applicantDetails.phone };
+      newJob.experienceinfo = { currentTitle: "", currentCompany: "", yearsofexperience: applicantDetails.experience };
+      newJob.resumeId = file.fileId;
+      newJob.s3Link = file.s3Link;
+      newJob.appliedOn = new Date();
+      newJob.careerId = "123";
+      newJob.applicantStatus = 0;
       await newJob.save();
 
-    }catch(error){
+    } catch (error) {
       logger.info("Error occured in applyJob.Repo")
       logger.error(error)
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
