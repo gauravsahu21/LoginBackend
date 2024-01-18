@@ -16,46 +16,43 @@ import logger from '../../connections/logger/logger';
 @Injectable()
 export default class ContactUsRepository {
   private channel: any;
-
-  // async composeContactUs(contactus: contactUsDto) {
-  //   this.channel = await createConnectionAndChannel();
-  //   try {
-  //     if (this.channel) {
-  //       const contactusform = Buffer.from(JSON.stringify(contactus));
-  //       this.channel.sendToQueue('contactus', contactusform);
-
-  //       await this.channel.consume('contactus', async (contact) => {
-  //         try {
-  //           const messageObj = JSON.parse(contact.content.toString());
-  //           this.insertData(messageObj);
-  //           this.channel.ack(contact);
-  //         } catch (error) {
-  //           logger.info("Error occured in composeContactUs.Repo")
-  //           logger.error(error)
-  //           console.error('Error processing contact us form:', error);
-  //         }
-  //       });
-  //     }
-  //   } catch (error) {
-  //     logger.info("Error occured in composeContactUs.Repo")
-  //     logger.error(error)
-  //     throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-  //   }
-  // }
-  async insertData(contactUs: contactUsDto) {
+  async insertDataType(type: string, email: string) {
     try {
-      console.log(contactUs.messages,"&&&&&&&&&&&&")
       const newContactUs = new ContactUsEntity();
       newContactUs.contactUsId = uuidv4();
-      newContactUs.contactUsType ="0";
+      newContactUs.contactUsType = "0";
+      newContactUs.message = type;
+      newContactUs.countryCode = "";
+      newContactUs.contactNumber ="";
+      newContactUs.email = email;
+      newContactUs.connectorName ="";
+      newContactUs.contactSubject = { "brandId": "", "brandName": "Kayempee", "categoryId": "", "categoryName": "Kayempee" };
+      newContactUs.contactTime = new Date();
+      newContactUs.connectStatus = 0;
+      newContactUs.additionalNotes = type;
+      await ContactUsEntity.save(newContactUs);
+    } catch (err) {
+      logger.info("Error occured in insertData.Repo")
+      logger.error(err)
+      throw err;
+    }
+  }
+
+
+  async insertData(contactUs: contactUsDto) {
+    try {
+    
+      const newContactUs = new ContactUsEntity();
+      newContactUs.contactUsId = uuidv4();
+      newContactUs.contactUsType = "0";
       newContactUs.message = contactUs.messages;
       newContactUs.countryCode = "+91";
       newContactUs.contactNumber = contactUs.phone;
       newContactUs.email = contactUs.email;
-      newContactUs.connectorName =`${contactUs.firstName} ${contactUs.lastName}`;
-      newContactUs.contactSubject ={"brandId": "", "brandName": "Kayempee", "categoryId": "", "categoryName": "Kayempee"};
+      newContactUs.connectorName = `${contactUs.firstName} ${contactUs.lastName}`;
+      newContactUs.contactSubject = { "brandId": "", "brandName": "Kayempee", "categoryId": "", "categoryName": "Kayempee" };
       newContactUs.contactTime = new Date();
-      newContactUs.connectStatus =0;
+      newContactUs.connectStatus = 0;
       newContactUs.additionalNotes = contactUs.messages;
       await ContactUsEntity.save(newContactUs);
     } catch (err) {
@@ -110,10 +107,10 @@ export default class ContactUsRepository {
 
   async getAllEnquiries(enquiries: enquiriesDto) {
     try {
-      
-      const contactusPerPage=20;
-      const { toDate, fromDate, connectStatus, page,type } = enquiries;
-      if (type.includes("ALL") && type.length===1) {
+
+      const contactusPerPage = 20;
+      const { toDate, fromDate, connectStatus, page, type } = enquiries;
+      if (type.includes("ALL") && type.length === 1) {
         type.push(...["1", "2", "0"]);
       }
       let response;
@@ -125,7 +122,7 @@ export default class ContactUsRepository {
             contactUsType: In([...type]),
           },
         });
-      console.log(totalconnectUs,"asd")
+        console.log(totalconnectUs, "asd")
         totalPages = Math.ceil(totalconnectUs / contactusPerPage);
         response = await ContactUsEntity.find({
           where: {
@@ -205,7 +202,7 @@ export default class ContactUsRepository {
 
         totalPages = Math.ceil(totalconnectUs / contactusPerPage);
       }
-    
+
       return {
         response,
         totalPages,

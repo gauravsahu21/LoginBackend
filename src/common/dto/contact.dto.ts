@@ -8,6 +8,12 @@ import {
   IsString,
 } from 'class-validator';
 
+export class contactUsTypeDto {
+ 
+  @IsNotEmpty()
+  @IsString()
+  email:any;
+}
 export class contactUsDto {
   @IsNotEmpty()
   @IsString()
@@ -17,14 +23,14 @@ export class contactUsDto {
   @IsString()
   lastName :string;
 
-  @IsNotEmpty()
   @IsString()
   messages: string;
 
-  @IsNotEmpty()
+  @IsString()
   phone:any;
 
   @IsNotEmpty()
+  @IsString()
   email:any;
 }
 

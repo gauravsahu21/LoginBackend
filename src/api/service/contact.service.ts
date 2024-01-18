@@ -8,6 +8,20 @@ import logger from '../../connections/logger/logger';
 @Injectable()
 export class ContactUsService {
     constructor(private readonly contactusRepo: ContactUsRepository) { }
+
+    async ContactUsType(type:string,email:string) {
+        try {
+            await this.contactusRepo.insertDataType(type,email);
+            return HttpResponse.success(
+                null,'Contactus form submitted successfully',200
+            );
+        } catch (error) {
+            logger.info("Error occured in composeContactUs.Service")
+            logger.error(error)
+            return HttpResponse.error(error.message);
+        }
+    }
+
     async composeContactUs(contactus: contactUsDto) {
         try {
             await this.contactusRepo.insertData(contactus);

@@ -9,9 +9,11 @@ import {
   Delete,
   Param,
   UseInterceptors,
+  Query,
 } from '@nestjs/common';
 import {
   contactUsDto,
+  contactUsTypeDto,
   enquiriesDto,
   updateEnquiryDto,
 } from 'src/common/dto/contact.dto';
@@ -25,8 +27,13 @@ export class ContactUsController {
 
   @Post('submit')
   @UseInterceptors(FilesInterceptor(''))
+  ContactUs(@Query('type') type:string,@Body() contactUs: contactUsTypeDto) {
+   return this.messagesService.ContactUsType(type,contactUs.email);
+  }
+
+  @Post('/form/submit')
+  @UseInterceptors(FilesInterceptor(''))
   composeContactUs(@Body() contactUs: contactUsDto) {
-   console.log(contactUs,"&&&&&&&&&&")
     return this.messagesService.composeContactUs(contactUs);
   }
 
