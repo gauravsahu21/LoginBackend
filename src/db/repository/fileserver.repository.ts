@@ -35,7 +35,7 @@ export default class FileRepository {
                         //     Expires: 36000,
                         // };
                         
-                        const url =`${process.env.CONTABO_OBJECT_STORAGE_accessLink}:${bucket}/${fileName}`
+                        const url =`${process.env.CONTABO_OBJECT_STORAGE_accessLink}:kmp-${bucket}/${fileName}`
         
                         resolve(url);
                     }
