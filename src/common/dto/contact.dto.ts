@@ -23,8 +23,7 @@ export class contactUsDto {
   @IsString()
   lastName :string;
 
-  @IsString()
-  messages: string;
+  messages:any;
 
   @IsString()
   phone:any;

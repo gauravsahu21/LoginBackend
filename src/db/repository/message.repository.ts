@@ -46,7 +46,7 @@ export default class ContactUsRepository {
       newContactUs.contactUsId = uuidv4();
       newContactUs.contactUsType = "0";
       newContactUs.message = contactUs.messages;
-      newContactUs.countryCode = "+91";
+      newContactUs.countryCode = "";
       newContactUs.contactNumber = contactUs.phone;
       newContactUs.email = contactUs.email;
       newContactUs.connectorName = `${contactUs.firstName} ${contactUs.lastName}`;
