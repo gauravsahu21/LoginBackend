@@ -13,6 +13,12 @@ export default class BrandController {
     const {user} = request;
     return this.brandsService.getBrands(user)
   }
+
+  @Get('all')
+  async getAllBrands(): Promise<any> {
+    return this.brandsService.getAllBrands()
+  }
+
   @Post('/')
   @UseGuards(PermissionsAuthGuard)
   async addBrand(@Body() body:Brand): Promise<any> {

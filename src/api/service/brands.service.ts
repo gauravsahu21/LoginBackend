@@ -18,6 +18,16 @@ export class BrandsService {
       return HttpResponse.error(error.message);
     }
   }
+  async getAllBrands() {
+    try {
+      const list = await this.brandsRepository.getAllBrands();
+      return HttpResponse.success(list, 'Brands Data Fetched succesfully', 200);
+    } catch (error) {
+      logger.info("Error occured in getBrands.Service")
+      logger.error(error)
+      return HttpResponse.error(error.message);
+    }
+  }
   
   async addBrand(body: Brand) {
     try {

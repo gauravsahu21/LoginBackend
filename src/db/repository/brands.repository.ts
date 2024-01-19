@@ -31,6 +31,17 @@ export default class BrandsRepository {
       throw new HttpException('Something went wrong!', HttpStatus.NOT_FOUND);
     }
   }
+
+  async getAllBrands() {
+    try {
+     const brands = await BrandEntity.find();
+      return brands;
+    } catch (error) {
+      logger.info("Error occured in getBrands.Repo")
+      logger.error(error)
+      throw new HttpException('Something went wrong!',HttpStatus.NOT_FOUND);
+    }
+  }
   async BrandIdDto(brandIds: string[]) {
     try {
       const brands = await BrandEntity.find({
