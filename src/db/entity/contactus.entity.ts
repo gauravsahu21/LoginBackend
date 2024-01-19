@@ -36,4 +36,7 @@ export class ContactUsEntity extends BaseEntity {
 
     @Column({ type: 'text', nullable: true })
     additionalNotes: string;
+
+    @Column({ type: 'varchar', length: 100 })
+    contactType: string;
 }

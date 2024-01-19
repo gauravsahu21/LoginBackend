@@ -21,7 +21,7 @@ export default class ContactUsRepository {
       const newContactUs = new ContactUsEntity();
       newContactUs.contactUsId = uuidv4();
       newContactUs.contactUsType = "0";
-      newContactUs.message = type;
+      newContactUs.message ="";
       newContactUs.countryCode = "";
       newContactUs.contactNumber ="";
       newContactUs.email = email;
@@ -29,7 +29,8 @@ export default class ContactUsRepository {
       newContactUs.contactSubject = { "brandId": "", "brandName": "Kayempee", "categoryId": "", "categoryName": "Kayempee" };
       newContactUs.contactTime = new Date();
       newContactUs.connectStatus = 0;
-      newContactUs.additionalNotes = type;
+      newContactUs.additionalNotes ="";
+      newContactUs.contactType=type;
       await ContactUsEntity.save(newContactUs);
     } catch (err) {
       logger.info("Error occured in insertData.Repo")
