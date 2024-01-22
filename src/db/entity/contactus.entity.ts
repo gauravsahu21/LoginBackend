@@ -39,4 +39,7 @@ export class ContactUsEntity extends BaseEntity {
 
     @Column({ type: 'varchar', length: 100 })
     contactType: string;
+
+    @Column({ type: 'varchar', length: 45 })
+    product: string;
 }

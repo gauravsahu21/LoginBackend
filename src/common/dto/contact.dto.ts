@@ -31,6 +31,8 @@ export class contactUsDto {
   @IsNotEmpty()
   @IsString()
   email:any;
+
+  product:any;
 }
 
 export class enquiriesDto {

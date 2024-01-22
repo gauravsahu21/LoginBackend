@@ -55,6 +55,7 @@ export default class ContactUsRepository {
       newContactUs.contactTime = new Date();
       newContactUs.connectStatus = 0;
       newContactUs.additionalNotes = contactUs.messages;
+      newContactUs.product=contactUs.product;
       await ContactUsEntity.save(newContactUs);
     } catch (err) {
       logger.info("Error occured in insertData.Repo")
