@@ -23,6 +23,22 @@ export class CatalogueService {
       return HttpResponse.error(error.message);
     }
   }
+
+  async getPepeCatalogue(brand:string) {
+    try {
+      const list = await this.catalogueRepository.getPepeCatalogue(brand);
+      return HttpResponse.success(
+        list,
+        'Catalogue Data Fetched successfully',
+        200,
+      );
+    } catch (error) {
+      logger.info('Error occurred in getCatalogue.Service');
+      logger.error(error);
+      return HttpResponse.error(error.message);
+    }
+  }
+
   async addCatalogue(body: Catalogue) {
     try {
       const response = await this.catalogueRepository.addCatalogue(body);

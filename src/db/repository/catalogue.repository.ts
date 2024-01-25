@@ -10,12 +10,32 @@ import { v4 as uuidv4 } from 'uuid';
 import { CatalogueEntity } from '../entity/catalogue.entity';
 import { Catalogue } from 'src/common/dto/catalogue.dto';
 import logger from '../../connections/logger/logger';
+import { BrandEntity } from '../entity/brands.entity';
 
 @Injectable()
 export default class CatalogueRepository {
   async getCatalogue() {
     try {
       const catalogEntries = await CatalogueEntity.find();
+      return catalogEntries;
+    } catch (error) {
+      logger.info('Error occurred in getCatalogue.Repo');
+      logger.error(error);
+      throw new HttpException('Something Went wrong!', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async getPepeCatalogue(brandName:string) {
+    try {
+      const brands = await BrandEntity.find();
+      const pepeBrand = brands.find(brand => brand.brandName.toLowerCase() === "pepe");
+      console.log(pepeBrand.brandId,"&&&&&&&&&&&&&&&&&")
+   
+      const catalogEntries = await CatalogueEntity.find({
+        where: {
+          brandId:pepeBrand.brandId,
+        },
+    });
       return catalogEntries;
     } catch (error) {
       logger.info('Error occurred in getCatalogue.Repo');

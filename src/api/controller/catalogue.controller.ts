@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Body,
   Controller,
@@ -19,6 +20,12 @@ export default class CatalogueController {
   async getCatalogue(@Query() brandId: any): Promise<any> {
     return this.catalogueService.getCatalogue();
   }
+
+  @Get('/product')
+  async getPepeCatalogue(@Query('brand') brand:string): Promise<any> { 
+    return this.catalogueService.getPepeCatalogue(brand);
+  }
+
   @Post('/')
   @UseGuards(PermissionsAuthGuard)
   async addCatalogue(@Body() body: Catalogue): Promise<any> {
