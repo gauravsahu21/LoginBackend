@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Entity, Column, PrimaryColumn, BaseEntity } from "typeorm";
 
 @Entity({ name: 'catelogues' })
@@ -37,4 +38,8 @@ export class CatalogueEntity extends BaseEntity{
 
     @Column({ type: 'text', nullable: true })
     s3linkThumbnail:string;
+    
+    @Column({ type: 'datetime' })
+    modifiedOn: Date;
+
 }

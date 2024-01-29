@@ -75,6 +75,7 @@ export default class CatalogueRepository {
         isExited.thumbnailId = thumbnailId;
         isExited.s3linkVideo = s3linkVideo;
         isExited.s3linkThumbnail = s3linkThumbnail;
+        isExited.modifiedOn=new Date();
         await CatalogueEntity.save(isExited);
       } else {
         const catalogue = new CatalogueEntity();
@@ -90,6 +91,7 @@ export default class CatalogueRepository {
         catalogue.thumbnailId = body.thumbnailId;
         catalogue.s3linkVideo = body.s3linkVideo;
         catalogue.s3linkThumbnail = body.s3linkThumbnail;
+        catalogue.modifiedOn=new Date();
         await CatalogueEntity.save(catalogue);
       }
       return true;
