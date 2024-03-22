@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as dotenv from 'dotenv';
 import { Reflector } from '@nestjs/core';
 import accessibility from './routes';
-import { Brand } from 'src/common/dto/brands.dto';
+
 import { BrandEntity } from 'src/db/entity/brands.entity';
 import { CatalogueEntity } from 'src/db/entity/catalogue.entity';
 dotenv.config();

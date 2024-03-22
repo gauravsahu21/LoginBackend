@@ -2,7 +2,6 @@
 import { Injectable } from '@nestjs/common';
 import HttpResponse from 'src/common/lib/http-response';
 import FileRepository from 'src/db/repository/fileserver.repository';
-import { downloadDto } from 'src/common/dto/sample.dto';
 import logger from '../../connections/logger/logger';
 
 @Injectable()
@@ -26,7 +25,7 @@ export class FileUploadService {
   }
 
  
-  async deleteFile(filedata:downloadDto) {
+  async deleteFile(filedata) {
     try {
        const message=await this.fileRepo.deleteMultiplesFile(filedata.ids, filedata.type);
        return HttpResponse.success(

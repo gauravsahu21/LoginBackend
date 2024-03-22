@@ -10,8 +10,9 @@ export default class ForgetController {
 
   @Get('')
   async forget(@Query('email') email:string): Promise<any>{
-    console.log(email,"@#$")
-    return this.forgetService.forget(email);
+    return email;
+   // return this.forgetService.forget(email);
+
   }
   
   @Post('/reset')
