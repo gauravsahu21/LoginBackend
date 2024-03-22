@@ -16,6 +16,15 @@ export class ILoginBody {
   @IsString()
   password: string;
 }
+export class IRegisterBody {
+  @IsNotEmpty()
+  @IsString()
+  userid: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+}
 
 export class IChangePassword {
   @IsNotEmpty()

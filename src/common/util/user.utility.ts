@@ -44,12 +44,7 @@ export const userRememberToken = (loggedInUser) => {
 };
 
 export const findUserFromUserId = async (userid: string) => {
-  if (userid !== userid.toLowerCase()) {
-    throw new HttpException(
-      'Invalid email or password',
-      HttpStatus.BAD_REQUEST,
-    );
-  }
+ 
   const user = await Authorization.createQueryBuilder('user')
     .select([
       'user.userId as userId',
@@ -66,8 +61,9 @@ export const findUserFromUserId = async (userid: string) => {
       'user.resetPasswordToken as resetPasswordToken ',
       'user.resetPasswordExpire as resetPasswordExpire',
     ])
-    .where('user.userId = :userId', { userId: userid })
+    .where('user.emailId = :emailId', { emailId: userid })
     .getRawOne();
+ 
   if (user) {
     return user;
   } else {

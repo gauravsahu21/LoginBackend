@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import UserService from '../service/login.service';
-import { IChangePassword, ILoginBody, MasterChangePassword } from 'src/common/dto/login.dto';
+import { IChangePassword, ILoginBody, IRegisterBody, MasterChangePassword } from 'src/common/dto/login.dto';
 import { Request } from 'express';
 import { PasswordWriteAccess, WriteAccess } from '../jwt-auth.guard';
 
@@ -24,21 +24,28 @@ export default class LoginController {
     return this.us.login(body);
   }
 
-  @Post('/changepassword')
-  @UseGuards(PasswordWriteAccess)
-  async changePassword(
-    @Body() iChangePassword: IChangePassword,
-    @Req() req: Request,
-  ) {
-    return this.us.changePassword(iChangePassword);
+  @Post('/register')
+  async registerUser(@Body() body: IRegisterBody): Promise<any> {
+    return this.us.register(body);
   }
 
-  @Post('/masterchangepassword')
-  @UseGuards(PasswordWriteAccess)
-  async masterChangePassword(
-    @Body() iChangePassword: MasterChangePassword,
-    @Req() req: Request,
-  ){
-    return this.us.masterChangePassword(iChangePassword)
-  }
+ 
+
+  // @Post('/changepassword')
+  // @UseGuards(PasswordWriteAccess)
+  // async changePassword(
+  //   @Body() iChangePassword: IChangePassword,
+  //   @Req() req: Request,
+  // ) {
+  //   return this.us.changePassword(iChangePassword);
+  // }
+
+  // @Post('/masterchangepassword')
+  // @UseGuards(PasswordWriteAccess)
+  // async masterChangePassword(
+  //   @Body() iChangePassword: MasterChangePassword,
+  //   @Req() req: Request,
+  // ){
+  //   return this.us.masterChangePassword(iChangePassword)
+  // }
 }

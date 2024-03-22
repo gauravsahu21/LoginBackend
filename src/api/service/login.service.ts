@@ -3,6 +3,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import {
   IChangePassword,
   ILoginBody,
+  IRegisterBody,
   MasterChangePassword,
 } from 'src/common/dto/login.dto';
 import HttpResponse from 'src/common/lib/http-response';
@@ -33,6 +34,29 @@ export default class UserService {
       return HttpResponse.success(
         { ...refactoredUser, accessToken, expiresOn },
         'Logged In succesfully',
+        200,
+      );
+    } catch (error) {
+      logger.info('Error occured in login.Service');
+      logger.error(error);
+      return HttpResponse.error("Check you password", {
+        errorData: error,
+        errorCode: error.status,
+        httpCode: error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      });
+    }
+  }
+  async register(loginData: IRegisterBody) {
+    try {
+      const user = await this.userRepository.registerUser(loginData);
+
+      // return HttpResponse.success(
+      //   'New User Register succesfully',
+      //   200,
+      // );
+      return HttpResponse.success(
+        {},
+        'New User Register succesfully',
         200,
       );
     } catch (error) {
