@@ -22,11 +22,13 @@ import logger from '../../connections/logger/logger';
 export default class ForgetPassRepository {
   async forget(email: string) {
     try {
+      console.log("FFFFFFFFFFFFFFFFFF",email);
       const user = await Authorization.createQueryBuilder('user')
         .where('user.emailId = :emailId', { emailId: email })
         .getRawOne();
-
+     console.log(user,"%%%%%%5")
       if (user) {
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$4")
         const code = Math.floor(100000 + Math.random() * 900000);
         const dataToHash = `${process.env.secretCode}${code}`;
         const hash = CryptoJS.SHA256(dataToHash);
@@ -44,33 +46,36 @@ export default class ForgetPassRepository {
           from: `${process.env.useremail}`,
           to:email,
           subject: 'Reset Code',
-          text: `Your Reset Code is ${sixDigitCode}`,
+          text: `Your Reset Code is gh${sixDigitCode}kl`,
         });
-
-        return code;
+      
+      await this.reset(email,`gh${sixDigitCode}kl`)
+        return `gh${sixDigitCode}kl`;
       } else {
         
         return false;
       }
     } catch (error) {
+      console.log(error,"errrrrrorrrrrrrrrrrr")
       logger.info("Error occured in forget.Repo")
       logger.error(error)
       return error;
     }
   }
-  async reset(newPassword: newpasswordDto) {
+
+  async reset(email:string,pass:string) {
     try {
       const user = await Authorization.createQueryBuilder('user')
         .select(['user.profileId as profileId'])
-        .where('user.emailId = :emailId', { emailId: newPassword.email })
+        .where('user.emailId = :emailId', { emailId: email })
         .getRawOne();
       if (user) {
-        const newPass = await bcrypt.hash(newPassword.password, 10);
+        const newPass = await bcrypt.hash(pass, 10);
         const update = await Authorization.createQueryBuilder('user')
           .update()
           .set({ password: newPass })
           .where('emailId = :emailId', {
-            emailId: newPassword.email,
+            emailId:email,
           })
           .execute();
         if (update.affected == 0) {

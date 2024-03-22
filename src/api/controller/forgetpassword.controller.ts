@@ -10,8 +10,7 @@ export default class ForgetController {
 
   @Get('')
   async forget(@Query('email') email:string): Promise<any>{
-    return email;
-   // return this.forgetService.forget(email);
+    return this.forgetService.forget(email);
 
   }
   

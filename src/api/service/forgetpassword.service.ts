@@ -15,7 +15,7 @@ export class ForgetPassService {
       if (code) {
         return HttpResponse.success(code, 'Check your email', 200);
       } else {
-        return HttpResponse.error(`No user Id found with this email ${email}`);
+        return HttpResponse.error(`No user found with this email ${email}`);
       }
     } catch (error) {
       logger.info("Error occured in forget.Service")
@@ -26,14 +26,14 @@ export class ForgetPassService {
 
   async reset(newPassword: newpasswordDto) {
     try {
-      const update = await this.forgetRepo.reset(newPassword);
-      if (update) {
-        return HttpResponse.success(null, 'Password reset successfully', 200);
-      } else {
-        return HttpResponse.error(
-          `No user Id found with this email ${newPassword.email}`,
-        );
-      }
+      // const update = await this.forgetRepo.reset(newPassword);
+      // if (update) {
+      //   return HttpResponse.success(null, 'Password reset successfully', 200);
+      // } else {
+      //   return HttpResponse.error(
+      //     `No user Id found with this email ${newPassword.email}`,
+      //   );
+      // }
     } catch (error) {
       logger.info("Error occured in reset.Service")
       logger.error(error)
